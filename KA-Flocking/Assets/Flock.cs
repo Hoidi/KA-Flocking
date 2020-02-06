@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,9 +32,11 @@ public class Flock : MonoBehaviour
 
         for (int i = 0; i < startingAmount; i++)
         {
+            Vector3 location = Random.insideUnitSphere * startingAmount;
+            location.y = 0;
             FlockAgent newAgent = Instantiate (
                 agentPrefab,
-                Random.insideUnitCircle * startingAmount * agentDensity,
+                location,
                 Quaternion.Euler(Vector3.up * Random.Range(0f,360f)),
                 transform
             );
