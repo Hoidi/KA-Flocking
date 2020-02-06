@@ -152,11 +152,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
     type: 3}
-  behaviour: {fileID: 0}
-  startingAmount: 50
+  behaviour: {fileID: 11400000, guid: c0e53d5e2c1c829e4bc3f3ef7aa54eac, type: 2}
+  startingAmount: 102
   driveFactor: 10
   maxSpeed: 5
-  neighbourRadius: 1.5
+  neighbourRadius: 8.66
   avoidanceRadiusMultiplier: 0.5
 --- !u!4 &437747587
 Transform:
@@ -340,10 +340,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalRotation: {x: 0, y: 0.08715578, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0, y: 0, z: -150}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 10, z: 0}

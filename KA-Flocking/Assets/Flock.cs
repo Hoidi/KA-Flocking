@@ -10,7 +10,7 @@ public class Flock : MonoBehaviour
     List<FlockAgent> agents = new List<FlockAgent>();
     public FlockBehaviour behaviour;
 
-    [Range(10,100)]
+    [Range(10,1000)]
     public int startingAmount = 50;
     [Range(1f,100f)]
     public float driveFactor = 10f;
@@ -35,7 +35,7 @@ public class Flock : MonoBehaviour
             FlockAgent newAgent = Instantiate (
                 agentPrefab,
                 Random.insideUnitCircle * startingAmount * agentDensity,
-                Quaternion.Euler(Vector3.forward * Random.Range(0f,360f)),
+                Quaternion.Euler(Vector3.up * Random.Range(0f,360f)),
                 transform
             );
             newAgent.name = "Agent " + i;
@@ -50,11 +50,24 @@ public class Flock : MonoBehaviour
         {
             List<Transform> context = GetNearbyObjects(agent);
 
+            Vector3 move = behaviour.CalculateMove(agent, context, this);
+            move *= driveFactor;
+            if (move.sqrMagnitude > squareMaxSpeed) {
+                move = move.normalized * maxSpeed;
+            }
+            agent.Move(move);
         }
     }
 
     List<Transform> GetNearbyObjects(FlockAgent agent) {
         List<Transform> context = new List<Transform>();
-        //Collider[] contextCollider = Physics3D.OverlapCircleAll
+        Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius);
+        foreach (Collider c in contextColliders)
+        {
+            if (c != agent.AgentCollider) {
+                context.Add(c.transform);
+            }
+        }
+        return context;
     }
 }
