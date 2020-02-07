@@ -34,10 +34,11 @@ public class Flock : MonoBehaviour
         {
             Vector3 location = Random.insideUnitSphere * startingAmount;
             location.y = 0;
+        
             FlockAgent newAgent = Instantiate (
                 agentPrefab,
                 location,
-                Quaternion.Euler(Vector3.up * Random.Range(0f,360f)),
+                Quaternion.Euler((Vector3.up * Random.Range(0f,360f)/*+Vector3.up*Mathf.PI/2*/)),
                 transform
             );
             newAgent.name = "Agent " + i;
@@ -64,9 +65,10 @@ public class Flock : MonoBehaviour
     List<Transform> GetNearbyObjects(FlockAgent agent) {
         List<Transform> context = new List<Transform>();
         Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius);
+        
         foreach (Collider c in contextColliders)
         {
-            if (c != agent.AgentCollider) {
+            if (c != agent.AgentCollider && c.CompareTag("Player")) {
                 context.Add(c.transform);
             }
         }

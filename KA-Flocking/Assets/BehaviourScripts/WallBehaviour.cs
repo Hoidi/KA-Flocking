@@ -6,7 +6,7 @@ using UnityEngine;
 public class WallBehaviour : FlockBehaviour
 {
     public Vector3 center = Vector3.zero;
-    public float radius = 15f;
+    public float radius = 50f;
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock) {
         Vector3 centerOffset = center - agent.transform.position;
         float t = centerOffset.magnitude / radius;
