@@ -17,7 +17,8 @@ public class restartGame : MonoBehaviour
 
 		void ResetGame()
 		{
-		text.text = ("Yaaay!");
+		//Here should the scene for the game be loaded!
+		text.text = ("Play again!");
 		}
 }
 
