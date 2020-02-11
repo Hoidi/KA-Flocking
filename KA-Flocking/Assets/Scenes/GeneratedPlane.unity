@@ -367,8 +367,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd383e6d264f8e2409e9cd5dda5e042e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resolution: 2
   xSize: 50
   zSize: 50
+  octaves: 4
+  height: 1.91
+  scale: 0.005
+  percistance: 0.615
+  lacunarity: 1.5
 --- !u!33 &926401871
 MeshFilter:
   m_ObjectHideFlags: 0
