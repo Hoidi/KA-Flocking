@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -77,7 +77,6 @@ public class CameraManager : MonoBehaviour {
         if (frameZoom < 0f) {
             zoomStrategy.ZoomIn(camera, Time.deltaTime * Mathf.Abs(frameZoom) * zoomSpeed, nearZoomLimit);
             frameZoom = 0f;
-
         }
 
         if (frameZoom > 0f) {

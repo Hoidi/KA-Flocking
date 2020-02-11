@@ -1,13 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class KeyboardInputManager : InputManager {
 
     // EVENTS
-    public static event MoveInpuptHandler OnMoveInput;
-    public static event RotateInpuptHandler OnRotateInput;
-    public static event ZoomInpuptHandler OnZoomInput;
+    public static event MoveInputHandler OnMoveInput;
+    public static event RotateInputHandler OnRotateInput;
+    public static event ZoomInputHandler OnZoomInput;
 
 
     // Update is called once per frame
