@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,7 @@ public class KeyboardInputManager : InputManager {
     public static event MoveInputHandler OnMoveInput;
     public static event RotateInputHandler OnRotateInput;
     public static event ZoomInputHandler OnZoomInput;
+    public static event SpeedInputHandler OnSpeedInput;
 
 
     // Update is called once per frame
@@ -40,6 +41,14 @@ public class KeyboardInputManager : InputManager {
         }
         if (Input.GetKey(KeyCode.X)) {
             OnZoomInput?.Invoke(1.0f);
+        }
+
+        //speed
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            OnSpeedInput?.Invoke(1.25f);
+        }
+        if (Input.GetKey(KeyCode.LeftControl)) {
+            OnSpeedInput?.Invoke(0.8f);
         }
     }
 }
