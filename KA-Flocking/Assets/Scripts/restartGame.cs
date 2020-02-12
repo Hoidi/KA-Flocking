@@ -6,19 +6,19 @@ using UnityEngine.UI;
 
 public class restartGame : MonoBehaviour
 {
-    public Text text;
+	public Text text;
 	public Button yourButton;
 
-		void Start()
-		{
-			//Button btn = yourButton.GetComponent<Button>();
-			yourButton.onClick.AddListener(ResetGame);
-		}
+	void Start()
+	{
+		//Button btn = yourButton.GetComponent<Button>();
+		yourButton.onClick.AddListener(ResetGame);
+	}
 
-		void ResetGame()
-		{
+	void ResetGame()
+	{
 		//Here should the scene for the game be loaded!
 		text.text = ("Play again!");
-		}
+	}
 }
 
