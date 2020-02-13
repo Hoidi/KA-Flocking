@@ -40,7 +40,8 @@ public class CameraManager : MonoBehaviour {
         camera = GetComponentsInChildren<Camera>()[0];
         camera.transform.localPosition = new Vector3(0f, Mathf.Abs(cameraOffset.y), -Mathf.Abs(cameraOffset.x));
 
-        zoomStrategy = new OrthographicZoomStrategy(camera, startingZoom);
+        //zoomStrategy = new OrthographicZoomStrategy(camera, startingZoom);
+        zoomStrategy = camera.orthographic ? (IZoomStrategy) new OrthographicZoomStrategy(camera, startingZoom) : new PerspectiveZoomStrategy(camera, cameraOffset, startingZoom); ;
         camera.transform.LookAt(transform.position + Vector3.up * lookAtOffset);
     }
 

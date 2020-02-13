@@ -430,7 +430,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1e-45, y: 0, z: 1e-45, w: 0}
+  m_BoundingSphereOverride: {x: 5.8e-43, y: -1.2894347e+10, z: 5.8e-43, w: -3.455674e+10}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -574,9 +574,9 @@ MonoBehaviour:
   rotateSpeed: 100
   minBounds: {x: -100, y: -100}
   maxBounds: {x: 100, y: 100}
-  zoomSpeed: 400
+  zoomSpeed: 8
   nearZoomLimit: 2
-  farZoomLimit: 16
+  farZoomLimit: 18
   startingZoom: 5
 --- !u!4 &1146196244
 Transform:
