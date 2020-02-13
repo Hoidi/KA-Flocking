@@ -18,7 +18,7 @@ public class OrthographicZoomStrategy : IZoomStrategy {
     public void ZoomOut(Camera camera, float delta, float farZoomLimit)
     {
         if (camera.orthographicSize != farZoomLimit) {
-            camera.orthographicSize = Mathf.Min(camera.orthographicSize - delta, farZoomLimit);
+            camera.orthographicSize = Mathf.Min(camera.orthographicSize + delta, farZoomLimit);
         }
     }
 }

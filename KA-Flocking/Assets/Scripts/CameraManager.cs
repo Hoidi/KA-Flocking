@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,10 +22,10 @@ public class CameraManager : MonoBehaviour {
     public Vector2 minBounds, maxBounds;
 
     [Header("Zoom Controls")]
-    public float zoomSpeed = 4.0f;
+    public float zoomSpeed = 8.0f;
     public float nearZoomLimit = 2.0f;
-    public float farZoomLimit = 16.0f;
-    public float startingZoom = 5.0f;
+    public float farZoomLimit = 18.0f;
+    public float startingZoom = 10.0f;
 
     IZoomStrategy zoomStrategy;
     Vector3 frameMove;
@@ -37,10 +37,9 @@ public class CameraManager : MonoBehaviour {
         inOutSpeed = originalInOutSpeed;
         lateralSpeed = originalLateralSpeed;
 
-        camera = GetComponentsInChildren<Camera>()[0];
+        camera = GetComponentInChildren<Camera>();
         camera.transform.localPosition = new Vector3(0f, Mathf.Abs(cameraOffset.y), -Mathf.Abs(cameraOffset.x));
 
-        //zoomStrategy = new OrthographicZoomStrategy(camera, startingZoom);
         zoomStrategy = camera.orthographic ? (IZoomStrategy) new OrthographicZoomStrategy(camera, startingZoom) : new PerspectiveZoomStrategy(camera, cameraOffset, startingZoom); ;
         camera.transform.LookAt(transform.position + Vector3.up * lookAtOffset);
     }
