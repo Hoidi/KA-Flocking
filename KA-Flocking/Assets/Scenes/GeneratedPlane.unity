@@ -371,10 +371,10 @@ MonoBehaviour:
   xSize: 50
   zSize: 50
   octaves: 4
-  height: 1.91
-  scale: 0.005
-  percistance: 0.615
-  lacunarity: 1.5
+  height: 1.42
+  scale: 0.1
+  percistance: 0.5
+  lacunarity: 2
 --- !u!33 &926401871
 MeshFilter:
   m_ObjectHideFlags: 0

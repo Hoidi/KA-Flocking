@@ -30,19 +30,31 @@ public class MeshGenerator : MonoBehaviour
         CreateShape();
         updateMesh();
     }
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.U)){
+            mesh = new Mesh();
+            GetComponent<MeshFilter>().mesh = mesh;
+            CreateShape();
+            updateMesh();
+        }
+    }
 
     void CreateShape()
     {
-        xSize *= resolution;
-        zSize *= resolution;
-        scale /= resolution;
+        int xNodes = xSize * resolution;
+        int zNodes = zSize * resolution;
+        float adjustedScale = scale / (float) resolution;
 
-        vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-        Debug.Log((xSize + 1) * (zSize + 1));
+        vertices = new Vector3[(xNodes + 1) * (zNodes + 1)];
+        Debug.Log((xNodes + 1) * (zNodes + 1));
 
-        for (int z = 0, i = 0; z <= zSize; z++)
+        float maxValue = float.MinValue;
+        float minValue = float.MaxValue;
+
+        for (int z = 0, i = 0; z <= zNodes; z++)
         {
-            for (int x = 0; x <= xSize; x++)
+            for (int x = 0; x <= xNodes; x++)
             {
                 if (lacunarity < 1)
                 {
@@ -50,41 +62,53 @@ public class MeshGenerator : MonoBehaviour
                 }
                 float amplitude = 1f;
                 float frequency = 1f;
-                float noiceHeight = 0f;
-                float y = 0;
+                float y = 0f;
+
                 for(int j = 0; j< octaves; j++)
                 {
-                    float sampleX = x * frequency * scale;
-                    float sampleZ = z * frequency * scale;
+                    float sampleX = x * frequency * adjustedScale;
+                    float sampleZ = z * frequency * adjustedScale;
 
-                    y = Mathf.PerlinNoise(sampleX, sampleZ) * 2f -1f;
-                    noiceHeight += y * amplitude;
+                    float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2f -1f;
+                    y += perlinValue * amplitude;
 
                     amplitude *= percistance;
                     frequency *= lacunarity;
                 }
-                vertices[i] = new Vector3(x / (float)resolution, y * height, z / (float)resolution);
+                vertices[i] = new Vector3(x / (float)resolution, y, z / (float)resolution);
+                if (y > maxValue)
+                {
+                    maxValue = y;
+                } else if(y < minValue)
+                {
+                    minValue = y;
+                }
                 i++;
             }
-
         }
 
-        triangles = new int[xSize * zSize * 6];
+        //renomalizes the height values to be between 1 and -1. 
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i].y = Mathf.InverseLerp(minValue, maxValue, vertices[i].y) * height;
+        }
+
+        triangles = new int[xNodes * zNodes * 6];
 
 
         int vert = 0;
         int tris = 0;
 
-        for (int z = 0; z < zSize; z++) 
+        for (int z = 0; z < zNodes; z++) 
         { 
-            for (int x = 0; x < xSize; x++)
+            for (int x = 0; x < xNodes; x++)
             {
                 triangles[0 + tris] = vert + 0;
-                triangles[1 + tris] = vert + xSize + 1;
+                triangles[1 + tris] = vert + xNodes + 1;
                 triangles[2 + tris] = vert + 1;
                 triangles[3 + tris] = vert + 1;
-                triangles[4 + tris] = vert + xSize + 1;
-                triangles[5 + tris] = vert + xSize + 2;
+                triangles[4 + tris] = vert + xNodes + 1;
+                triangles[5 + tris] = vert + xNodes + 2;
 
                 vert++;
                 tris += 6;
