@@ -13,12 +13,18 @@ public class OrthographicZoomStrategy : IZoomStrategy {
         if (camera.orthographicSize != nearZoomLimit) {
             camera.orthographicSize = Mathf.Max(camera.orthographicSize - delta, nearZoomLimit);
         }
+
+        //if (camera.orthographicSize == nearZoomLimit) return;
+        //camera.orthographicSize = Mathf.Max(camera.orthographicSize - delta, nearZoomLimit);
     }
 
     public void ZoomOut(Camera camera, float delta, float farZoomLimit)
     {
         if (camera.orthographicSize != farZoomLimit) {
-            camera.orthographicSize = Mathf.Min(camera.orthographicSize - delta, farZoomLimit);
+            camera.orthographicSize = Mathf.Min(camera.orthographicSize + delta, farZoomLimit);
         }
+
+        //if (camera.orthographicSize == farZoomLimit) return;
+        //camera.orthographicSize = Mathf.Min(camera.orthographicSize + delta, farZoomLimit);
     }
 }
