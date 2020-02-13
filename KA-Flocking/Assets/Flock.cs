@@ -30,15 +30,14 @@ public class Flock : MonoBehaviour
         squareNeighbourRadius = neighbourRadius * neighbourRadius;
         squareAvoidanceRadius = avoidanceRadiusMultiplier * avoidanceRadiusMultiplier * squareNeighbourRadius;
 
-        for (int i = 0; i < startingAmount; i++)
-        {
+        for (int i = 0; i < startingAmount; i++) {
             Vector3 location = Random.insideUnitSphere * startingAmount;
             location.y = 0;
         
             FlockAgent newAgent = Instantiate (
                 agentPrefab,
                 location,
-                Quaternion.Euler((Vector3.up * Random.Range(0f,360f)/*+Vector3.up*Mathf.PI/2*/)),
+                Quaternion.Euler((Vector3.up * Random.Range(0f,360f))),
                 transform
             );
             newAgent.name = "Agent " + i;
