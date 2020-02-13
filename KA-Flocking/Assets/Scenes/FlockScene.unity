@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.48972055, g: 0.64729995, b: 0.6698113, a: 0.36862746}
+  m_Color: {r: 0.4784314, g: 0.53333336, b: 0.40000004, a: 0.36862746}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -841,7 +841,8 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.54e-43, y: 1.16e-43, z: 0, w: -5.0294228}
+  m_BoundingSphereOverride: {x: 1.7849972e+31, y: 1.1089524e+27, z: 7.2130683e+22,
+    w: 0.0000000023316256}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
