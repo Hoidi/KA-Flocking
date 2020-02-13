@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// credit to BoardToBitsGames on YouTube
+
 public class PerspectiveZoomStrategy : IZoomStrategy {
 
     Vector3 normalizedCameraPosition;

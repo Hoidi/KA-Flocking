@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// credit to BoardToBitsGames on YouTube
+
 public class OrthographicZoomStrategy : IZoomStrategy {
 
     public OrthographicZoomStrategy(Camera camera, float startingZoom) {

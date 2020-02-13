@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// credit to BoardToBitsGames on YouTube
+
 public abstract class InputManager : MonoBehaviour {
 
     public delegate void MoveInputHandler(Vector3 moveVector);

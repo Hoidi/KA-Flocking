@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// credit to BoardToBitsGames on YouTube
+
 public class CameraManager : MonoBehaviour {
 
     [Header("Camera Positioning")]
