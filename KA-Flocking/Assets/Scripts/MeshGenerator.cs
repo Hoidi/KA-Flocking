@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
@@ -10,6 +8,7 @@ public class MeshGenerator : MonoBehaviour
 
     Vector3[] vertices;
     int[] triangles;
+    Color[] colors;
 
     public int resolution = 1;
     public int xSize = 20;
@@ -20,7 +19,12 @@ public class MeshGenerator : MonoBehaviour
     [Range(0, 1)]
     public float percistance = 0.5f;
     public float lacunarity = 5f;
-    public 
+    public int seed = 0;
+    public Gradient gradient;
+
+    public float colorMin;
+    public float colorMax;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,25 +36,40 @@ public class MeshGenerator : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.U)){
-            mesh = new Mesh();
-            GetComponent<MeshFilter>().mesh = mesh;
-            CreateShape();
-            updateMesh();
-        }
+        mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = mesh;
+        CreateShape();
+        updateMesh();
     }
 
+    //Creates a new mesh based on the public varables. 
     void CreateShape()
     {
+        //Makes sure that octaves are not less than zero (otherwise it would break).
+        if (octaves < 0)
+        {
+            octaves = 0;
+        }
+        //creates offsets for the octaves based on the seed. 
+        System.Random prng = new System.Random(seed);
+        Vector2[] octaveOffsets = new Vector2[octaves];
+
+        for (int i = 0; i < octaves; i++)
+        {
+            float offsetX = prng.Next(-100000, 100000);
+            float offsetY = prng.Next(-100000, 100000);
+            octaveOffsets[i] = new Vector2(offsetX, offsetY);
+        }
+
         int xNodes = xSize * resolution;
         int zNodes = zSize * resolution;
-        float adjustedScale = scale / (float) resolution;
+        float adjustedScale = (float) 1 / (scale * resolution);
 
         vertices = new Vector3[(xNodes + 1) * (zNodes + 1)];
         Debug.Log((xNodes + 1) * (zNodes + 1));
 
-        float maxValue = float.MinValue;
-        float minValue = float.MaxValue;
+        float maxHeight = float.MinValue;
+        float minHeight = float.MaxValue;
 
         for (int z = 0, i = 0; z <= zNodes; z++)
         {
@@ -64,43 +83,49 @@ public class MeshGenerator : MonoBehaviour
                 float frequency = 1f;
                 float y = 0f;
 
-                for(int j = 0; j< octaves; j++)
+                //here several layers of different sizes are merged to create more advanced behavior. 
+                //octaves = number of layers. 
+                //lacunarity = increase in frequency of the the layers (from mountains to rocks).
+                //percistance = how fast the layers will decrease (a rock should not be the size of a mountain). 
+                for (int j = 0; j < octaves; j++)
                 {
-                    float sampleX = x * frequency * adjustedScale;
-                    float sampleZ = z * frequency * adjustedScale;
+                    float sampleX = x * frequency * adjustedScale + octaveOffsets[j].x;
+                    float sampleZ = z * frequency * adjustedScale + octaveOffsets[j].y;
 
-                    float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2f -1f;
+                    float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2f - 1f;
                     y += perlinValue * amplitude;
 
                     amplitude *= percistance;
                     frequency *= lacunarity;
                 }
-                vertices[i] = new Vector3(x / (float)resolution, y, z / (float)resolution);
-                if (y > maxValue)
+                vertices[i] = new Vector3((float) x / resolution, y, (float) z / resolution);
+                if (y > maxHeight)
                 {
-                    maxValue = y;
-                } else if(y < minValue)
+                    maxHeight = y;
+                } else if (y < minHeight)
                 {
-                    minValue = y;
+                    minHeight = y;
                 }
                 i++;
             }
         }
 
-        //renomalizes the height values to be between 1 and -1. 
+        //renomalizes the height values to be between 1 and -1 and multipiles with the wanted height. 
         for (int i = 0; i < vertices.Length; i++)
         {
-            vertices[i].y = Mathf.InverseLerp(minValue, maxValue, vertices[i].y) * height;
+            vertices[i].y = Mathf.InverseLerp(minHeight, maxHeight, vertices[i].y) * height;
         }
 
         triangles = new int[xNodes * zNodes * 6];
 
 
+
+        //creates the triangles in the mesh
         int vert = 0;
         int tris = 0;
 
-        for (int z = 0; z < zNodes; z++) 
-        { 
+        for (int z = 0; z < zNodes; z++)
+        {
             for (int x = 0; x < xNodes; x++)
             {
                 triangles[0 + tris] = vert + 0;
@@ -114,7 +139,21 @@ public class MeshGenerator : MonoBehaviour
                 tris += 6;
             }
             vert++;
-        }  
+        }
+
+        //sets the colors of the mesh from a gradiant depending on the height.
+
+        colors = new Color[vertices.Length];
+        for (int i = 0, z = 0; z <= zNodes; z++)
+        {
+            for (int x = 0; x <= xNodes; x++)
+            {
+                //float adjustedHeight = Mathf.InverseLerp(minHeight * height, maxHeight * height, vertices[i].y);
+                float adjustedHeight = Mathf.InverseLerp(colorMin, colorMax,vertices[i].y);
+                colors[i] = gradient.Evaluate(adjustedHeight);
+                i++;
+            }
+        }
     }
 
 
@@ -123,6 +162,7 @@ public class MeshGenerator : MonoBehaviour
         mesh.Clear();
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.colors = colors;
 
         mesh.RecalculateNormals();
 
