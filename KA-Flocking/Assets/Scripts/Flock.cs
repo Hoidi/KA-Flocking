@@ -7,7 +7,7 @@ public class Flock : MonoBehaviour
 
     public FlockAgent agentPrefab;
     const float agentDensity = 0.8f;
-    List<FlockAgent> agents = new List<FlockAgent>();
+    public List<FlockAgent> agents = new List<FlockAgent>();
     public FlockBehaviour behaviour;
 
     [Range(10,1000)]
