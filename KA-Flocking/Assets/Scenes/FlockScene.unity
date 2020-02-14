@@ -853,6 +853,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 1.57e-43, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1672,6 +1673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fb922aedf5e6ae4e973235cff71075e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flock: {fileID: 437747586}
   infantry: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
     type: 3}
   cam: {fileID: 447764074}
