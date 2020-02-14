@@ -339,7 +339,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
@@ -430,7 +430,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1e-45, y: 0, z: 1e-45, w: 0}
+  m_BoundingSphereOverride: {x: 5.8e-43, y: -1.2894347e+10, z: 5.8e-43, w: -3.455674e+10}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a421885e0556847a257edef6f5a133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 20, y: 14}
+  cameraOffset: {x: 16, y: 14}
   lookAtOffset: 2
   originalInOutSpeed: 20
   originalLateralSpeed: 20
