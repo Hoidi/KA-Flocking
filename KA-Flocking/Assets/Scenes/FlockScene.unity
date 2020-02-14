@@ -853,8 +853,6 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.7849972e+31, y: 1.1089524e+27, z: 7.2130683e+22,
-    w: 0.0000000023316256}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -989,17 +987,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a421885e0556847a257edef6f5a133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 10, y: 14}
+  cameraOffset: {x: 16, y: 14}
   lookAtOffset: 2
-  inOutSpeed: 20
-  lateralSpeed: 20
+  originalInOutSpeed: 20
+  originalLateralSpeed: 20
+  slowSpeed: 13
+  fastSpeed: 30
   rotateSpeed: 100
   minBounds: {x: -100, y: -100}
   maxBounds: {x: 100, y: 100}
-  zoomSpeed: 4
+  zoomSpeed: 8
   nearZoomLimit: 2
-  farZoomLimit: 16
-  startingZoom: 5
+  farZoomLimit: 18
+  startingZoom: 10
 --- !u!4 &1146196244
 Transform:
   m_ObjectHideFlags: 0

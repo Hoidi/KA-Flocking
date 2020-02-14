@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+// credit to BoardToBitsGames on YouTube
 
 public class CameraManager : MonoBehaviour {
 
@@ -10,18 +12,22 @@ public class CameraManager : MonoBehaviour {
     public float lookAtOffset = 2.0f;
 
     [Header("Move Controls")]
-    public float inOutSpeed = 5.0f;
-    public float lateralSpeed = 5.0f;
-    public float rotateSpeed = 5.0f;
+    public float originalInOutSpeed = 20.0f;
+    public float originalLateralSpeed = 20.0f;
+    float inOutSpeed;
+    float lateralSpeed;
+    public float slowSpeed = 13.0f;
+    public float fastSpeed = 30.0f;
+    public float rotateSpeed = 100.0f;
 
     [Header("Move Bounds")]
     public Vector2 minBounds, maxBounds;
 
     [Header("Zoom Controls")]
-    public float zoomSpeed = 4.0f;
+    public float zoomSpeed = 8.0f;
     public float nearZoomLimit = 2.0f;
-    public float farZoomLimit = 16.0f;
-    public float startingZoom = 5.0f;
+    public float farZoomLimit = 18.0f;
+    public float startingZoom = 10.0f;
 
     IZoomStrategy zoomStrategy;
     Vector3 frameMove;
@@ -30,10 +36,13 @@ public class CameraManager : MonoBehaviour {
     Camera camera;
 
     private void Awake() {
-        camera = GetComponentsInChildren<Camera>()[0];
+        inOutSpeed = originalInOutSpeed;
+        lateralSpeed = originalLateralSpeed;
+
+        camera = GetComponentInChildren<Camera>();
         camera.transform.localPosition = new Vector3(0f, Mathf.Abs(cameraOffset.y), -Mathf.Abs(cameraOffset.x));
 
-        zoomStrategy = new OrthographicZoomStrategy(camera, startingZoom);
+        zoomStrategy = camera.orthographic ? (IZoomStrategy) new OrthographicZoomStrategy(camera, startingZoom) : new PerspectiveZoomStrategy(camera, cameraOffset, startingZoom); ;
         camera.transform.LookAt(transform.position + Vector3.up * lookAtOffset);
     }
 
@@ -41,6 +50,18 @@ public class CameraManager : MonoBehaviour {
         KeyboardInputManager.OnMoveInput += UpdateFrameMove;
         KeyboardInputManager.OnRotateInput += UpdateFrameRotate;
         KeyboardInputManager.OnZoomInput += UpdateFrameZoom;
+        KeyboardInputManager.OnSpeedInput += UpdateFrameSpeed;
+    }
+
+    private void UpdateFrameSpeed(float speed) {
+        // this is pretty ugly but it works
+        if (speed > 1) {
+            lateralSpeed = fastSpeed;
+            inOutSpeed = fastSpeed;
+        } else {
+            lateralSpeed = slowSpeed;
+            inOutSpeed = slowSpeed;
+        }
     }
 
     private void UpdateFrameMove(Vector3 moveVector) {
@@ -58,6 +79,7 @@ public class CameraManager : MonoBehaviour {
         KeyboardInputManager.OnMoveInput -= UpdateFrameMove;
         KeyboardInputManager.OnRotateInput -= UpdateFrameRotate;
         KeyboardInputManager.OnZoomInput -= UpdateFrameZoom;
+        KeyboardInputManager.OnSpeedInput -= UpdateFrameSpeed;       
     }
 
     private void LateUpdate() {
@@ -77,13 +99,15 @@ public class CameraManager : MonoBehaviour {
         if (frameZoom < 0f) {
             zoomStrategy.ZoomIn(camera, Time.deltaTime * Mathf.Abs(frameZoom) * zoomSpeed, nearZoomLimit);
             frameZoom = 0f;
-
         }
 
         if (frameZoom > 0f) {
             zoomStrategy.ZoomOut(camera, Time.deltaTime * frameZoom * zoomSpeed, farZoomLimit);
             frameZoom = 0f;
         }
+
+        lateralSpeed = originalLateralSpeed;
+        inOutSpeed = originalInOutSpeed;
     }
 
     private void LookPositionInBouds() {
