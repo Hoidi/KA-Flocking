@@ -420,8 +420,8 @@ MonoBehaviour:
   startingAmount: 100
   driveFactor: 10
   maxSpeed: 5
-  neighbourRadius: 23.5
-  avoidanceRadiusMultiplier: 0.172
+  neighbourRadius: 8
+  avoidanceRadiusMultiplier: 0.5
 --- !u!4 &437747587
 Transform:
   m_ObjectHideFlags: 0
