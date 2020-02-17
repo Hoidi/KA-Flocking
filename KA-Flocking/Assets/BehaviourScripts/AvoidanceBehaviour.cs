@@ -13,11 +13,13 @@ public class AvoidanceBehaviour : FlockBehaviour
 
         Vector3 avoidanceMove = Vector3.zero;
         int avoidAmount = 0;
+        float distanceSqr;
         foreach (Transform item in context)
         {
-            if (Vector3.SqrMagnitude(item.position - agent.transform.position) < flock.SquareAvoidanceRadius) {
+            distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
+            if (distanceSqr < flock.SquareAvoidanceRadius) {
                 avoidAmount ++;
-                avoidanceMove += agent.transform.position - item.position;
+                avoidanceMove += (agent.transform.position - item.position)/distanceSqr;
             }
         }
         if (avoidAmount > 0) {

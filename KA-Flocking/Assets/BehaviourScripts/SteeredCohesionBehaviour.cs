@@ -14,14 +14,15 @@ public class SteeredCohesionBehaviour : FlockBehaviour
         }
 
         Vector3 cohesionMove = Vector3.zero;
+        float distanceSqr;
         foreach (Transform item in context)
         {
-            cohesionMove += item.position;
+            distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
+            cohesionMove += item.position/distanceSqr;
         }
         cohesionMove /= context.Count;
         cohesionMove -= agent.transform.position;
         cohesionMove = Vector3.SmoothDamp(agent.transform.forward, cohesionMove, ref currentVelocity, agentSmoothTime, flock.maxSpeed);
-        
         return cohesionMove;
     }
 }

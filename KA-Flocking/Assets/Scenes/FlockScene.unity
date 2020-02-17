@@ -241,11 +241,11 @@ MonoBehaviour:
   agentPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
     type: 3}
   behaviour: {fileID: 11400000, guid: 9233c2d20ecbd71f2800056d025ed7a0, type: 2}
-  startingAmount: 250
+  startingAmount: 100
   driveFactor: 10
   maxSpeed: 5
-  neighbourRadius: 4.55
-  avoidanceRadiusMultiplier: 0.478
+  neighbourRadius: 23.5
+  avoidanceRadiusMultiplier: 0.172
 --- !u!4 &437747587
 Transform:
   m_ObjectHideFlags: 0
