@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: SteeredCohesion
   m_EditorClassIdentifier: 
   filter: {fileID: 11400000, guid: 4ccf880ab06649a4f888555fe54dd733, type: 2}
-  agentSmoothTime: 1
+  agentSmoothTime: 3
