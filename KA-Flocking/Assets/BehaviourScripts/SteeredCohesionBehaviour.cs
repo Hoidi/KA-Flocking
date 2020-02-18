@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Flock/Behaviour/SteeredCohesion")]
-public class SteeredCohesionBehaviour : FlockBehaviour
+public class SteeredCohesionBehaviour : FilteredFlockBehaviour
 {
     Vector3 currentVelocity;
     public float agentSmoothTime = 0.5f;
@@ -14,14 +14,16 @@ public class SteeredCohesionBehaviour : FlockBehaviour
         }
 
         Vector3 cohesionMove = Vector3.zero;
-        foreach (Transform item in context)
+        float distanceSqr;
+        List<Transform> filteredContext = (filter == null) ? context : filter.Filter(agent, context);
+        foreach (Transform item in filteredContext)
         {
-            cohesionMove += item.position;
+            distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
+            cohesionMove += item.position/distanceSqr;
         }
         cohesionMove /= context.Count;
         cohesionMove -= agent.transform.position;
         cohesionMove = Vector3.SmoothDamp(agent.transform.forward, cohesionMove, ref currentVelocity, agentSmoothTime, flock.maxSpeed);
-        
         return cohesionMove;
     }
 }

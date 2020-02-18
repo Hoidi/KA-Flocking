@@ -96,7 +96,7 @@ public class EntitySpawning : MonoBehaviour
             }
             flock.agents.Add(Instantiate(troop, new Vector3(worldPos.x, worldPos.y, worldPos.z), transform.rotation));
             for (int i = 1; i < amountOfTroops; i++){
-                flock.agents.Add(Instantiate(troop, new Vector3(worldPos.x + 5 * (i % 5), worldPos.y, worldPos.z + 5 * Mathf.CeilToInt(i / 5)), transform.rotation)); //spawn troops in formation
+                flock.agents.Add(Instantiate(troop, new Vector3(worldPos.x + 2.5f * (i % 5), worldPos.y, worldPos.z + 2.5f * Mathf.CeilToInt(i / 5)), transform.rotation)); //spawn troops in formation
 
             }
 

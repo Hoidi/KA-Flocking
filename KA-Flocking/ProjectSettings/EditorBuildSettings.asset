@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 688f7ede37eaf9d458d3a11c59fb1853
   - enabled: 1
-    path: Assets/Scenes/FlockScene.unity
+    path: Assets/Scenes/asd.unity
     guid: 231ccf8874ececb7b949f1c7b742997c
   m_configObjects: {}

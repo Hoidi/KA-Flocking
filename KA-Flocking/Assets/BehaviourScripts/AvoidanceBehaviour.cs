@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Flock/Behaviour/Avoidance")]
-public class AvoidanceBehaviour : FlockBehaviour
+public class AvoidanceBehaviour : FilteredFlockBehaviour
 {
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock) {
         if (context.Count == 0)
@@ -13,11 +13,14 @@ public class AvoidanceBehaviour : FlockBehaviour
 
         Vector3 avoidanceMove = Vector3.zero;
         int avoidAmount = 0;
-        foreach (Transform item in context)
+        float distanceSqr;
+        List<Transform> filteredContext = (filter == null) ? context : filter.Filter(agent, context);
+        foreach (Transform item in filteredContext)
         {
-            if (Vector3.SqrMagnitude(item.position - agent.transform.position) < flock.SquareAvoidanceRadius) {
+            distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
+            if (distanceSqr < flock.SquareAvoidanceRadius) {
                 avoidAmount ++;
-                avoidanceMove += agent.transform.position - item.position;
+                avoidanceMove += (agent.transform.position - item.position)/distanceSqr;
             }
         }
         if (avoidAmount > 0) {
