@@ -866,7 +866,7 @@ MonoBehaviour:
     type: 3}
   agents: []
   behaviour: {fileID: 11400000, guid: 9233c2d20ecbd71f2800056d025ed7a0, type: 2}
-  startingAmount: 10
+  startingAmount: 250
   driveFactor: 10
   maxSpeed: 5
   neighbourRadius: 4.55
@@ -2690,7 +2690,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!154 &1629298836
 TerrainCollider:
   m_ObjectHideFlags: 0
