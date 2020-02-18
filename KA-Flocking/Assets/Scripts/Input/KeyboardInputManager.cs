@@ -31,10 +31,10 @@ public class KeyboardInputManager : InputManager {
 
         //rotate
         if (Input.GetKey(KeyCode.E)) {
-            OnRotateInput?.Invoke(-1.0f);
+            OnRotateInput?.Invoke(1.0f);
         }
         if (Input.GetKey(KeyCode.Q)) {
-            OnRotateInput?.Invoke(1.0f);
+            OnRotateInput?.Invoke(-1.0f);
         }
 
         //zoom
