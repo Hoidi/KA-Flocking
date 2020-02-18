@@ -97,7 +97,6 @@ public class CameraManager : MonoBehaviour {
         }
 
         if (frameZoom < 0f) {
-            Debug.Log(zoomStrategy.getCurrentZoomLevel() / startingZoom);
             zoomStrategy.ZoomIn(camera, Time.deltaTime * Mathf.Abs(frameZoom) * zoomSpeed * (zoomStrategy.getCurrentZoomLevel()/startingZoom), nearZoomLimit);
             frameZoom = 0f;
         }
