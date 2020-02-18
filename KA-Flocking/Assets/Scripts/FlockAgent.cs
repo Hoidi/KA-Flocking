@@ -9,6 +9,7 @@ public class FlockAgent : MonoBehaviour
     public float stability = 0.3f;
     // The speed at which the rotation of the agents stabilises
     public float stabilisationSpeed = 2.0f;
+    public Infantry infantry = new Infantry();
 
     Collider agentCollider;
     Rigidbody rb;
@@ -23,7 +24,9 @@ public class FlockAgent : MonoBehaviour
 
     public void Move(Vector3 velocity) {
         transform.position += velocity * Time.deltaTime;
-        transform.forward = velocity;
+        if (velocity != Vector3.zero) {
+            transform.forward = velocity;
+        }
     }
 
     public void Initialize(Flock flock)

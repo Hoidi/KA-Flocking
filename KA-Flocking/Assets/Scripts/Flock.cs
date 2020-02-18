@@ -52,6 +52,7 @@ public class Flock : MonoBehaviour
         foreach (FlockAgent agent in agents)
         {
             List<Transform> context = GetNearbyObjects(agent);
+            agent.infantry.Attack(context);
 
             Vector3 move = behaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
@@ -65,7 +66,7 @@ public class Flock : MonoBehaviour
     List<Transform> GetNearbyObjects(FlockAgent agent) {
         List<Transform> context = new List<Transform>();
         Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius);
-        
+
         foreach (Collider c in contextColliders)
         {
             if (c != agent.AgentCollider && c.CompareTag("Player")) {
