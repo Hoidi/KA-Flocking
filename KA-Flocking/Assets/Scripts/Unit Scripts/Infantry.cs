@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Infantry
+[CreateAssetMenu(menuName = "Flock/Units/Infantry")]
+public class Infantry : Unit
 {
+
+    public ContextFilter filter;
     [Range(1f,1000f)]
     public float health = 100f;
     // The amount of damage this unit deals in one Time unit
@@ -12,19 +15,21 @@ public class Infantry
     [Range(0f,100f)]
     public float range = 8f;
 
-    public void TakeDamage(float amount, FlockAgent agent) {
+    public override void TakeDamage(float amount, FlockAgent agent) {
         amount *= Time.deltaTime;
         if (amount < health) {
-            Debug.Log(health);
+            //Debug.Log(health);
             health -= amount;
         } else {
             health = 0;
+            Debug.Log(agent.name + " Died");
             agent.tag = "Dead";
             agent.AgentFlock.agents.Remove(agent);
         }
     }
 
-    public void Attack(List<Transform> targets, FlockAgent attacker) {
+    public override void Attack(List<Transform> targets, FlockAgent attacker) {
+        targets = (filter == null) ? targets : filter.Filter(attacker, targets);
         if (targets.Count == 0) {
             return;
         }
