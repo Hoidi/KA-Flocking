@@ -12,9 +12,11 @@ public class AlignmentBehaviour : FlockBehaviour
         }
 
         Vector3 aligntmentMove = Vector3.zero;
+        float distanceSqr;
         foreach (Transform item in context)
         {
-            aligntmentMove += item.transform.forward;
+            distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
+            aligntmentMove += item.transform.forward/distanceSqr;
         }
         aligntmentMove /= context.Count;
         

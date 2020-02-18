@@ -22,10 +22,10 @@ public class CompositeBehaviour : FlockBehaviour
             //partialMove.y = 0;
 
             if (partialMove != Vector3.zero) {
-                if (partialMove.sqrMagnitude > weights[i] * weights[i]) {
-                    partialMove.Normalize();
-                    partialMove *= weights[i];
-                }
+                //if (partialMove.sqrMagnitude > weights[i] * weights[i]) {
+                partialMove.Normalize();
+                partialMove *= weights[i];
+                //}
             }
             move += partialMove;
         }
