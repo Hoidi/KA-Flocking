@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class FlockAgent : MonoBehaviour
 {
+    public Flock AgentFlock;
     public float stability = 0.3f;
     // The speed at which the rotation of the agents stabilises
     public float stabilisationSpeed = 2.0f;
@@ -23,6 +24,11 @@ public class FlockAgent : MonoBehaviour
     public void Move(Vector3 velocity) {
         transform.position += velocity * Time.deltaTime;
         transform.forward = velocity;
+    }
+
+    public void Initialize(Flock flock)
+    {
+        AgentFlock = flock;
     }
 
     void FixedUpdate () {
