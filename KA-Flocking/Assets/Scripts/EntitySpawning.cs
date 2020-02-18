@@ -75,7 +75,7 @@ public class EntitySpawning : MonoBehaviour
 
             for (int i = 0; i < amountOfTroops; i++)
             {
-                Vector3 location = Random.insideUnitSphere * amountOfTroops;
+                Vector3 location = Random.insideUnitSphere * amountOfTroops*0.3f;
                 location.y = 0;
 
                 flock.agents.Add(Instantiate(troop, worldPos + location, Quaternion.Euler(Vector3.up)));
