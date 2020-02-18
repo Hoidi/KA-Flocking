@@ -16,7 +16,7 @@ public class EntitySpawning : MonoBehaviour
     public Toggle pikeToggle;
     public Toggle archerToggle;
     public Slider troopSlider;
-    private int amountOfTroops;
+    private int amountOfTroops = 1;
     public Text troopText;
     public void setTroopAmount()
     {
@@ -24,42 +24,42 @@ public class EntitySpawning : MonoBehaviour
         troopText.text = amountOfTroops.ToString();
 
     }
-    public void spawnOne(){
+    public void spawnCircle(){
         if(infantryToggle.isOn){
-            spawnEntity(infantry);
+            spawnEntitiesCircular(infantry);
         }
         else if(pikeToggle.isOn){
-            //spawnEntity(pike);
+            //spawnEntitiesCircular(pike);
         }
         else if(archerToggle.isOn){
-            //spawnEntity(archer);
+            //spawnEntitiesCircular(archer);
         }
     }
 
-    public void spawnFive(){
+    public void spawnRectangle(){
         if(infantryToggle.isOn){
-            spawnMultipleEntities(infantry);
+            spawnEntitiesRectangular(infantry);
         }
         else if(pikeToggle.isOn){
-            //spawnFiveEntites(pike);
+            //spawnEntitiesRectangular(pike);
         }
         else if(archerToggle.isOn){
-            //spawnFiveEntites(archer);
+            //spawnEntitiesRectangular(archer);
         }
     }
 
-    public void spawnTriangleShape(){
+    public void spawnTriangle(){
         if(infantryToggle.isOn){
-            spawnTriangleShapedEntites(infantry);
+            spawnEntitiesTriangular(infantry);
         }
         else if(pikeToggle.isOn){
-            //spawnTriangleShapedEntites(pike);
+            //spawnEntitiesTriangular(pike);
         }
         else if(archerToggle.isOn){
-            //spawnTriangleShapedEntites(archer);
+            //spawnEntitiesTriangular(archer);
         }
     }
-    public void spawnEntity(FlockAgent troop){
+    public void spawnEntitiesCircular(FlockAgent troop){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
             Vector3 worldPos;
@@ -73,12 +73,19 @@ public class EntitySpawning : MonoBehaviour
                 worldPos.y += 1f; //make sure they dont fall through the ground
                 }
 
-            FlockAgent spawnedAgent = Instantiate(troop, worldPos, transform.rotation); //spawn the troop at cursor location (=+ 1 for y coord)
-            flock.agents.Add(spawnedAgent); //add the newly spawned troop into the list of flock members
+            for (int i = 0; i < amountOfTroops; i++)
+            {
+                Vector3 location = Random.insideUnitSphere * amountOfTroops;
+                location.y = 0;
+
+                flock.agents.Add(Instantiate(troop, worldPos + location, Quaternion.Euler(Vector3.up)));
+            }
+                //FlockAgent spawnedAgent = Instantiate(troop, worldPos, transform.rotation); //spawn the troop at cursor location (=+ 1 for y coord)
+                //flock.agents.Add(spawnedAgent); //add the newly spawned troop into the list of flock members
             }
     }
 
-    public void spawnMultipleEntities(FlockAgent troop){
+    public void spawnEntitiesRectangular(FlockAgent troop){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
@@ -103,7 +110,7 @@ public class EntitySpawning : MonoBehaviour
         }
     }
 
-    public void spawnTriangleShapedEntites(FlockAgent troop){
+    public void spawnEntitiesTriangular(FlockAgent troop){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
 
         if (Input.GetKey("space"))
