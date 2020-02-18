@@ -35,4 +35,9 @@ public class PerspectiveZoomStrategy : IZoomStrategy {
             PositionCamera(camera);
         }
     }
+
+    public float getCurrentZoomLevel()
+    {
+        return currentZoomLevel;
+    }
 }
