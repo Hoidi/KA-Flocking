@@ -11,6 +11,5 @@ public class BluePanel : MonoBehaviour
     void Update()
     {
         infantryNoText.text = blueFlock.agents.Count.ToString();
-        Debug.Log(blueFlock.agents.Count.ToString());
     }
 }
