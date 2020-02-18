@@ -16,18 +16,18 @@ public class CameraManager : MonoBehaviour {
     public float originalLateralSpeed = 20.0f;
     float inOutSpeed;
     float lateralSpeed;
-    public float slowSpeed = 13.0f;
-    public float fastSpeed = 30.0f;
+    public float slowSpeed = 12.0f;
+    public float fastSpeed = 40.0f;
     public float rotateSpeed = 100.0f;
 
     [Header("Move Bounds")]
     public Vector2 minBounds, maxBounds;
 
     [Header("Zoom Controls")]
-    public float zoomSpeed = 8.0f;
+    public float zoomSpeed = 20.0f;
     public float nearZoomLimit = 2.0f;
-    public float farZoomLimit = 18.0f;
-    public float startingZoom = 10.0f;
+    public float farZoomLimit = 100.0f;
+    public float startingZoom = 30.0f;
 
     IZoomStrategy zoomStrategy;
     Vector3 frameMove;
@@ -36,7 +36,7 @@ public class CameraManager : MonoBehaviour {
     Camera camera;
 
     private void Awake() {
-        inOutSpeed = originalInOutSpeed;
+        inOutSpeed = originalInOutSpeed * (frameZoom / startingZoom);
         lateralSpeed = originalLateralSpeed;
 
         camera = GetComponentInChildren<Camera>();
@@ -56,11 +56,11 @@ public class CameraManager : MonoBehaviour {
     private void UpdateFrameSpeed(float speed) {
         // this is pretty ugly but it works
         if (speed > 1) {
-            lateralSpeed = fastSpeed;
-            inOutSpeed = fastSpeed;
+            lateralSpeed = fastSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom);
+            inOutSpeed = fastSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom);
         } else {
-            lateralSpeed = slowSpeed;
-            inOutSpeed = slowSpeed;
+            lateralSpeed = slowSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom);
+            inOutSpeed = slowSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom);
         }
     }
 
@@ -97,17 +97,18 @@ public class CameraManager : MonoBehaviour {
         }
 
         if (frameZoom < 0f) {
-            zoomStrategy.ZoomIn(camera, Time.deltaTime * Mathf.Abs(frameZoom) * zoomSpeed, nearZoomLimit);
+            Debug.Log(zoomStrategy.getCurrentZoomLevel() / startingZoom);
+            zoomStrategy.ZoomIn(camera, Time.deltaTime * Mathf.Abs(frameZoom) * zoomSpeed * (zoomStrategy.getCurrentZoomLevel()/startingZoom), nearZoomLimit);
             frameZoom = 0f;
         }
 
         if (frameZoom > 0f) {
-            zoomStrategy.ZoomOut(camera, Time.deltaTime * frameZoom * zoomSpeed, farZoomLimit);
+            zoomStrategy.ZoomOut(camera, Time.deltaTime * frameZoom * zoomSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom), farZoomLimit);
             frameZoom = 0f;
         }
 
-        lateralSpeed = originalLateralSpeed;
-        inOutSpeed = originalInOutSpeed;
+        lateralSpeed = originalLateralSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom);
+        inOutSpeed = originalInOutSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom);
     }
 
     private void LookPositionInBouds() {

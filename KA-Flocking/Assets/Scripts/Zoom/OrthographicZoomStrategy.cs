@@ -23,4 +23,10 @@ public class OrthographicZoomStrategy : IZoomStrategy {
             camera.orthographicSize = Mathf.Min(camera.orthographicSize + delta, farZoomLimit);
         }
     }
+
+    public float getCurrentZoomLevel()
+    {
+        // don't use this method
+        return 1; // could return camera.orthographicSize;
+    }
 }

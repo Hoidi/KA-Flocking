@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1704,19 +1704,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a421885e0556847a257edef6f5a133, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraOffset: {x: 16, y: 14}
+  cameraOffset: {x: 10, y: 14}
   lookAtOffset: 2
   originalInOutSpeed: 20
   originalLateralSpeed: 20
-  slowSpeed: 13
-  fastSpeed: 30
+  slowSpeed: 12
+  fastSpeed: 40
   rotateSpeed: 100
   minBounds: {x: -100, y: -100}
   maxBounds: {x: 100, y: 100}
-  zoomSpeed: 8
+  zoomSpeed: 20
   nearZoomLimit: 2
-  farZoomLimit: 18
-  startingZoom: 10
+  farZoomLimit: 100
+  startingZoom: 30
 --- !u!4 &1146196244
 Transform:
   m_ObjectHideFlags: 0
