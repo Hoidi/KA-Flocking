@@ -38,7 +38,7 @@ public class EntitySpawning : MonoBehaviour
 
     public void spawnFive(){
         if(infantryToggle.isOn){
-            spawnFiveEntites(infantry);
+            spawnMultipleEntities(infantry);
         }
         else if(pikeToggle.isOn){
             //spawnFiveEntites(pike);
@@ -78,7 +78,7 @@ public class EntitySpawning : MonoBehaviour
             }
     }
 
-    public void spawnFiveEntites(FlockAgent troop){
+    public void spawnMultipleEntities(FlockAgent troop){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
