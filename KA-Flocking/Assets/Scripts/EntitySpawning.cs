@@ -9,7 +9,7 @@ public class EntitySpawning : MonoBehaviour
 {
     
     public Flock flock;
-    public FlockAgent infantry;
+    public FlockAgent infantryPrefab;
     public Camera cam;
     RaycastHit collisionWithPlane;
     public Toggle infantryToggle;
@@ -26,7 +26,7 @@ public class EntitySpawning : MonoBehaviour
     }
     public void spawnCircle(){
         if(infantryToggle.isOn){
-            spawnEntitiesCircular(infantry);
+            spawnEntitiesCircular(infantryPrefab, "Infantry");
         }
         else if(pikeToggle.isOn){
             //spawnEntitiesCircular(pike);
@@ -38,7 +38,7 @@ public class EntitySpawning : MonoBehaviour
 
     public void spawnRectangle(){
         if(infantryToggle.isOn){
-            spawnEntitiesRectangular(infantry);
+            spawnEntitiesRectangular(infantryPrefab, "Infantry");
         }
         else if(pikeToggle.isOn){
             //spawnEntitiesRectangular(pike);
@@ -50,7 +50,7 @@ public class EntitySpawning : MonoBehaviour
 
     public void spawnTriangle(){
         if(infantryToggle.isOn){
-            spawnEntitiesTriangular(infantry);
+            spawnEntitiesTriangular(infantryPrefab, "Infantry");
         }
         else if(pikeToggle.isOn){
             //spawnEntitiesTriangular(pike);
@@ -59,7 +59,7 @@ public class EntitySpawning : MonoBehaviour
             //spawnEntitiesTriangular(archer);
         }
     }
-    public void spawnEntitiesCircular(FlockAgent troop){
+    public void spawnEntitiesCircular(FlockAgent agentPrefab, string unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
             Vector3 worldPos;
@@ -77,15 +77,19 @@ public class EntitySpawning : MonoBehaviour
             {
                 Vector3 location = Random.insideUnitSphere * amountOfTroops;
                 location.y = 0;
-
-                flock.agents.Add(Instantiate(troop, worldPos + location, Quaternion.Euler(Vector3.up)));
+                flock.CreateUnit(
+                    agentPrefab, 
+                    worldPos + location,
+                    Quaternion.Euler(Vector3.up),
+                    unitType
+                );
             }
                 //FlockAgent spawnedAgent = Instantiate(troop, worldPos, transform.rotation); //spawn the troop at cursor location (=+ 1 for y coord)
                 //flock.agents.Add(spawnedAgent); //add the newly spawned troop into the list of flock members
             }
     }
 
-    public void spawnEntitiesRectangular(FlockAgent troop){
+    public void spawnEntitiesRectangular(FlockAgent agentPrefab, string unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
@@ -101,16 +105,19 @@ public class EntitySpawning : MonoBehaviour
                 worldPos = cam.ScreenToWorldPoint(mousePos);
                 worldPos.y += 1f; //make sure they dont fall through the ground
             }
-            flock.agents.Add(Instantiate(troop, new Vector3(worldPos.x, worldPos.y, worldPos.z), transform.rotation));
-            for (int i = 1; i < amountOfTroops; i++){
-                flock.agents.Add(Instantiate(troop, new Vector3(worldPos.x + 2.5f * (i % 5), worldPos.y, worldPos.z + 2.5f * Mathf.CeilToInt(i / 5)), transform.rotation)); //spawn troops in formation
-
+            for (int i = 0; i < amountOfTroops; i++){
+                flock.CreateUnit(
+                    agentPrefab, 
+                    new Vector3(worldPos.x + 2.5f * (i % 5), worldPos.y, worldPos.z + 2.5f * Mathf.CeilToInt(i / 5)),
+                    transform.rotation,
+                    unitType
+                );
             }
 
         }
     }
 
-    public void spawnEntitiesTriangular(FlockAgent troop){
+    public void spawnEntitiesTriangular(FlockAgent agentPrefab, string unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
 
         if (Input.GetKey("space"))
@@ -128,8 +135,12 @@ public class EntitySpawning : MonoBehaviour
                 worldPos.y += 1f; //make sure they dont fall through the ground
             }
             for (int i = 0; i < amountOfTroops; i++){
-                flock.agents.Add(Instantiate(troop, new Vector3(worldPos.x + 5 * (i % 2), worldPos.y, worldPos.z - 5 * (i % 5)), transform.rotation)); //spawn troops in formation
-
+                flock.CreateUnit(
+                    agentPrefab, 
+                    new Vector3(worldPos.x + 5 * (i % 2), worldPos.y, worldPos.z - 5 * (i % 5)),
+                    transform.rotation,
+                    unitType
+                );
             }  
         }
 

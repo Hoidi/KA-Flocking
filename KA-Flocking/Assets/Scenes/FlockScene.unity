@@ -4340,7 +4340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flock: {fileID: 437747586}
-  infantry: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
+  infantryPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
     type: 3}
   cam: {fileID: 447764074}
   infantryToggle: {fileID: 1110981720}
