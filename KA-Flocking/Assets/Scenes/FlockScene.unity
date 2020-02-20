@@ -473,7 +473,7 @@ MonoBehaviour:
     type: 3}
   agents: []
   behaviour: {fileID: 11400000, guid: 9233c2d20ecbd71f2800056d025ed7a0, type: 2}
-  startingAmount: 25
+  startingAmount: 10
   driveFactor: 10
   maxSpeed: 5
   neighbourRadius: 8
@@ -750,7 +750,7 @@ MonoBehaviour:
     type: 3}
   agents: []
   behaviour: {fileID: 11400000, guid: f913cd5355568294da34e8d98a31c48b, type: 2}
-  startingAmount: 15
+  startingAmount: 10
   driveFactor: 10
   maxSpeed: 5
   neighbourRadius: 8
@@ -997,7 +997,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.58e-43, y: 1.2834169e-14, z: 7.57e-43, w: 0}
+  m_BoundingSphereOverride: {x: 6.05e-43, y: -2.5824222e-15, z: 6.04e-43, w: 3878.9658}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
