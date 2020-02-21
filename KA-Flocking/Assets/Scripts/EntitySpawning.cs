@@ -123,6 +123,8 @@ public class EntitySpawning : MonoBehaviour
             }
     } 
 
+    }
+
     public void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
 
