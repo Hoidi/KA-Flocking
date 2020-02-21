@@ -110,16 +110,10 @@ public class EntitySpawning : MonoBehaviour
                 worldPos = cam.ScreenToWorldPoint(mousePos);
                 worldPos.y += 1f; //make sure they dont fall through the ground
             }
-            flock.CreateUnit(
-                        agentPrefab,
-                        new Vector3(worldPos.x, worldPos.y, worldPos.z),
-                        Quaternion.Euler(Vector3.up),
-                        unitType
-                    );
                 for (int i = 0; i < amountOfTroops; i++) {
                     flock.CreateUnit( //spawn troops in formation
                         agentPrefab,
-                        new Vector3(worldPos.x + 2.5f * (i % 5), worldPos.y, worldPos.z + 2.5f * Mathf.CeilToInt(i / 5)),
+                        new Vector3(worldPos.x + 3 * (i % 5), worldPos.y, worldPos.z + 3 * Mathf.CeilToInt(i / 5)),
                         Quaternion.Euler(Vector3.up),
                         unitType
                     );
@@ -154,7 +148,7 @@ public class EntitySpawning : MonoBehaviour
             int switchSide = 1; //variable to make spawning on each "side" of triangle shape possible..
             for (int i = 1; i < amountOfTroops; i++)
             {
-                flock.CreateUnit(
+                flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
                     new Vector3(worldPos.x + (2 * i * switchSide), worldPos.y, worldPos.z - (2 * i)),
                     Quaternion.Euler(Vector3.up),
