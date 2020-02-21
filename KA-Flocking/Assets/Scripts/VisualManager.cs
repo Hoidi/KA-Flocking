@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class VisualManager: MonoBehaviour
-{  
-    Chunk[,] chunks; 
+public class VisualManager : MonoBehaviour
+{
+    Chunk[,] chunks;
     public int chunksX = 0;
     public int chunksZ = 0;
     public int chunkSize = 0;
@@ -10,7 +10,7 @@ public class VisualManager: MonoBehaviour
     [Range(1, 4)]
     public int resolution = 1;
     [Range(0, 20)]
-    public float height = 1; 
+    public float height = 1;
     public float scale = 1;
     public int seed = 0;
 
@@ -26,9 +26,11 @@ public class VisualManager: MonoBehaviour
     {
         //generates the chunks 
         chunks = new Chunk[chunksX, chunksZ];
-        for (int x = 0; x < chunksX; x++) {
-            for (int z = 0; z < chunksZ; z++) {
-                GameObject MH = Instantiate(meshHandler, new Vector3(x*chunkSize, 0, z*chunkSize), Quaternion.identity);
+        for (int x = 0; x < chunksX; x++)
+        {
+            for (int z = 0; z < chunksZ; z++)
+            {
+                GameObject MH = Instantiate(meshHandler, new Vector3(x * chunkSize, 0, z * chunkSize), Quaternion.identity);
                 chunks[x, z] = MH.GetComponent<Chunk>();
             }
         }
@@ -37,11 +39,13 @@ public class VisualManager: MonoBehaviour
 
     private void Update()
     {
+        // enable for to be able to change the level during runtime. (is very laggy with bigger levels)
         //updateChunks();
     }
 
     //Updates the values for all the chunks. 
-    void updateChunks() {
+    void updateChunks()
+    {
         float maxHeight = float.MinValue;
         float minHeight = float.MaxValue;
         for (int x = 0; x < chunksX; x++)
@@ -59,6 +63,8 @@ public class VisualManager: MonoBehaviour
                 chunks[x, z].percistance = percistance;
                 chunks[x, z].lacunarity = lacunarity;
                 chunks[x, z].octaves = octaves;
+
+                chunks[x, z].updateChunk(-1, 1); // to make them have max and min values. 
 
                 float chunkMaxHeight = chunks[x, z].getMaxHeight();
                 float chunkMinHeight = chunks[x, z].getMinHeight();

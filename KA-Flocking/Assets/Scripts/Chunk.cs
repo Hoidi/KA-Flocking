@@ -14,8 +14,8 @@ public class Chunk : MonoBehaviour
     private Color[] colors;
 
     //for recording the min and max hight.
-    private float maxHeight = float.MinValue;
-    private float minHeight = float.MaxValue;
+    private float localMaxHeight = float.MinValue;
+    private float localMinHeight = float.MaxValue;
 
     public int resolution = 1;
     public int xSize = 20;
@@ -28,7 +28,7 @@ public class Chunk : MonoBehaviour
     public float lacunarity = 5f;
     public int seed = 0;
     public float offsetX = 0;
-    public float offsetZ = 0; 
+    public float offsetZ = 0;
     public Gradient gradient;
 
     public float colorMin;
@@ -38,7 +38,7 @@ public class Chunk : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        updateChunk(minHeight, maxHeight);
+        //updateChunk(minHeight, maxHeight);
     }
 
     //Creates a new mesh based on the public varables. 
@@ -70,8 +70,8 @@ public class Chunk : MonoBehaviour
         int adjustedXSize = xSize * resolution;
         int adjustedZSize = zSize * resolution;
         float adjstedOffsetX = offsetX * resolution;
-        float adjustedOffsetZ = offsetZ * resolution; 
-        float adjustedScale = (float) 1 / (scale * resolution);
+        float adjustedOffsetZ = offsetZ * resolution;
+        float adjustedScale = (float)1 / (scale * resolution);
 
         //here is where all the positional data will be stored. 
         vertices = new Vector3[(adjustedXSize + 1) * (adjustedZSize + 1)];
@@ -95,18 +95,19 @@ public class Chunk : MonoBehaviour
 
                     float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2f - 1f;
                     y += perlinValue * amplitude;
-                    
+
 
                     amplitude *= percistance;
                     frequency *= lacunarity;
                 }
-                vertices[i] = new Vector3((float) x / resolution, y, (float) z / resolution);
-                if (y > maxHeight)
+                vertices[i] = new Vector3((float)x / resolution, y, (float)z / resolution);
+                if (y > localMaxHeight)
                 {
-                    maxHeight = y;
-                } else if (y < minHeight)
+                    localMaxHeight = y;
+                }
+                else if (y < localMinHeight)
                 {
-                    minHeight = y;
+                    localMinHeight = y;
                 }
                 i++;
             }
@@ -181,11 +182,11 @@ public class Chunk : MonoBehaviour
 
     public float getMaxHeight()
     {
-        return maxHeight;
+        return localMaxHeight;
     }
 
     public float getMinHeight()
     {
-        return minHeight;
+        return localMinHeight;
     }
 }

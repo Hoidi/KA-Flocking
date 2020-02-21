@@ -76,11 +76,11 @@ MonoBehaviour:
     key6: {r: 1, g: 1, b: 1, a: 0}
     key7: {r: 1, g: 1, b: 1, a: 0}
     ctime0: 1349
-    ctime1: 13493
-    ctime2: 21974
-    ctime3: 34310
-    ctime4: 45296
-    ctime5: 56669
+    ctime1: 11372
+    ctime2: 14264
+    ctime3: 36237
+    ctime4: 47031
+    ctime5: 63800
     ctime6: 65535
     ctime7: 65535
     atime0: 0
@@ -94,8 +94,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 7
     m_NumAlphaKeys: 2
-  colorMin: 0
-  colorMax: 5
+  colorMin: 0.15
+  colorMax: 10.03
 --- !u!23 &7884630620193990467
 MeshRenderer:
   m_ObjectHideFlags: 0
