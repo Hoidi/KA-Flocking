@@ -259,7 +259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &348286368
 RectTransform:
   m_ObjectHideFlags: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
     type: 3}
-  agents: []
+  defaultInfantryObject: {fileID: 0}
   behaviour: {fileID: 11400000, guid: 9233c2d20ecbd71f2800056d025ed7a0, type: 2}
   startingAmount: 10
   driveFactor: 10
@@ -606,7 +606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &492133217
 RectTransform:
   m_ObjectHideFlags: 0
@@ -748,7 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 3383208492696923475, guid: 4074e581115925348a08849a46e1b704,
     type: 3}
-  agents: []
+  defaultInfantryObject: {fileID: 0}
   behaviour: {fileID: 11400000, guid: f913cd5355568294da34e8d98a31c48b, type: 2}
   startingAmount: 10
   driveFactor: 10
@@ -997,7 +997,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.05e-43, y: -2.5824222e-15, z: 6.04e-43, w: 3878.9658}
+  m_BoundingSphereOverride: {x: 5.42e-43, y: -0.000000001834521, z: 5.42e-43, w: 1.28e-43}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1132,10 +1132,10 @@ RectTransform:
   m_Father: {fileID: 1386158813}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.85249996, y: 0.7451651}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -136.49997, y: -50.00004}
-  m_SizeDelta: {x: 115, y: 100}
+  m_AnchoredPosition: {x: 1, y: -0.000045776367}
+  m_SizeDelta: {x: -3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &764110927
 MonoBehaviour:
@@ -1536,7 +1536,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2216,7 +2216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1110981719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2360,7 +2360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1212591782
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2565,7 +2565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1240461561
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2654,7 +2654,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3192,7 +3192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1593133937
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3395,7 +3395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1637917624
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3553,7 +3553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1771521578
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4055,7 +4055,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1928300759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4341,7 +4341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2012675548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4357,6 +4357,7 @@ MonoBehaviour:
   flock: {fileID: 437747586}
   infantryPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
     type: 3}
+  defaultInfantryObject: {fileID: 0}
   cam: {fileID: 447764074}
   infantryToggle: {fileID: 1110981720}
   pikeToggle: {fileID: 1771521579}
