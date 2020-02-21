@@ -9,6 +9,7 @@ public class FlockAgent : MonoBehaviour
     public float stability = 0.3f;
     // The speed at which the rotation of the agents stabilises
     public float stabilisationSpeed = 2.0f;
+    public Unit unit;
 
     Collider agentCollider;
     Rigidbody rb;
@@ -30,9 +31,10 @@ public class FlockAgent : MonoBehaviour
         }
     }
 
-    public void Initialize(Flock flock)
+    public void Initialize(Flock flock, string unitType)
     {
         AgentFlock = flock;
+        unit = (Unit) ScriptableObject.CreateInstance(unitType);
     }
 
     void FixedUpdate () {
