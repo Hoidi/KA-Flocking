@@ -5,8 +5,9 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - agentPrefab: {instanceID: 0}
+  - defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
+      type: 2}
   - behaviour: {instanceID: 0}
-  - unit: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

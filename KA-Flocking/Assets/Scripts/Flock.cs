@@ -11,6 +11,7 @@ public class Flock : MonoBehaviour
     private List<FlockAgent> _agents = new List<FlockAgent>();
     // Public Read Only reference to the agent list. 
     public IList<FlockAgent> agents {get { return _agents.AsReadOnly(); } }
+    public Unit defaultInfantryObject;
     private HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
     public FlockBehaviour behaviour;
     [Range(10,1000)]
@@ -41,7 +42,7 @@ public class Flock : MonoBehaviour
                 agentPrefab,
                 location,
                 Quaternion.Euler((Vector3.up * Random.Range(0f,360f))),
-                "Infantry"
+                defaultInfantryObject
             );
             
         }
@@ -81,7 +82,7 @@ public class Flock : MonoBehaviour
     }
 
     // The preferred way to create an agent
-    public void CreateUnit(FlockAgent prefab, Vector3 location, Quaternion rotation, string unitType) {
+    public void CreateUnit(FlockAgent prefab, Vector3 location, Quaternion rotation, Unit unitType) {
         FlockAgent newAgent = Instantiate(
             prefab,   // The prefab of the new agent, should correspond to the unitType
             location, // The location of the new agent
