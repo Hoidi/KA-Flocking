@@ -31,10 +31,10 @@ public class FlockAgent : MonoBehaviour
         }
     }
 
-    public void Initialize(Flock flock, string unitType)
+    public void Initialize(Flock flock, Unit unitType)
     {
         AgentFlock = flock;
-        unit = (Unit) ScriptableObject.CreateInstance(unitType);
+        unit = Instantiate(unitType);
     }
 
     void FixedUpdate () {

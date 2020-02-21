@@ -10,6 +10,7 @@ public class EntitySpawning : MonoBehaviour
     
     public Flock flock;
     public FlockAgent infantryPrefab;
+    public Infantry defaultInfantryObject;
     public Camera cam;
     RaycastHit collisionWithPlane;
     public Toggle infantryToggle;
@@ -26,7 +27,7 @@ public class EntitySpawning : MonoBehaviour
     }
     public void spawnCircle(){
         if(infantryToggle.isOn){
-            spawnEntitiesCircular(infantryPrefab, "Infantry");
+            spawnEntitiesCircular(infantryPrefab, defaultInfantryObject);
         }
         else if(pikeToggle.isOn){
             //spawnEntitiesCircular(pike);
@@ -38,7 +39,7 @@ public class EntitySpawning : MonoBehaviour
 
     public void spawnRectangle(){
         if(infantryToggle.isOn){
-            spawnEntitiesRectangular(infantryPrefab, "Infantry");
+            spawnEntitiesRectangular(infantryPrefab, defaultInfantryObject);
         }
         else if(pikeToggle.isOn){
             //spawnEntitiesRectangular(pike);
@@ -50,7 +51,7 @@ public class EntitySpawning : MonoBehaviour
 
     public void spawnTriangle(){
         if(infantryToggle.isOn){
-            spawnEntitiesTriangular(infantryPrefab, "Infantry");
+            spawnEntitiesTriangular(infantryPrefab, defaultInfantryObject);
         }
         else if(pikeToggle.isOn){
             //spawnEntitiesTriangular(pike);
@@ -59,7 +60,7 @@ public class EntitySpawning : MonoBehaviour
             //spawnEntitiesTriangular(archer);
         }
     }
-    public void spawnEntitiesCircular(FlockAgent agentPrefab, string unitType){
+    public void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
             Vector3 worldPos;
@@ -89,7 +90,7 @@ public class EntitySpawning : MonoBehaviour
             }
     }
 
-    public void spawnEntitiesRectangular(FlockAgent agentPrefab, string unitType){
+    public void spawnEntitiesRectangular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
@@ -117,7 +118,7 @@ public class EntitySpawning : MonoBehaviour
         }
     }
 
-    public void spawnEntitiesTriangular(FlockAgent agentPrefab, string unitType){
+    public void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
 
         if (Input.GetKey("space"))

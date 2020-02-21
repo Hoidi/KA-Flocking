@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be15c3b0079c7b7c6afe31228968f02d, type: 3}
   m_Name: Infantry
   m_EditorClassIdentifier: 
-  filter: {fileID: 0}
+  attackFilter: {fileID: 0}
   health: 100
   damage: 2
-  range: 8
+  reachMultiplier: 1
