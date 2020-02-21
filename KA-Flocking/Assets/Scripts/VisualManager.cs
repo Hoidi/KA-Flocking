@@ -37,7 +37,7 @@ public class VisualManager: MonoBehaviour
 
     private void Update()
     {
-        updateChunks();
+        //updateChunks();
     }
 
     //Updates the values for all the chunks. 
