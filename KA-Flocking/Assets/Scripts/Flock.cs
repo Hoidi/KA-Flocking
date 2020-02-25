@@ -42,7 +42,11 @@ public class Flock : MonoBehaviour
             CreateUnit(
                 agentPrefab,
                 location,
+<<<<<<< HEAD
                 Quaternion.Euler((Vector3.up * Random.Range(0f, 360f))),
+=======
+                Quaternion.Euler((Vector3.up * Random.Range(0f,360f))),
+>>>>>>> master
                 defaultInfantryObject
             );
 
@@ -86,8 +90,7 @@ public class Flock : MonoBehaviour
     }
 
     // The preferred way to create an agent
-    public void CreateUnit(FlockAgent prefab, Vector3 location, Quaternion rotation, Unit unitType)
-    {
+    public void CreateUnit(FlockAgent prefab, Vector3 location, Quaternion rotation, Unit unitType) {
         FlockAgent newAgent = Instantiate(
             prefab,   // The prefab of the new agent, should correspond to the unitType
             location, // The location of the new agent
