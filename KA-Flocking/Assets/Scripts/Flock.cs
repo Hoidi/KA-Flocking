@@ -33,24 +33,6 @@ public class Flock : MonoBehaviour
         squareMaxSpeed = maxSpeed * maxSpeed;
         squareNeighbourRadius = neighbourRadius * neighbourRadius;
         squareAvoidanceRadius = avoidanceRadiusMultiplier * avoidanceRadiusMultiplier * squareNeighbourRadius;
-
-        /*for (int i = 0; i < startingAmount; i++)
-        {
-            Vector3 location = Random.insideUnitSphere * startingAmount;
-            location.y = 0;
-
-            CreateUnit(
-                agentPrefab,
-                location,
-<<<<<<< HEAD
-                Quaternion.Euler((Vector3.up * Random.Range(0f, 360f))),
-=======
-                Quaternion.Euler((Vector3.up * Random.Range(0f,360f))),
->>>>>>> master
-                defaultInfantryObject
-            );
-
-        }*/
     }
 
     // Update is called once per frame
