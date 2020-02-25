@@ -10,42 +10,29 @@ public class Flock : MonoBehaviour
     // The lists of agent. Should only be modified via AddUnit and RemoveUnit
     private List<FlockAgent> _agents = new List<FlockAgent>();
     // Public Read Only reference to the agent list. 
-    public IList<FlockAgent> agents {get { return _agents.AsReadOnly(); } }
+    public IList<FlockAgent> agents { get { return _agents.AsReadOnly(); } }
     public Unit defaultInfantryObject;
     private HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
     public FlockBehaviour behaviour;
-    [Range(10,1000)]
+    [Range(10, 1000)]
     public int startingAmount = 50;
-    [Range(1f,100f)]
+    [Range(1f, 100f)]
     public float driveFactor = 10f;
-    [Range(1f,100f)]
+    [Range(1f, 100f)]
     public float maxSpeed = 5f;
-    [Range(1f,50f)]
+    [Range(1f, 50f)]
     public float neighbourRadius = 1.5f;
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
 
-    float squareMaxSpeed,squareNeighbourRadius,squareAvoidanceRadius;
-    public float SquareAvoidanceRadius {get {return squareAvoidanceRadius;}}
+    float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
+    public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
     // Start is called before the first frame update
     void Start()
     {
         squareMaxSpeed = maxSpeed * maxSpeed;
         squareNeighbourRadius = neighbourRadius * neighbourRadius;
         squareAvoidanceRadius = avoidanceRadiusMultiplier * avoidanceRadiusMultiplier * squareNeighbourRadius;
-
-        for (int i = 0; i < startingAmount; i++) {
-            Vector3 location = Random.insideUnitSphere * startingAmount;
-            location.y = 0;
-
-            CreateUnit(
-                agentPrefab,
-                location,
-                Quaternion.Euler((Vector3.up * Random.Range(0f,360f))),
-                defaultInfantryObject
-            );
-            
-        }
     }
 
     // Update is called once per frame
@@ -58,7 +45,8 @@ public class Flock : MonoBehaviour
 
             Vector3 move = behaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
-            if (move.sqrMagnitude > squareMaxSpeed) {
+            if (move.sqrMagnitude > squareMaxSpeed)
+            {
                 move = move.normalized * maxSpeed;
             }
             agent.Move(move);
@@ -68,13 +56,15 @@ public class Flock : MonoBehaviour
     }
 
     // Returns a list of all nearby collider's transforms with the tag "Player"
-    List<Transform> GetNearbyObjects(FlockAgent agent) {
+    List<Transform> GetNearbyObjects(FlockAgent agent)
+    {
         List<Transform> context = new List<Transform>();
         Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius);
 
         foreach (Collider c in contextColliders)
         {
-            if (c != agent.AgentCollider && c.CompareTag("Player")) {
+            if (c != agent.AgentCollider && c.CompareTag("Player"))
+            {
                 context.Add(c.transform);
             }
         }
@@ -99,13 +89,15 @@ public class Flock : MonoBehaviour
 
     // Adds the agent to the dead units, this will disable them at the end of the update()
     // Threadsafe and is the only way that an agent should be removed
-    public void RemoveUnit(FlockAgent agent) {
+    public void RemoveUnit(FlockAgent agent)
+    {
         deadUnits.Add(agent);
     }
 
     // Removes all agents from the flock that are in the list deadUnits. Mainly for threadsafety
     // Note: This can be effectivised by clearing the deadUnits list after function call.
-    private void RemoveUnitsFromFlock() {
+    private void RemoveUnitsFromFlock()
+    {
         _agents.RemoveAll(deadUnits.Contains);
     }
 }

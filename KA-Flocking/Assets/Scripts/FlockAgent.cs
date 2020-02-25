@@ -13,7 +13,7 @@ public class FlockAgent : MonoBehaviour
 
     Collider agentCollider;
     Rigidbody rb;
-    public Collider AgentCollider { get {return agentCollider;} }
+    public Collider AgentCollider { get { return agentCollider; } }
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +37,8 @@ public class FlockAgent : MonoBehaviour
         unit = Instantiate(unitType);
     }
 
-    void FixedUpdate () {
+    void FixedUpdate()
+    {
         Vector3 predictedUp = Quaternion.AngleAxis(
             rb.angularVelocity.magnitude * Mathf.Rad2Deg * stability / stabilisationSpeed,
             rb.angularVelocity

@@ -63,6 +63,7 @@ public class EntitySpawning : MonoBehaviour
             //spawnEntitiesTriangular(archer);
         }
     }
+
     public void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetKey("space"))
@@ -85,7 +86,7 @@ public class EntitySpawning : MonoBehaviour
                 Vector3 location = Random.insideUnitSphere * amountOfTroops * 0.7f;
                 location.y = 0;
                 flock.CreateUnit(
-                    agentPrefab, 
+                    agentPrefab,
                     worldPos + location,
                     Quaternion.Euler(Vector3.up),
                     unitType
@@ -93,7 +94,6 @@ public class EntitySpawning : MonoBehaviour
             }
         }
     }
-
     public void spawnEntitiesRectangular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
 
@@ -111,6 +111,7 @@ public class EntitySpawning : MonoBehaviour
                 worldPos = cam.ScreenToWorldPoint(mousePos);
                 worldPos.y += 1f; //make sure they dont fall through the ground
             }
+
             for (int i = 0; i < amountOfTroops; i++) {
                 flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
@@ -123,7 +124,6 @@ public class EntitySpawning : MonoBehaviour
         }
 
     }
-
     public void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
 
@@ -158,7 +158,7 @@ public class EntitySpawning : MonoBehaviour
                 );
                 switchSide *= -1;
             }
-        }  
+        }
     }
 
 }

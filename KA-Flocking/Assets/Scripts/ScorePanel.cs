@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 public class ScorePanel : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Text infantryNoText;
-    public Flock flock;
+    public string teamFlockName;
+    private Flock flock;
+
+    void Start() {
+        flock = GameObject.Find(teamFlockName).GetComponent<Flock>();
+    }
 
     // Update is called once per frame
     void Update()
