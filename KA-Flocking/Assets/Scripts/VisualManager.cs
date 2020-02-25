@@ -25,7 +25,7 @@ public class VisualManager : MonoBehaviour
     void Start()
     {
         //generates the chunks 
-        seed = Random.Range(0, 1000);
+        seed = Random.Range(0, 10000);
         chunks = new Chunk[chunksX, chunksZ];
         for (int x = 0; x < chunksX; x++)
         {
