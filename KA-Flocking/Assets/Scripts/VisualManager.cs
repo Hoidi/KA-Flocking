@@ -25,16 +25,18 @@ public class VisualManager : MonoBehaviour
     void Start()
     {
         //generates the chunks 
+        seed = Random.Range(0, 10000);
         chunks = new Chunk[chunksX, chunksZ];
         for (int x = 0; x < chunksX; x++)
         {
             for (int z = 0; z < chunksZ; z++)
             {
-                GameObject MH = Instantiate(meshHandler, new Vector3(x * chunkSize, 0, z * chunkSize), Quaternion.identity);
+                GameObject MH = Instantiate(meshHandler, new Vector3(x * chunkSize, 0, z * chunkSize), Quaternion.identity, transform);
                 chunks[x, z] = MH.GetComponent<Chunk>();
             }
         }
         updateChunks();
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
