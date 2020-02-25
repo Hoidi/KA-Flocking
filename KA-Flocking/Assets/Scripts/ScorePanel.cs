@@ -12,6 +12,6 @@ public class ScorePanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        infantryNoText.text = flock.agents.Count.ToString();
+        infantryNoText.text = DontDestroy.agents.Count.ToString();
     }
 }
