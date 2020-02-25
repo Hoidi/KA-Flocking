@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cf757bdd2943151a9b3c48182551a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
+  agentPrefab: {fileID: -3617908639792016736, guid: 02c316c337429db48bfd05d9da4019bc,
     type: 3}
   defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
     type: 2}
@@ -747,7 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cf757bdd2943151a9b3c48182551a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentPrefab: {fileID: 3383208492696923475, guid: 4074e581115925348a08849a46e1b704,
+  agentPrefab: {fileID: 2185900543212254752, guid: 108c9165f7b559c41919cbd9de40a4cd,
     type: 3}
   defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
     type: 2}
@@ -999,7 +999,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 6.05e-43, y: -2.5824222e-15, z: 6.04e-43, w: 3878.9658}
+  m_BoundingSphereOverride: {x: 5.6e-43, y: 4.880092e-10, z: 5.6e-43, w: 5.8163785e-10}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -4357,7 +4357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flock: {fileID: 437747586}
-  infantryPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
+  infantryPrefab: {fileID: -3617908639792016736, guid: 02c316c337429db48bfd05d9da4019bc,
     type: 3}
   defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
     type: 2}
