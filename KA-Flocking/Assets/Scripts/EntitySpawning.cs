@@ -69,20 +69,20 @@ public class EntitySpawning : MonoBehaviour
         if (Input.GetKey("space"))
         { //shortcut to place units, prone to change(?)
             Vector3 worldPos;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition); //raytracing towards mouse cursor from camera
+            if (Physics.Raycast(ray, out collisionWithPlane, 100f))
+            { //raytracing collided with something
+                worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
+                worldPos.y += 1f; //make sure they dont fall through the ground
+            }
+            else
+            { //no collision
+                worldPos = cam.ScreenToWorldPoint(mousePos);
+                worldPos.y += 1f; //make sure they dont fall through the ground
+            }
+
             for (int i = 0; i < amountOfTroops; i++)
             {
-                if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out collisionWithPlane, 100f))
-                { //raytracing collided with something
-                    worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
-                    worldPos.y += 1f; //make sure they dont fall through the ground
-                }
-                else
-                { //no collision
-                    worldPos = cam.ScreenToWorldPoint(mousePos);
-                    worldPos.y += 1f; //make sure they dont fall through the ground
-                }
-
-            
                 Vector3 location = Random.insideUnitSphere * amountOfTroops * 0.7f;
                 location.y = 0;
                 flock.CreateUnit(
@@ -100,10 +100,8 @@ public class EntitySpawning : MonoBehaviour
         if (Input.GetKey("space"))
         { //shortcut to place units, prone to change(?)
             Vector3 worldPos;
-            for (int i = 0; i < amountOfTroops; i++)
-            {
-                // Ray ray =  raytracing towards mouse cursor from camera
-            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out collisionWithPlane, 100f))
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition); //raytracing towards mouse cursor from camera
+            if (Physics.Raycast(ray, out collisionWithPlane, 100f))
             { //raytracing collided with something
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
                 worldPos.y += 1f; //make sure they dont fall through the ground
@@ -114,7 +112,7 @@ public class EntitySpawning : MonoBehaviour
                 worldPos.y += 1f; //make sure they dont fall through the ground
             }
 
-            
+            for (int i = 0; i < amountOfTroops; i++) {
                 flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
                     new Vector3(worldPos.x + 3 * (i % 5), worldPos.y, worldPos.z + 3 * Mathf.CeilToInt(i / 5)),
@@ -152,16 +150,6 @@ public class EntitySpawning : MonoBehaviour
             int switchSide = 1; //variable to make spawning on each "side" of triangle shape possible..
             for (int i = 1; i < amountOfTroops; i++)
             {
-                if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out collisionWithPlane, 100f))
-                { //raytracing collided with something
-                    worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
-                    worldPos.y += 1f; //make sure they dont fall through the ground
-                }
-                else
-                { //no collision
-                    worldPos = cam.ScreenToWorldPoint(mousePos);
-                    worldPos.y += 1f; //make sure they dont fall through the ground
-                }
                 flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
                     new Vector3(worldPos.x + (2 * i * switchSide), worldPos.y, worldPos.z - (2 * i)),
