@@ -29,6 +29,8 @@ public class FlockAgent : MonoBehaviour
         {
             transform.forward = velocity;
         }
+
+      
     }
 
     public void Initialize(Flock flock, Unit unitType)

@@ -382,15 +382,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cf757bdd2943151a9b3c48182551a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
+  agentPrefab: {fileID: -3617908639792016736, guid: 02c316c337429db48bfd05d9da4019bc,
     type: 3}
   defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
     type: 2}
   behaviour: {fileID: 11400000, guid: 9233c2d20ecbd71f2800056d025ed7a0, type: 2}
   startingAmount: 10
   driveFactor: 10
-  maxSpeed: 5
-  neighbourRadius: 8
+  maxSpeed: 3
+  neighbourRadius: 2
   avoidanceRadiusMultiplier: 0.5
 --- !u!4 &437747587
 Transform:
@@ -948,7 +948,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.717e-42, y: 1.01e-43, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 6.2e-43, y: -2.23912e-26, z: 4.5905e-41, w: -2.2389894e-26}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2814,10 +2814,10 @@ RectTransform:
   m_Father: {fileID: 1386158813}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.91, y: 0.42626074}
-  m_AnchorMax: {x: 0.99000007, y: 0.514}
-  m_AnchoredPosition: {x: 0, y: -165}
-  m_SizeDelta: {x: 96, y: 40}
+  m_AnchorMin: {x: 0.91, y: 0}
+  m_AnchorMax: {x: 0.99000007, y: 0.11032058}
+  m_AnchoredPosition: {x: 0, y: 1.6000061}
+  m_SizeDelta: {x: 96, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1336722952
 MonoBehaviour:
@@ -4472,7 +4472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flock: {fileID: 437747586}
-  infantryPrefab: {fileID: 3383208492696923475, guid: 010522ff6a9240565a79195a759c6d8f,
+  infantryPrefab: {fileID: -3617908639792016736, guid: 02c316c337429db48bfd05d9da4019bc,
     type: 3}
   defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
     type: 2}
