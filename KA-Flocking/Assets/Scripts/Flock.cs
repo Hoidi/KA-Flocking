@@ -34,7 +34,7 @@ public class Flock : MonoBehaviour
         squareNeighbourRadius = neighbourRadius * neighbourRadius;
         squareAvoidanceRadius = avoidanceRadiusMultiplier * avoidanceRadiusMultiplier * squareNeighbourRadius;
 
-        for (int i = 0; i < startingAmount; i++)
+        /*for (int i = 0; i < startingAmount; i++)
         {
             Vector3 location = Random.insideUnitSphere * startingAmount;
             location.y = 0;
@@ -46,7 +46,7 @@ public class Flock : MonoBehaviour
                 defaultInfantryObject
             );
 
-        }
+        }*/
     }
 
     // Update is called once per frame

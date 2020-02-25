@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
-    public static List<FlockAgent> agents;
-    public static List<FlockAgent> agents2;
+    public static Flock flock1;
+    public static Flock flock2;
     void Start()
     {
-        DontDestroy.agents = GameObject.Find("Team 1 Flock").GetComponent<List<FlockAgent>>();
-        DontDestroy.agents2 = GameObject.Find("Team 2 Flock").GetComponent<List<FlockAgent>>();
+        if (flock1 == null) {
+            flock1 = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
+        } else if (flock2 == null) {
+            flock2 = GameObject.Find("Team 2 Flock").GetComponent<Flock>();
+        }
         //Debug.Log(agents2.Count);
-        //DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);
     }
 }
