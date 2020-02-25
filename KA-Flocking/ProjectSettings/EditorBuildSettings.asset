@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 688f7ede37eaf9d458d3a11c59fb1853
   - enabled: 1
+    path: Assets/Scenes/PlayerOneSetupScene.unity
+    guid: e946ed30dc66a2c4fa560cb5e7c3869a
+  - enabled: 1
+    path: Assets/Scenes/PlayerTwoSetupScene.unity
+    guid: 8dbd5c4c62db57546bf48f76d94da1e0
+  - enabled: 1
     path: Assets/Scenes/FlockScene.unity
     guid: 8affcb54fc3ebd549809f2c04e3eb28a
   - enabled: 1

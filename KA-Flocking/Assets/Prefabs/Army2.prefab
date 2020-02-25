@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3383208492696923474}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 3346288672938658544}
   m_Father: {fileID: 0}
@@ -89,7 +89,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
       propertyPath: m_Name
-      value: Plane1_S3
+      value: Army2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
       propertyPath: m_LocalPosition.x
