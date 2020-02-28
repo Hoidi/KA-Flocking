@@ -99,5 +99,18 @@ public class Flock : MonoBehaviour
     private void RemoveUnitsFromFlock()
     {
         _agents.RemoveAll(deadUnits.Contains);
+        foreach (FlockAgent deadUnit in deadUnits){ //for testing purposes, until we know what to do with dead units
+            StartCoroutine(oneSecDelay()); //delay for 5 secs
+            deadUnit.gameObject.SetActive(false); //make dead people invisible 1 second after dying
+
+
+        }
+        
+    }
+    IEnumerator oneSecDelay(){ //delay for 5 seconds
+
+        yield return new WaitForSeconds(5);
+
     }
 }
+
