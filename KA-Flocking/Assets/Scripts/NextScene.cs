@@ -9,4 +9,8 @@ public class NextScene : MonoBehaviour
     public void nextScene() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
+    public void restartGame() {
+        SceneManager.LoadScene(0);
+    }
 }

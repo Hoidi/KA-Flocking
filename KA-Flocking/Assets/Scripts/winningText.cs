@@ -11,6 +11,6 @@ public class winningText : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        winText.text = ("Best team won!");
+        winText.text = ScorePanel.winningText;
     }
 }
