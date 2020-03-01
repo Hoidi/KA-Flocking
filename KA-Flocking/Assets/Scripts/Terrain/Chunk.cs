@@ -5,17 +5,16 @@
 
 //The chunk class hold the mesh for a chunk. 
 //Large portions of the code was created thorugh following the turtorials of the two youtubers Sebastian Lague and Brackeys. 
-public class Chunk : MonoBehaviour
+public abstract class Chunk : MonoBehaviour
 {
-    private Mesh mesh;
+    protected Mesh mesh;
 
-    private Vector3[] vertices;
-    private int[] triangles;
-    private Color[] colors;
+    protected Vector3[] vertices;
+    protected int[] triangles;
 
     //for recording the min and max hight.
-    private float localMaxHeight = float.MinValue;
-    private float localMinHeight = float.MaxValue;
+    protected float localMaxHeight = float.MinValue;
+    protected float localMinHeight = float.MaxValue;
 
     public int resolution = 1;
     public int xSize = 20;
@@ -34,15 +33,11 @@ public class Chunk : MonoBehaviour
     public float colorMin;
     public float colorMax;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //updateChunk(minHeight, maxHeight);
-    }
+    //updated the colors
+    protected abstract void updateColors();
 
     //Creates a new mesh based on the public varables. 
-    void CreateShape()
+    protected void CreateShape()
     {
         //Makes sure that values are not out of bounds.
         if (octaves < 0)
@@ -129,6 +124,7 @@ public class Chunk : MonoBehaviour
                 triangles[4 + tris] = vert + adjustedXSize + 1;
                 triangles[5 + tris] = vert + adjustedXSize + 2;
 
+
                 vert++;
                 tris += 6;
             }
@@ -136,21 +132,7 @@ public class Chunk : MonoBehaviour
         }
     }
 
-    void updateMesh()
-    {
-        mesh.Clear();
-
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.colors = colors;
-
-        //makes sure that lighting is good.
-        mesh.RecalculateNormals();
-
-        GetComponent<MeshCollider>().sharedMesh = mesh;
-    }
-
-    void renormaliseHeight(float minHeight, float maxHeight)
+    protected void renormaliseHeight(float minHeight, float maxHeight)
     {
         //renomalizes the height values to be between 1 and -1 and multipiles with the wanted height. 
         for (int i = 0; i < vertices.Length; i++)
@@ -158,26 +140,18 @@ public class Chunk : MonoBehaviour
             vertices[i].y = Mathf.InverseLerp(minHeight, maxHeight, vertices[i].y) * height;
         }
     }
-
-    void updateColors()
-    {
-        //sets the colors of the mesh from a gradiant depending on the height.
-        colors = new Color[vertices.Length];
-        for (int i = 0; i < colors.Length; i++)
-        {
-            //float adjustedHeight = Mathf.InverseLerp(minHeight * height, maxHeight * height, vertices[i].y);
-            float adjustedHeight = Mathf.InverseLerp(colorMin, colorMax, vertices[i].y);
-            colors[i] = gradient.Evaluate(adjustedHeight);
-        }
-    }
     public void updateChunk(float minHeight, float maxHeight)
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
+        mesh.Clear();
         CreateShape();
         renormaliseHeight(minHeight, maxHeight);
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
         updateColors();
-        updateMesh();
+        mesh.RecalculateNormals();  //makes sure that lighting is good.
+        GetComponent<MeshCollider>().sharedMesh = mesh;  // updates the mesh in Unity.
     }
 
     public float getMaxHeight()

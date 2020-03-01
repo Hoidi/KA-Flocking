@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class VisualManager : MonoBehaviour
+public class ChunkManager : MonoBehaviour
 {
     Chunk[,] chunks;
     public int chunksX = 0;
@@ -21,7 +21,7 @@ public class VisualManager : MonoBehaviour
     public int octaves = 1;
 
 
-    public GameObject meshHandler;
+    public GameObject chunkType;
     void Start()
     {
         //generates the chunks 
@@ -31,7 +31,7 @@ public class VisualManager : MonoBehaviour
         {
             for (int z = 0; z < chunksZ; z++)
             {
-                GameObject MH = Instantiate(meshHandler, new Vector3(x * chunkSize, 0, z * chunkSize), Quaternion.identity, transform);
+                GameObject MH = Instantiate(chunkType, new Vector3(x * chunkSize, 0, z * chunkSize), Quaternion.identity, transform);
                 chunks[x, z] = MH.GetComponent<Chunk>();
             }
         }
@@ -56,6 +56,9 @@ public class VisualManager : MonoBehaviour
             {
                 chunks[x, z].offsetX = x * chunkSize;
                 chunks[x, z].offsetZ = z * chunkSize;
+
+                chunks[x, z].xSize = chunkSize;
+                chunks[x, z].zSize = chunkSize;
 
                 chunks[x, z].height = height;
                 chunks[x, z].scale = scale;
