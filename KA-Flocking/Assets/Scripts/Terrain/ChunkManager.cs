@@ -11,6 +11,9 @@ public class ChunkManager : MonoBehaviour
     public int resolution = 1;
     [Range(0, 20)]
     public float height = 1;
+    [Range(0, 2)]
+    public float pointyness = 1;
+    public float pointyBreakOff = 0;
     public float scale = 1;
     public int seed = 0;
 
@@ -61,6 +64,8 @@ public class ChunkManager : MonoBehaviour
                 chunks[x, z].zSize = chunkSize;
 
                 chunks[x, z].height = height;
+                chunks[x, z].pointyness = pointyness;
+                chunks[x, z].pointyBreakOff = pointyBreakOff;
                 chunks[x, z].scale = scale;
                 chunks[x, z].resolution = resolution;
                 chunks[x, z].seed = seed;

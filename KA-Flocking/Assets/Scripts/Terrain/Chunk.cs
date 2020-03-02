@@ -21,6 +21,8 @@ public abstract class Chunk : MonoBehaviour
     public int zSize = 20;
     public int octaves = 1;
     public float height = 0.3f;
+    public float pointyness = 1;
+    public float pointyBreakOff = 0;
     public float scale = 0.3f;
     [Range(0, 1)]
     public float percistance = 0.5f;
@@ -137,6 +139,11 @@ public abstract class Chunk : MonoBehaviour
         for (int i = 0; i < vertices.Length; i++)
         {
             vertices[i].y = Mathf.InverseLerp(minHeight, maxHeight, vertices[i].y) * height;
+            if (vertices[i].y > pointyBreakOff)
+            {
+                vertices[i].y *= Mathf.Pow(pointyness, vertices[i].y - pointyBreakOff);
+
+            }
         }
     }
     public void updateChunk(float minHeight, float maxHeight)
