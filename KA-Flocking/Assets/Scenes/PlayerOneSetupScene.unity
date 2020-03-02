@@ -2710,7 +2710,7 @@ PrefabInstance:
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: resolution
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
@@ -2722,6 +2722,12 @@ PrefabInstance:
       propertyPath: chunkSize
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
+        type: 3}
+      propertyPath: chunkType
+      value: 
+      objectReference: {fileID: 7884630620193990466, guid: 48e671da11155bb47bd9639f37316f9a,
+        type: 3}
     - target: {fileID: 2707572346282673837, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: m_LocalPosition.x

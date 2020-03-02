@@ -7,8 +7,13 @@ public class TextureGenerator
     public static Texture2D TextureFromColorMap(Color[] colors, int width, int height)
     {
         Texture2D texture = new Texture2D(width, height);
+        texture.filterMode = FilterMode.Point;
+        texture.wrapMode = TextureWrapMode.Clamp;
         texture.SetPixels(colors);
         texture.Apply();
+        //byte[] _bytes = texture.EncodeToPNG();
+        //string _fullPath = "Assets/Images/pic.png";
+        //System.IO.File.WriteAllBytes(_fullPath, _bytes);
         return texture;
     }
 
@@ -18,11 +23,13 @@ public class TextureGenerator
         int height = heightMap.GetLength(1);
 
         Color[] colors = new Color[width * height];
-        for(int y = 0; y < height; y++)
+        for(int z = 0; z < height; z++)
         {
             for (int x = 0; x<width; x++)
             {
-                colors[y * width * x] = Color.Lerp(Color.black, Color.white, heightMap[x, y]);
+                colors[z * width + x] = Color.Lerp(Color.white, Color.black, heightMap[x, z]);
+                //Debug.Log(heightMap[x, z].ToString());
+
             }
         }
         return TextureFromColorMap(colors, width, height);

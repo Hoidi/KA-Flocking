@@ -87,7 +87,6 @@ public abstract class Chunk : MonoBehaviour
                 {
                     float sampleX = ((x + adjstedOffsetX) * frequency * adjustedScale + octaveOffsetsX[j]);
                     float sampleZ = ((z + adjustedOffsetZ) * frequency * adjustedScale + octaveOffsetsZ[j]);
-
                     float perlinValue = Mathf.PerlinNoise(sampleX, sampleZ) * 2f - 1f;
                     y += perlinValue * amplitude;
 
