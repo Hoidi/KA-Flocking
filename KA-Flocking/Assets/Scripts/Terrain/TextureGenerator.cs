@@ -12,9 +12,6 @@ public class TextureGenerator
         texture.wrapMode = TextureWrapMode.Clamp;
         texture.SetPixels(colors);
         texture.Apply();
-        //byte[] _bytes = texture.EncodeToPNG();
-        //string _fullPath = "Assets/Images/pic.png";
-        //System.IO.File.WriteAllBytes(_fullPath, _bytes);
         return texture;
     }
 
@@ -30,7 +27,6 @@ public class TextureGenerator
             {
                 colors[z * width + x] = Color.Lerp(Color.white, Color.black, heightMap[x, z]); 
                 colors[z * width + x] = gradient.Evaluate(heightMap[x, z]);
-                //Debug.Log(heightMap[x, z].ToString());
 
             }
         }

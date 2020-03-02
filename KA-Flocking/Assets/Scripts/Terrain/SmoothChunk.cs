@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//A chunk with vertice colors which makes it look smooth. 
 public class SmoothChunk : Chunk
 {
     protected Color[] colors;

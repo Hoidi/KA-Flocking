@@ -34,7 +34,7 @@ public class ChunkManager : MonoBehaviour
         {
             for (int z = 0; z < chunksZ; z++)
             {
-                GameObject MH = Instantiate(chunkType, new Vector3(x * chunkSize, 0, z * chunkSize), Quaternion.identity, transform);
+                GameObject MH = Instantiate(chunkType, new Vector3(x * chunkSize - (chunksX * chunkSize)/2, 0, z * chunkSize - (chunksZ * chunkSize)/2), Quaternion.identity, transform);
                 chunks[x, z] = MH.GetComponent<Chunk>();
             }
         }
