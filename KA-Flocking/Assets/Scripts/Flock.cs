@@ -99,5 +99,10 @@ public class Flock : MonoBehaviour
     private void RemoveUnitsFromFlock()
     {
         _agents.RemoveAll(deadUnits.Contains);
+        foreach (FlockAgent deadUnit in deadUnits){ //for testing purposes, until we know what to do with dead units
+            deadUnit.gameObject.SetActive(false); //make dead troops invisible
+        }
+        
     }
 }
+

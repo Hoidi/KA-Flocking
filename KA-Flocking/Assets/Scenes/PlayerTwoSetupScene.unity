@@ -363,7 +363,6 @@ GameObject:
   - component: {fileID: 447764071}
   - component: {fileID: 447764074}
   - component: {fileID: 447764073}
-  - component: {fileID: 447764072}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -385,18 +384,6 @@ Transform:
   m_Father: {fileID: 1146196244}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 28.071001, y: 90.809006, z: 0.048}
---- !u!114 &447764072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 447764070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 895b344ecc32c6649bedabf8d6697c50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &447764073
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1138,6 +1125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infantryNoText: {fileID: 422496239}
   teamFlockName: 
+  next: {fileID: 0}
 --- !u!1 &793660877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,6 +1903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   infantryNoText: {fileID: 942863195}
   teamFlockName: 
+  next: {fileID: 0}
 --- !u!1 &1011148867
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,8 +2173,8 @@ MonoBehaviour:
   slowSpeed: 12
   fastSpeed: 40
   rotateSpeed: 100
-  minBounds: {x: 0, y: 5}
-  maxBounds: {x: 150, y: 151}
+  minBounds: {x: 0, y: 20.833334}
+  maxBounds: {x: 625, y: 629.1667}
   zoomSpeed: 20
   nearZoomLimit: 2
   farZoomLimit: 100
