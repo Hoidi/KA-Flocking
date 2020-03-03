@@ -53,5 +53,5 @@ MonoBehaviour:
   percistance: 0.5
   lacunarity: 2
   octaves: 1
-  meshHandler: {fileID: 7884630620193990466, guid: 420ebdbe1809ab74f9cb739feacfae7b,
+  chunkType: {fileID: 7884630620193990466, guid: 420ebdbe1809ab74f9cb739feacfae7b,
     type: 3}

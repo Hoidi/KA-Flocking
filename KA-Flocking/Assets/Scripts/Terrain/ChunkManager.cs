@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class VisualManager : MonoBehaviour
+public class ChunkManager : MonoBehaviour
 {
     Chunk[,] chunks;
     public int chunksX = 0;
@@ -11,6 +11,9 @@ public class VisualManager : MonoBehaviour
     public int resolution = 1;
     [Range(0, 20)]
     public float height = 1;
+    [Range(0, 2)]
+    public float pointyness = 1;
+    public float pointyBreakOff = 0;
     public float scale = 1;
     public int seed = 0;
 
@@ -21,7 +24,7 @@ public class VisualManager : MonoBehaviour
     public int octaves = 1;
 
 
-    public GameObject meshHandler;
+    public GameObject chunkType;
     void Start()
     {
         //generates the chunks 
@@ -31,7 +34,7 @@ public class VisualManager : MonoBehaviour
         {
             for (int z = 0; z < chunksZ; z++)
             {
-                GameObject MH = Instantiate(meshHandler, new Vector3(x * chunkSize, 0, z * chunkSize), Quaternion.identity, transform);
+                GameObject MH = Instantiate(chunkType, new Vector3(x * chunkSize - (chunksX * chunkSize)/2, 0, z * chunkSize - (chunksZ * chunkSize)/2), Quaternion.identity, transform);
                 chunks[x, z] = MH.GetComponent<Chunk>();
             }
         }
@@ -57,7 +60,12 @@ public class VisualManager : MonoBehaviour
                 chunks[x, z].offsetX = x * chunkSize;
                 chunks[x, z].offsetZ = z * chunkSize;
 
+                chunks[x, z].xSize = chunkSize;
+                chunks[x, z].zSize = chunkSize;
+
                 chunks[x, z].height = height;
+                chunks[x, z].pointyness = pointyness;
+                chunks[x, z].pointyBreakOff = pointyBreakOff;
                 chunks[x, z].scale = scale;
                 chunks[x, z].resolution = resolution;
                 chunks[x, z].seed = seed;
