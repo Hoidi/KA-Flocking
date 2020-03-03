@@ -21,17 +21,14 @@ public class FightOrFlightBehaviour : FlockBehaviour
 
         if (enemiesStrength > friendsStrength)
         {
-            //Debug.Log("Im running away");
             return enemiesDirection.normalized * -1;
         }
         else
         {
-            //Debug.Log("Im attacking!!!");
             return enemiesDirection.normalized;
         }
     }
 
-    //stolen from cohension class
     public  void calculateDirections(FlockAgent agent, List<Transform> context, Flock flock)
     {
         Vector3 cohesionMove = Vector3.zero;
@@ -73,21 +70,5 @@ public class FightOrFlightBehaviour : FlockBehaviour
             enemiesDirection /= enemies;
             enemiesDirection -= agent.transform.position;
         }
-    }
-
-    //stolen from filter class 
-    public List<Transform> filter(FlockAgent agent, List<Transform> original,bool friends)
-    {
-        List<Transform> filtered = new List<Transform>();
-        foreach (var item in original)
-        {
-            FlockAgent itemAgent = item.GetComponent<FlockAgent>();
-            if (itemAgent != null && ((itemAgent.AgentFlock == agent.AgentFlock && friends )||
-                (itemAgent.AgentFlock != agent.AgentFlock && !friends)))
-            {
-                filtered.Add(itemAgent.transform);
-            }
-        }
-        return filtered;
     }
 }
