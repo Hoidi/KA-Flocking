@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7884630620193990495}
   - component: {fileID: 3436063889873236061}
   m_Layer: 0
-  m_Name: CartoonChunk
+  m_Name: PixelatedChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +112,8 @@ MonoBehaviour:
   zSize: 20
   octaves: 3
   height: 0.3
+  pointyness: 1
+  pointyBreakOff: 0
   scale: 0.3
   percistance: 0.5
   lacunarity: 5

@@ -5,53 +5,74 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Flock/Behaviour/FightOrFlight")]
 public class FightOrFlightBehaviour : FlockBehaviour
 {
-    //SteeredCohesionBehaviour friendlyCohesionBehaviour = CreateInstance<SteeredCohesionBehaviour>();
-    //SteeredCohesionBehaviour enemyCohesionBehaviour = CreateInstance<SteeredCohesionBehaviour>();
+    Vector3 enemiesDirection = Vector3.zero;
+    Vector3 friendsDirection = Vector3.zero;
+
+    float enemiesStrength = 0f;
+    float friendsStrength = 0f;
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
-        //enemyCohesionBehaviour.filter= CreateInstance<OtherFlockFilter>();
-        //friendlyCohesionBehaviour.filter = CreateInstance<SameFlockFilter>();
         if (context.Count == 0)
         {
             return Vector3.zero;
         }
-        //Vector3 enemyVector = enemyCohesionBehaviour.CalculateMove(agent, context, flock);
-        //Vector3 friendlyVector = friendlyCohesionBehaviour.CalculateMove(agent, context, flock);
-        Vector3 friendlyVector = calculateDirection(agent, context, flock, false);
-        Vector3 enemyVector = calculateDirection(agent, context, flock, true);
 
-        if (enemyVector.magnitude > friendlyVector.magnitude)
+        calculateDirections(agent, context, flock);
+
+        if (enemiesStrength > friendsStrength)
         {
-            Debug.Log("Im running away");
-            return enemyVector * -10;
+            //Debug.Log("Im running away");
+            return enemiesDirection.normalized * -1;
         }
         else
         {
-            Debug.Log("Im attacking!!!");
-            return enemyVector;
+            //Debug.Log("Im attacking!!!");
+            return enemiesDirection.normalized;
         }
     }
 
     //stolen from cohension class
-    public  Vector3 calculateDirection(FlockAgent agent, List<Transform> context, Flock flock, bool friend)
+    public  void calculateDirections(FlockAgent agent, List<Transform> context, Flock flock)
     {
-        if (context.Count == 0)
-        {
-            return Vector3.zero;
-        }
-
         Vector3 cohesionMove = Vector3.zero;
+        friendsDirection = Vector3.zero;
+        enemiesDirection = Vector3.zero;
+        friendsStrength = 0f;
+        enemiesStrength = 0f;
+
+        int enemies = 0, friends = 0;
 
         float distanceSqr;
-        List<Transform> filteredContext = filter(agent, context, friend);  
-        foreach (Transform item in filteredContext)
+        foreach (Transform item in context)
         {
-            distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
-            cohesionMove += item.position / distanceSqr;
+            FlockAgent itemAgent = item.GetComponent<FlockAgent>();
+            if (itemAgent != null)
+            {
+                distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
+                if (itemAgent.AgentFlock == agent.AgentFlock)
+                {
+                    friendsDirection += item.position / distanceSqr;
+                    friendsStrength += 1f / distanceSqr;
+                    friends++;
+                }
+                else
+                {
+                    enemiesDirection += item.position / distanceSqr;
+                    enemiesStrength += 1f / distanceSqr;
+                    enemies++;
+                }
+            }
         }
-        cohesionMove /= context.Count;
-        cohesionMove -= agent.transform.position;
-        return cohesionMove;
+        if(friends != 0)
+        {
+            friendsDirection /= friends;
+            friendsDirection -= agent.transform.position;
+        }
+        if (enemies != 0)
+        {
+            enemiesDirection /= enemies;
+            enemiesDirection -= agent.transform.position;
+        }
     }
 
     //stolen from filter class 
@@ -61,7 +82,8 @@ public class FightOrFlightBehaviour : FlockBehaviour
         foreach (var item in original)
         {
             FlockAgent itemAgent = item.GetComponent<FlockAgent>();
-            if (itemAgent != null && ((itemAgent.AgentFlock != agent.AgentFlock)^friends))
+            if (itemAgent != null && ((itemAgent.AgentFlock == agent.AgentFlock && friends )||
+                (itemAgent.AgentFlock != agent.AgentFlock && !friends)))
             {
                 filtered.Add(itemAgent.transform);
             }
