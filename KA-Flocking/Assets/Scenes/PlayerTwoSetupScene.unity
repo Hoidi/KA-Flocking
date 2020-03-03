@@ -2173,8 +2173,8 @@ MonoBehaviour:
   slowSpeed: 12
   fastSpeed: 40
   rotateSpeed: 100
-  minBounds: {x: 0, y: 5}
-  maxBounds: {x: 150, y: 151}
+  minBounds: {x: 0, y: 20.833334}
+  maxBounds: {x: 625, y: 629.1667}
   zoomSpeed: 20
   nearZoomLimit: 2
   farZoomLimit: 100
