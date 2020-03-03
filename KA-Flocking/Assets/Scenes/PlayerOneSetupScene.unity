@@ -391,7 +391,7 @@ MonoBehaviour:
   driveFactor: 10
   maxSpeed: 3
   neighbourRadius: 2
-  avoidanceRadiusMultiplier: 0.5
+  avoidanceRadiusMultiplier: 1
 --- !u!4 &437747587
 Transform:
   m_ObjectHideFlags: 0
@@ -2710,7 +2710,7 @@ PrefabInstance:
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: resolution
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}

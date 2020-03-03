@@ -22,12 +22,14 @@ public class FlockAgent : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    public void Move(Vector3 velocity)
+    public void Move(Vector3 acceleration)
     {
-        transform.position += velocity * Time.deltaTime;
-        if (velocity != Vector3.zero)
+        rb.velocity += acceleration * Time.deltaTime * 3;
+         
+        if (rb.velocity != Vector3.zero)
         {
-            velocity.y = 0;
+            Vector3 velocity = rb.velocity;
+            velocity.y = 0; 
             transform.forward = velocity;
         }
 
