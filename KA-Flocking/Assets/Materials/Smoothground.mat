@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GroundMaterial
+  m_Name: Smoothground
   m_Shader: {fileID: 4800000, guid: 452a0be4e66f67c46bf17b45ed56c854, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -79,7 +79,7 @@ Material:
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Shininess: 0.593
+    - _Shininess: 0.456
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
