@@ -35,18 +35,18 @@ public class Infantry : Unit
             return;
         }
 
-        FlockAgent closest = targets[0].GetComponentInParent<FlockAgent>();
-        float closestDistance = Vector3.SqrMagnitude(targets[0].position - attacker.transform.position);
+        FlockAgent closest = null;
+        float closestDistance = float.MaxValue;
         float sqrDistance;
-        for (int i = 1; i < targets.Count; i++)
+        for (int i = 0; i < targets.Count; i++)
         {
-            sqrDistance = Vector3.SqrMagnitude(targets[1].position - attacker.transform.position);
+            sqrDistance = Vector3.SqrMagnitude(targets[i].position - attacker.transform.position);
             if (sqrDistance < closestDistance && sqrDistance < sqrReach * reachMultiplier) {
-                closest = targets[1].GetComponentInParent<FlockAgent>();
+                closest = targets[i].GetComponentInParent<FlockAgent>();
                 closestDistance = sqrDistance;
             }
         }
-        closest.unit.TakeDamage(damage, closest);
+        if (closest != null) closest.unit.TakeDamage(damage, closest);
     }
 
 
