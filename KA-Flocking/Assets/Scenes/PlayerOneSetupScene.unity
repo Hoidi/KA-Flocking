@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 437747587}
   - component: {fileID: 437747586}
   - component: {fileID: 437747588}
+  - component: {fileID: 437747589}
   m_Layer: 0
   m_Name: Team 1 Flock
   m_TagString: Untagged
@@ -418,6 +419,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d62058eff1d2734aae686940dee19ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &437747589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437747585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f55ce410561496e4faffbb830ff53e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenSpace: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 0, z: 0}
 --- !u!1 &447764070
 GameObject:
   m_ObjectHideFlags: 0
