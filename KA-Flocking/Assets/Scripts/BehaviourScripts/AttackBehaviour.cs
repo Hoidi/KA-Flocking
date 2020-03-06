@@ -20,11 +20,11 @@ public class AttackBehaviour : FilteredFlockBehaviour
         foreach (Transform item in filteredContext)
         {
             distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
-            cohesionMove += item.position / distanceSqr;
+            attackMove += item.position / distanceSqr;
         }
-        cohesionMove /= context.Count;
-        cohesionMove -= agent.transform.position;
-        cohesionMove = Vector3.SmoothDamp(agent.transform.forward, cohesionMove, ref currentVelocity, agentSmoothTime, flock.maxSpeed);
-        return cohesionMove;
+        attackMove /= context.Count;
+        attackMove -= agent.transform.position;
+        attackMove = Vector3.SmoothDamp(agent.transform.forward, attackMove, ref currentVelocity, agentSmoothTime, flock.maxSpeed);
+        return attackMove;
     }
 }
