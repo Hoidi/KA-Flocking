@@ -10,6 +10,7 @@ public class ScorePanel : MonoBehaviour
     private Flock flock;
     public NextScene next;
     public static string winningText;
+    public Text deadInfantryText;
 
     void Start() {
         flock = GameObject.Find(teamFlockName).GetComponent<Flock>();
@@ -19,6 +20,8 @@ public class ScorePanel : MonoBehaviour
     void Update()
     {
         infantryNoText.text = flock.agents.Count.ToString();
+        deadInfantryText.text = "(" + flock.CountDeadUnits.ToString() + ")";
+
         if(flock.agents.Count == 0)
         {
             if (flock.name == "Team 1 Flock") winningText = "Team 2 won!";
