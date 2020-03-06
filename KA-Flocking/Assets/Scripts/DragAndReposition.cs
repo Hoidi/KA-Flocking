@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 //credit to YoungjaeKim, https://forum.unity.com/threads/drag-drop-game-objects-without-rigidbody-with-the-mouse.64169/
 public class DragAndReposition : MonoBehaviour{
     private bool _mouseState;
-    int layerMask = 1 << 8;
+    int troopLayer = 1 << 8;
+    int planeLayer = 1 << 9;
     private GameObject target;
     public Vector3 screenSpace;
     public Vector3 offset;
@@ -23,13 +24,15 @@ public class DragAndReposition : MonoBehaviour{
             {
                 _mouseState = true;
                 screenSpace = Camera.main.WorldToScreenPoint(target.transform.position);
-                offset = target.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z));
+
+                offset = target.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Terrain.activeTerrain.SampleHeight(Camera.main.ScreenToWorldPoint(Input.mousePosition)), screenSpace.z));
             }
         }
         if (Input.GetMouseButtonUp(0)){
             _mouseState = false;
         }
-        if (_mouseState){
+        if (_mouseState)
+        {
             //keep track of the mouse position
             var curScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenSpace.z);
 
@@ -45,7 +48,7 @@ public class DragAndReposition : MonoBehaviour{
     GameObject RetrieveTroopObject(out RaycastHit hit){
         GameObject target = null;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //raytracing towards mouse cursor from camera
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, troopLayer))
         {
             target = hit.collider.gameObject; //if we hit a collider of a troop -> return its gameobject
         }
