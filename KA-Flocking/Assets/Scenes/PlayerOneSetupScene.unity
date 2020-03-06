@@ -1203,6 +1203,7 @@ MonoBehaviour:
   infantryNoText: {fileID: 422496239}
   teamFlockName: 
   next: {fileID: 0}
+  deadInfantryText: {fileID: 0}
 --- !u!1 &793660877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1981,6 +1982,7 @@ MonoBehaviour:
   infantryNoText: {fileID: 942863195}
   teamFlockName: 
   next: {fileID: 0}
+  deadInfantryText: {fileID: 0}
 --- !u!1 &1011148867
 GameObject:
   m_ObjectHideFlags: 0
@@ -2732,6 +2734,12 @@ PrefabInstance:
       propertyPath: pointyBreakOff
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
+        type: 3}
+      propertyPath: wallPrefab
+      value: 
+      objectReference: {fileID: -927199367670048503, guid: bc2f34e391ab4ad40b9cf8de48b84b9c,
+        type: 3}
     - target: {fileID: 2707572346282673837, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -22,11 +22,16 @@ public class ChunkManager : MonoBehaviour
     public float lacunarity = 5f;
     [Range(1, 5)]
     public int octaves = 1;
+    public GameObject wallPrefab;
 
 
     public GameObject chunkType;
     void Start()
     {
+        BuildWall(new Vector3(-312,0,-312), Quaternion.identity);
+        BuildWall(new Vector3(-312,0,312), Quaternion.identity);
+        BuildWall(new Vector3(-312,0,-312), new Quaternion (0,0.7071f,0,0.7071f));
+        BuildWall(new Vector3(312,0,-312), new Quaternion (0,0.7071f,0,0.7071f));
         //generates the chunks 
         seed = Random.Range(0, 10000);
         chunks = new Chunk[chunksX, chunksZ];
@@ -40,6 +45,22 @@ public class ChunkManager : MonoBehaviour
         }
         updateChunks();
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void BuildWall (Vector3 location, Quaternion rotation) {
+        Vector3 direction;
+        if (rotation == Quaternion.identity) {
+            direction = Vector3.right;
+        } else {
+            direction = Vector3.forward;
+        }
+        for (int i = 0; i < 10; i++)
+        {
+            // Each wall has a size of around 62.5 after scaling
+            GameObject go = Instantiate(wallPrefab, location + direction*i*62.5f + direction*31.25f, rotation,transform);
+            go.transform.localScale = new Vector3(12.5f,12.5f,1.0f);
+
+        }
     }
 
     private void Update()
