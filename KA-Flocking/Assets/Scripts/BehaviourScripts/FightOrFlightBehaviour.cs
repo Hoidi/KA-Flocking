@@ -6,7 +6,7 @@ using UnityEngine;
 public class FightOrFlightBehaviour : FlockBehaviour
 {
     Vector3 enemiesDirection = Vector3.zero;
-    Vector3 friendsDirection = Vector3.zero;
+    Vector3 friendsDirection = Vector3.zero; //is kept to enable more advanced behaviour in the future. 
 
     float enemiesStrength = 0f;
     float friendsStrength = 0f;
@@ -17,7 +17,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
             return Vector3.zero;
         }
 
-        calculateDirections(agent, context, flock);
+        CalculateDirections(agent, context, flock);
 
         if (enemiesStrength > friendsStrength)
         {
@@ -29,7 +29,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
         }
     }
 
-    public  void calculateDirections(FlockAgent agent, List<Transform> context, Flock flock)
+    void CalculateDirections(FlockAgent agent, List<Transform> context, Flock flock)
     {
         Vector3 cohesionMove = Vector3.zero;
         friendsDirection = Vector3.zero;
@@ -46,7 +46,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
             if (itemAgent != null)
             {
                 distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
-                if (itemAgent.AgentFlock == agent.AgentFlock)
+                if (itemAgent.AgentFlock == flock)
                 {
                     friendsDirection += item.position / distanceSqr;
                     friendsStrength += 1f / distanceSqr;
@@ -60,7 +60,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
                 }
             }
         }
-        if(friends != 0)
+        if (friends != 0)
         {
             friendsDirection /= friends;
             friendsDirection -= agent.transform.position;

@@ -14,7 +14,7 @@ public class AttackBehaviour : FilteredFlockBehaviour
             return Vector3.zero;
         }
 
-        Vector3 cohesionMove = Vector3.zero;
+        Vector3 attackMove = Vector3.zero;
         float distanceSqr;
         List<Transform> filteredContext = (filter == null) ? context : filter.Filter(agent, context);
         foreach (Transform item in filteredContext)
