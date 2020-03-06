@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -679,8 +679,8 @@ MonoBehaviour:
   startingAmount: 10
   driveFactor: 10
   maxSpeed: 3
-  neighbourRadius: 2
-  avoidanceRadiusMultiplier: 0.5
+  neighbourRadius: 3.5
+  avoidanceRadiusMultiplier: 0.4
 --- !u!4 &621886119
 Transform:
   m_ObjectHideFlags: 0
@@ -2173,8 +2173,8 @@ MonoBehaviour:
   slowSpeed: 12
   fastSpeed: 40
   rotateSpeed: 100
-  minBounds: {x: 0, y: 20.833334}
-  maxBounds: {x: 625, y: 629.1667}
+  minBounds: {x: -312.5, y: -312.5}
+  maxBounds: {x: 312.5, y: 312.5}
   zoomSpeed: 20
   nearZoomLimit: 2
   farZoomLimit: 100

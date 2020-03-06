@@ -59,6 +59,8 @@ MonoBehaviour:
   zSize: 20
   octaves: 3
   height: 0.3
+  pointyness: 1
+  pointyBreakOff: 0
   scale: 0.3
   percistance: 0.5
   lacunarity: 5
