@@ -37,38 +37,24 @@ public class FightOrFlightBehaviour : FlockBehaviour
         friendsStrength = 0f;
         enemiesStrength = 0f;
 
-        int enemies = 0, friends = 0;
-
-        float distanceSqr;
+        float distance;
         foreach (Transform item in context)
         {
             FlockAgent itemAgent = item.GetComponent<FlockAgent>();
             if (itemAgent != null)
             {
-                distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
+                distance = Vector3.Magnitude(item.position - agent.transform.position);
                 if (itemAgent.AgentFlock == flock)
                 {
-                    friendsDirection += item.position / distanceSqr;
-                    friendsStrength += 1f / distanceSqr;
-                    friends++;
+                    friendsDirection += item.position - agent.transform.position;
+                    friendsStrength += 1f / distance;
                 }
                 else
                 {
-                    enemiesDirection += item.position / distanceSqr;
-                    enemiesStrength += 1f / distanceSqr;
-                    enemies++;
+                    enemiesDirection += item.position - agent.transform.position;
+                    enemiesStrength += 1f / distance;
                 }
             }
-        }
-        if (friends != 0)
-        {
-            friendsDirection /= friends;
-            friendsDirection -= agent.transform.position;
-        }
-        if (enemies != 0)
-        {
-            enemiesDirection /= enemies;
-            enemiesDirection -= agent.transform.position;
         }
     }
 }
