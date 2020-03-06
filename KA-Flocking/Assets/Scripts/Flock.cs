@@ -41,7 +41,7 @@ public class Flock : MonoBehaviour
         foreach (FlockAgent agent in _agents)
         {
             List<Transform> context = GetNearbyObjects(agent);
-            agent.unit.Attack(context, agent, this, squareNeighbourRadius);
+            agent.unit.Attack(context, agent, this);
 
             Vector3 move = behaviour.CalculateMove(agent, context, this);
             move *= driveFactor;

@@ -13,8 +13,8 @@ public class Infantry : Unit
     [Range(0f,1000f)]
     public float damage = 2f;
     // The reach of the unit depending on the neighbourradius
-    [Range(0f,1f)]
-    public float reachMultiplier = 1f;
+    [Range(0f,10f)]
+    public float reach = 1f;
 
     public override void TakeDamage(float amount, FlockAgent agent) {
         amount *= Time.deltaTime;
@@ -29,7 +29,7 @@ public class Infantry : Unit
     }
 
     // Deal damage to the closest target from another flock within the unit's reach
-    public override void Attack(List<Transform> targets, FlockAgent attacker, Flock flock, float sqrReach) {
+    public override void Attack(List<Transform> targets, FlockAgent attacker, Flock flock) {
         targets = (attackFilter == null) ? targets : attackFilter.Filter(attacker, targets);
         if (targets.Count == 0) {
             return;
@@ -41,7 +41,7 @@ public class Infantry : Unit
         for (int i = 0; i < targets.Count; i++)
         {
             sqrDistance = Vector3.SqrMagnitude(targets[i].position - attacker.transform.position);
-            if (sqrDistance < closestDistance && sqrDistance < sqrReach * reachMultiplier) {
+            if (sqrDistance < closestDistance && sqrDistance < reach) {
                 closest = targets[i].GetComponentInParent<FlockAgent>();
                 closestDistance = sqrDistance;
             }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Infantry
   m_EditorClassIdentifier: 
   attackFilter: {fileID: 11400000, guid: 9a40376dfafe67140821885f10618ed6, type: 2}
-  health: 100
-  damage: 50
+  health: 200
+  damage: 20
   reachMultiplier: 1
