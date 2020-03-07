@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be15c3b0079c7b7c6afe31228968f02d, type: 3}
-  m_Name: Infantry
+  m_Script: {fileID: 11500000, guid: 47a29c4af019f5f44b9f25b8fb52af90, type: 3}
+  m_Name: FightOrFlight
   m_EditorClassIdentifier: 
-  attackFilter: {fileID: 11400000, guid: 9a40376dfafe67140821885f10618ed6, type: 2}
-  health: 200
-  damage: 20
-  reachMultiplier: 1

@@ -27,6 +27,8 @@ public class Flock : MonoBehaviour
 
     float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
+
+    public int CountDeadUnits{ get { return deadUnits.Count; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +43,7 @@ public class Flock : MonoBehaviour
         foreach (FlockAgent agent in _agents)
         {
             List<Transform> context = GetNearbyObjects(agent);
-            agent.unit.Attack(context, agent, this, squareNeighbourRadius);
+            agent.unit.Attack(context, agent, this);
 
             Vector3 move = behaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
