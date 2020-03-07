@@ -69,30 +69,22 @@ public class EntitySpawning : MonoBehaviour
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetKey("space"))
         { //shortcut to place units, prone to change(?)
-            Vector3 worldPos;
+            Vector3 worldPos = new Vector3(0,0,0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //raytracing towards mouse cursor from camera
-            if (Physics.Raycast(ray, out collisionWithPlane, 100f))
-            { //raytracing collided with something
+            if (Physics.Raycast(ray, out collisionWithPlane, 100f)) //raytracing collided with something
+            { 
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
-                //worldPos.y += 1f; //make sure they dont fall through the ground
+                
             }
-            else
-            { //no collision
-                worldPos = cam.ScreenToWorldPoint(mousePos);
-                //worldPos.y += 1f; //make sure they dont fall through the ground
-            }
-            Ray findYPos;
             RaycastHit hit;
             Vector3 location;
             for (int i = 0; i < amountOfTroops; i++){
-                location = Random.insideUnitSphere * amountOfTroops * 0.7f;
+                location = Random.insideUnitSphere * amountOfTroops * 0.8f;
                 Vector3 FinalWorldPos = worldPos + location;
-                findYPos = cam.ScreenPointToRay(worldPos + location);
-                Camera.main.ScreenToWorldPoint(worldPos + location);
-                Physics.Raycast(findYPos.origin, findYPos.direction, out hit, Mathf.Infinity, planeLayer);
-                Debug.Log("hit.point y: " + (hit.point.y));
-                //Debug.DrawRay(findYPos.origin, findYPos.origin + worldPos + location, )
-                flock.CreateUnit(
+                if (Physics.Raycast(new Vector3(worldPos.x + location.x, 100, worldPos.z + location.z), Vector3.down * 100f, out hit, Mathf.Infinity, planeLayer)) {
+                    FinalWorldPos.y = hit.point.y;
+                }
+                flock.CreateUnit( //spawn the unit on location: FinalWorldPos
                     agentPrefab,
                     FinalWorldPos,
                     Quaternion.Euler(Vector3.up),
