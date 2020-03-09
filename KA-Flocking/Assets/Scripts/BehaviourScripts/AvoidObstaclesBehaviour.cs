@@ -19,6 +19,7 @@ public class AvoidObstaclesBehaviour : FilteredFlockBehaviour
         {
             var collider = item.GetComponent<Collider>();
             var closestPoint = collider.ClosestPoint(agent.transform.position);
+            Debug.DrawRay(agent.transform.position,closestPoint - agent.transform.position, Color.red, 0.1f);
             distanceSqr = Vector3.SqrMagnitude(closestPoint - agent.transform.position);
             if (distanceSqr < flock.SquareAvoidanceRadius) {
                 avoidAmount ++;
