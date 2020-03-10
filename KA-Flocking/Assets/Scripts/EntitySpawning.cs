@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 
@@ -15,79 +16,67 @@ public class EntitySpawning : MonoBehaviour
     public Toggle pikeToggle;
     public Toggle archerToggle;
     public Slider troopSlider;
+    int planeLayer = 1 << 9;
     private int amountOfTroops = 1;
     public Text troopText;
-    public void setTroopAmount()
-    {
+    public void setTroopAmount(){
         amountOfTroops = (int)troopSlider.value;
         troopText.text = amountOfTroops.ToString();
 
     }
     public void spawnCircle(){
-        if(infantryToggle.isOn){
+        if (infantryToggle.isOn){
             spawnEntitiesCircular(infantryPrefab, defaultInfantryObject);
         }
-        else if (pikeToggle.isOn)
-        {
+        else if (pikeToggle.isOn){
             //spawnEntitiesCircular(pike);
         }
-        else if (archerToggle.isOn)
-        {
+        else if (archerToggle.isOn){
             //spawnEntitiesCircular(archer);
         }
     }
     public void spawnRectangle(){
-        if(infantryToggle.isOn){
+        if (infantryToggle.isOn){
             spawnEntitiesRectangular(infantryPrefab, defaultInfantryObject);
         }
-        else if (pikeToggle.isOn)
-        {
+        else if (pikeToggle.isOn){
             //spawnEntitiesRectangular(pike);
         }
-        else if (archerToggle.isOn)
-        {
+        else if (archerToggle.isOn){
             //spawnEntitiesRectangular(archer);
         }
     }
 
     public void spawnTriangle(){
-        if(infantryToggle.isOn){
+        if (infantryToggle.isOn){
             spawnEntitiesTriangular(infantryPrefab, defaultInfantryObject);
         }
-        else if (pikeToggle.isOn)
-        {
+        else if (pikeToggle.isOn){
             //spawnEntitiesTriangular(pike);
         }
-        else if (archerToggle.isOn)
-        {
+        else if (archerToggle.isOn){
             //spawnEntitiesTriangular(archer);
         }
     }
 
     public void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
-        if (Input.GetKey("space"))
-        { //shortcut to place units, prone to change(?)
-            Vector3 worldPos;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition); //raytracing towards mouse cursor from camera
-            if (Physics.Raycast(ray, out collisionWithPlane, 100f))
-            { //raytracing collided with something
+        if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
+            Vector3 worldPos = new Vector3(0, 0, 0);
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
-                worldPos.y += 1f; //make sure they dont fall through the ground
             }
-            else
-            { //no collision
-                worldPos = cam.ScreenToWorldPoint(mousePos);
-                worldPos.y += 1f; //make sure they dont fall through the ground
-            }
-
-            for (int i = 0; i < amountOfTroops; i++)
-            {
-                Vector3 location = Random.insideUnitSphere * amountOfTroops * 0.7f;
-                location.y = 0;
-                flock.CreateUnit(
+            Vector3 location;
+            for (int i = 0; i < amountOfTroops; i++){
+                location = Random.insideUnitSphere * amountOfTroops * 0.4f;
+                Vector3 FinalWorldPos = worldPos + location;
+                if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ //raycast to get the exact y coordinate
+                    FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                }
+                flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
-                    worldPos + location,
+                    FinalWorldPos,
                     Quaternion.Euler(Vector3.up),
                     unitType
                 );
@@ -96,26 +85,20 @@ public class EntitySpawning : MonoBehaviour
     }
     public void spawnEntitiesRectangular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
-
-        if (Input.GetKey("space"))
-        { //shortcut to place units, prone to change(?)
-            Vector3 worldPos;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition); //raytracing towards mouse cursor from camera
-            if (Physics.Raycast(ray, out collisionWithPlane, 100f))
-            { //raytracing collided with something
+        if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
+            Vector3 worldPos = new Vector3(0, 0, 0);
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
-                worldPos.y += 1f; //make sure they dont fall through the ground
             }
-            else
-            { //no collision
-                worldPos = cam.ScreenToWorldPoint(mousePos);
-                worldPos.y += 1f; //make sure they dont fall through the ground
-            }
-
-            for (int i = 0; i < amountOfTroops; i++) {
+            for (int i = 0; i < amountOfTroops; i++){
+                Vector3 FinalWorldPos = new Vector3(worldPos.x + 1.5f * (i % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))), worldPos.y, worldPos.z + 1.5f * Mathf.CeilToInt(i / Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))));
+                if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ //raycast to get the exact y coordinate
+                    FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                }
                 flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
-                    new Vector3(worldPos.x + 3 * (i % 5), worldPos.y, worldPos.z + 3 * Mathf.CeilToInt(i / 5)),
+                    FinalWorldPos,
                     Quaternion.Euler(Vector3.up),
                     unitType
                 );
@@ -126,39 +109,29 @@ public class EntitySpawning : MonoBehaviour
     }
     public void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
-
-        if (Input.GetKey("space"))
-        { //shortcut to place units, prone to change(?)
-            Vector3 worldPos;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition); //raytracing towards mouse cursor from camera
-            if (Physics.Raycast(ray, out collisionWithPlane, 100f))
-            { //raytracing collided with something
+        if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
+            Vector3 worldPos = new Vector3(0, 0, 0);
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
-                worldPos.y += 1f; //make sure they dont fall through the ground
             }
-            else
-            { //no collision
-                worldPos = cam.ScreenToWorldPoint(mousePos);
-                worldPos.y += 1f; //make sure they dont fall through the ground
-            }
-            flock.CreateUnit(
-                agentPrefab,
-                new Vector3(worldPos.x, worldPos.y, worldPos.z),
-                Quaternion.Euler(Vector3.up),
-                unitType
-            );
-            int switchSide = 1; //variable to make spawning on each "side" of triangle shape possible..
-            for (int i = 1; i < amountOfTroops; i++)
-            {
+            int switchSide = 1; //variable to make spawning on each "side" of the arrow shape possible..
+            int arrowDirection = -1; //arrow formation should be in opposite direction for the two players
+            if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") arrowDirection *= -1;
+            for (int i = 0; i < amountOfTroops; i++){
+                Vector3 FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location 
+                if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ //raycast to get the exact y coordinate
+                    FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                }
                 flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
-                    new Vector3(worldPos.x + (2 * i * switchSide), worldPos.y, worldPos.z - (2 * i)),
+                    FinalWorldPos,
                     Quaternion.Euler(Vector3.up),
                     unitType
                 );
                 switchSide *= -1;
             }
+
         }
     }
-
 }

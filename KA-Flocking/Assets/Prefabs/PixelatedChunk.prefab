@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7884630620193990467}
   - component: {fileID: 7884630620193990495}
   - component: {fileID: 3436063889873236061}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PixelatedChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
