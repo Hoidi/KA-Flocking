@@ -23,15 +23,19 @@ public class ChunkManager : MonoBehaviour
     [Range(1, 5)]
     public int octaves = 1;
     public GameObject wallPrefab;
+    [Range(1,25)]
+    public float wallScale = 10f;
 
 
     public GameObject chunkType;
     void Start()
     {
-        BuildWall(new Vector3(-312,0,-312), Quaternion.identity);
-        BuildWall(new Vector3(-312,0,312), Quaternion.identity);
-        BuildWall(new Vector3(-312,0,-312), new Quaternion (0,0.7071f,0,0.7071f));
-        BuildWall(new Vector3(312,0,-312), new Quaternion (0,0.7071f,0,0.7071f));
+        int wallpositionX = chunkSize*chunksX/2;
+        int wallpositionZ = chunkSize*chunksZ/2;
+        BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), Quaternion.identity);
+        BuildWall(new Vector3(-wallpositionX,0,wallpositionZ), Quaternion.identity);
+        BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
+        BuildWall(new Vector3(wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
         //generates the chunks 
         seed = Random.Range(0, 10000);
         chunks = new Chunk[chunksX, chunksZ];
@@ -54,11 +58,11 @@ public class ChunkManager : MonoBehaviour
         } else {
             direction = Vector3.forward;
         }
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Mathf.Ceil(Mathf.Min(chunksX,chunksZ)/2f); i++)
         {
             // Each wall has a size of around 62.5 after scaling
-            GameObject go = Instantiate(wallPrefab, location + direction*i*62.5f + direction*31.25f, rotation,transform);
-            go.transform.localScale = new Vector3(12.5f,12.5f,1.0f);
+            GameObject go = Instantiate(wallPrefab, location + direction*i*wallScale*chunkSize/5 + direction*wallScale*chunkSize/10, rotation,transform);
+            go.transform.localScale = new Vector3(wallScale,wallScale,1.0f);
 
         }
     }
