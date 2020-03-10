@@ -3,7 +3,24 @@ guid: 9fb922aedf5e6ae4e973235cff71075e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - flock: {instanceID: 0}
+  - infantryPrefab: {instanceID: 0}
+  - defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
+      type: 2}
+  - defaultArcherObject: {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975,
+      type: 2}
+  - defaultPikemanObject: {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72,
+      type: 2}
+  - cam: {instanceID: 0}
+  - infantryToggle: {instanceID: 0}
+  - pikeToggle: {instanceID: 0}
+  - archerToggle: {instanceID: 0}
+  - CircularToggle: {instanceID: 0}
+  - RectangularToggle: {instanceID: 0}
+  - ArrowToggle: {instanceID: 0}
+  - troopSlider: {instanceID: 0}
+  - troopText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
