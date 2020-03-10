@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 
 
@@ -27,11 +28,11 @@ public class EntitySpawning : MonoBehaviour
     private bool inSpawningMethod = false;
 
     private void Update(){
-        if (Input.GetKey(KeyCode.Space)){
-            StartCoroutine(wait());
+        if (Input.GetMouseButton(0)){
+            StartCoroutine(SpawnWithDelay());
         }
     }
-    IEnumerator wait(){
+    IEnumerator SpawnWithDelay(){
         if (!inSpawningMethod){
             inSpawningMethod = true;
             if (CircularToggle.isOn){
@@ -88,14 +89,13 @@ public class EntitySpawning : MonoBehaviour
     
     public void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
-        if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
+        if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
-            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer)){ //already a troop at location, so dont spawn
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer) || EventSystem.current.IsPointerOverGameObject()){ //already a troop at location, or user clicked on UI, so dont spawn
                 return;
             }
             if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
-                
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
             }
             Vector3 location;
@@ -116,10 +116,10 @@ public class EntitySpawning : MonoBehaviour
     }
     public void spawnEntitiesRectangular(FlockAgent agentPrefab, Unit unitType){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
-        if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
+        if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
-            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer)){ //already a troop at location, so dont spawn
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer) || EventSystem.current.IsPointerOverGameObject()){ //already a troop at location, or user clicked on UI, so dont spawn
                 return;
             }
             if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
@@ -144,10 +144,10 @@ public class EntitySpawning : MonoBehaviour
     public void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType)
     {
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
-        if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
+        if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
-            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer)){ //already a troop at location, so dont spawn
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer) || EventSystem.current.IsPointerOverGameObject()){ //already a troop at location, or user clicked on UI, so dont spawn
                 return;
             }
             if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
