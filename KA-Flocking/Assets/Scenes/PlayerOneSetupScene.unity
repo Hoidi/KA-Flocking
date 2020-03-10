@@ -2686,12 +2686,12 @@ PrefabInstance:
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: chunksX
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: chunksZ
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
