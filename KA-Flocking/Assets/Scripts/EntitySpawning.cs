@@ -50,7 +50,6 @@ public class EntitySpawning : MonoBehaviour
     public void setTroopAmount(){
         amountOfTroops = (int)troopSlider.value;
         troopText.text = amountOfTroops.ToString();
-
     }
     public void spawnCircle(){
         if (infantryToggle.isOn){
