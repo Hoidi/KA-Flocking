@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 576320006629704204}
   - component: {fileID: 2185900543212254752}
   - component: {fileID: -1296819599126893022}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Army2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -90,6 +90,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
       propertyPath: m_Name
       value: Army2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
       propertyPath: m_LocalPosition.x
