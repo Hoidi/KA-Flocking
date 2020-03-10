@@ -20,6 +20,7 @@ public class EntitySpawning : MonoBehaviour
     public Toggle RectangularToggle;
     public Toggle ArrowToggle;
     public Slider troopSlider;
+    int troopLayer = 1 << 8;
     int planeLayer = 1 << 9;
     private int amountOfTroops = 1;
     public Text troopText;
@@ -42,7 +43,7 @@ public class EntitySpawning : MonoBehaviour
             else{
                 spawnTriangle();
             }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
             inSpawningMethod = false;
         }
     }
@@ -91,7 +92,11 @@ public class EntitySpawning : MonoBehaviour
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer)){ //already a troop at location, so dont spawn
+                return;
+            }
             if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
+                
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
             }
             Vector3 location;
@@ -115,6 +120,9 @@ public class EntitySpawning : MonoBehaviour
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer)){ //already a troop at location, so dont spawn
+                return;
+            }
             if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
             }
@@ -140,6 +148,9 @@ public class EntitySpawning : MonoBehaviour
         if (Input.GetKey("space")){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer)){ //already a troop at location, so dont spawn
+                return;
+            }
             if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
             }
