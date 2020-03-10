@@ -2753,7 +2753,7 @@ PrefabInstance:
         type: 3}
       propertyPath: wallPrefab
       value: 
-      objectReference: {fileID: -927199367670048503, guid: bc2f34e391ab4ad40b9cf8de48b84b9c,
+      objectReference: {fileID: 3659160257145782057, guid: 9d0217e670d592b1680bcc0f65c7708a,
         type: 3}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
