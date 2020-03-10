@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3057,12 +3057,12 @@ PrefabInstance:
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: chunksX
-      value: 25
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: chunksZ
-      value: 25
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
@@ -3072,7 +3072,7 @@ PrefabInstance:
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: height
-      value: 11.09
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
@@ -3108,17 +3108,28 @@ PrefabInstance:
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: percistance
-      value: 0.179
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: pointyness
-      value: 1.283
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}
       propertyPath: pointyBreakOff
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
+        type: 3}
+      propertyPath: wallPrefab
+      value: 
+      objectReference: {fileID: 3659160257145782057, guid: 9d0217e670d592b1680bcc0f65c7708a,
+        type: 3}
+    - target: {fileID: 2707572346282673836, guid: cd2452ebc637aa9448d8d06c24c0265e,
+        type: 3}
+      propertyPath: wallScale
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2707572346282673837, guid: cd2452ebc637aa9448d8d06c24c0265e,
         type: 3}

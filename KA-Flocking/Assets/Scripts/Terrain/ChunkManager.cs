@@ -22,11 +22,22 @@ public class ChunkManager : MonoBehaviour
     public float lacunarity = 5f;
     [Range(1, 5)]
     public int octaves = 1;
+    public GameObject wallPrefab;
+    [Range(1,25)]
+    public float wallScale = 10f;
 
 
     public GameObject chunkType;
     void Start()
     {
+        // The starting positions for the walls, based on the chunksize and the amount of chunks in each direction
+        int wallpositionX = chunkSize*chunksX/2;
+        int wallpositionZ = chunkSize*chunksZ/2;
+        BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), Quaternion.identity);
+        BuildWall(new Vector3(-wallpositionX,0,wallpositionZ), Quaternion.identity);
+        BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
+        BuildWall(new Vector3(wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
+
         //generates the chunks 
         seed = Random.Range(0, 10000);
         chunks = new Chunk[chunksX, chunksZ];
@@ -40,6 +51,24 @@ public class ChunkManager : MonoBehaviour
         }
         updateChunks();
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    // Build a wall at the starting location with the desired rotation
+    private void BuildWall (Vector3 location, Quaternion rotation) {
+        Vector3 direction;
+        if (rotation == Quaternion.identity) {
+            direction = Vector3.right;
+        } else {
+            direction = Vector3.forward;
+        }
+        // Depending on the size in X or Z, generate an appropriate amount of walls depending on the wallScale
+        for (int i = 0; i < Mathf.Ceil(Mathf.Min(chunkSize*chunksX,chunkSize*chunksZ)/(wallScale*5)); i++)
+        {
+            // Each wall has a size of around 5 before scaling
+            GameObject go = Instantiate(wallPrefab, location + direction*i*wallScale*chunkSize/5 + direction*wallScale*chunkSize/10, rotation,transform);
+            go.transform.localScale = new Vector3(wallScale,wallScale,1.0f);
+
+        }
     }
 
     private void Update()
