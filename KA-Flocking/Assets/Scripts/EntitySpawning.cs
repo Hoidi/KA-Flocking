@@ -11,7 +11,11 @@ public class EntitySpawning : MonoBehaviour
 
     public Flock flock;
     public FlockAgent infantryPrefab;
+    public FlockAgent pikemanPrefab;
+    public FlockAgent archerPrefab;
     public Infantry defaultInfantryObject;
+    public Unit defaultArcherObject;
+    public Unit defaultPikemanObject;
     public Camera cam;
     RaycastHit collisionWithPlane;
     public Toggle infantryToggle;
@@ -57,10 +61,10 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesCircular(infantryPrefab, defaultInfantryObject);
         }
         else if (pikeToggle.isOn){
-            //spawnEntitiesCircular(pike);
+            spawnEntitiesCircular(pikemanPrefab, defaultPikemanObject);
         }
         else if (archerToggle.isOn){
-            //spawnEntitiesCircular(archer);
+            spawnEntitiesCircular(archerPrefab, defaultArcherObject);
         }
     }
     public void spawnRectangle(){
@@ -68,10 +72,10 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesRectangular(infantryPrefab, defaultInfantryObject);
         }
         else if (pikeToggle.isOn){
-            //spawnEntitiesRectangular(pike);
+            spawnEntitiesRectangular(pikemanPrefab, defaultPikemanObject);
         }
         else if (archerToggle.isOn){
-            //spawnEntitiesRectangular(archer);
+            spawnEntitiesRectangular(archerPrefab, defaultArcherObject);
         }
     }
 
@@ -80,10 +84,10 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesTriangular(infantryPrefab, defaultInfantryObject);
         }
         else if (pikeToggle.isOn){
-            //spawnEntitiesTriangular(pike);
+            spawnEntitiesTriangular(pikemanPrefab, defaultPikemanObject);
         }
         else if (archerToggle.isOn){
-            //spawnEntitiesTriangular(archer);
+            spawnEntitiesTriangular(archerPrefab, defaultArcherObject);
         }
     }
     

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4611,7 +4611,15 @@ MonoBehaviour:
   flock: {fileID: 621886118}
   infantryPrefab: {fileID: 2185900543212254752, guid: 108c9165f7b559c41919cbd9de40a4cd,
     type: 3}
+  pikemanPrefab: {fileID: 7099130137389473369, guid: a367c3e766eba4f5d8057f421b75df74,
+    type: 3}
+  archerPrefab: {fileID: 6314128460190958362, guid: c51126b60c610e060a6b19e292a8ca6d,
+    type: 3}
   defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
+    type: 2}
+  defaultArcherObject: {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975,
+    type: 2}
+  defaultPikemanObject: {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72,
     type: 2}
   cam: {fileID: 447764074}
   infantryToggle: {fileID: 1110981720}
