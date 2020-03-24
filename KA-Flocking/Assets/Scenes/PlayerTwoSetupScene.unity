@@ -4788,7 +4788,7 @@ MonoBehaviour:
   troopSlider: {fileID: 1928300759}
   troopText: {fileID: 348286369}
   money: {fileID: 742455934}
-  costOfSpawning: {fileID: 0}
+  costOfSpawning: {fileID: 1504969252}
 --- !u!4 &2012675549
 Transform:
   m_ObjectHideFlags: 0
