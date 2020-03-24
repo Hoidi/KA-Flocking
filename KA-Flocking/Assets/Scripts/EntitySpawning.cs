@@ -34,13 +34,14 @@ public class EntitySpawning : MonoBehaviour
     public Text troopText;
     private bool inSpawningMethod = false;
     public Text money;
+    public Text costOfSpawning;
     int infantryCost = 100;
     int archerCost = 300;
     int pikeCost = 200;
 
 
     void Start(){
-        //if statement is to get around a null pointer exception in flockscene (since the "money" text is not in flock scene)
+        //if statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) { 
         money.text = "Money: " + flock.moneyAmount.ToString(); 
         }
@@ -50,7 +51,24 @@ public class EntitySpawning : MonoBehaviour
         if (Input.GetMouseButton(0)){
             StartCoroutine(SpawnWithDelay());
         }
+        int sum;
+        //if statement is to get around a null pointer exception in flockscene (since the cost of spawning troops isnt relevant in the flocking scene)
+        if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded)
+        {
         
+            if (infantryToggle.isOn){
+                sum = amountOfTroops * infantryCost;
+                costOfSpawning.text = "Spawning " + amountOfTroops + " infantries will cost: " + sum.ToString();
+            }
+            else if (pikeToggle.isOn) {
+                sum = amountOfTroops * pikeCost;
+                costOfSpawning.text = "Spawning " + amountOfTroops + " pikemen will cost: " + sum.ToString();
+            }
+            else { 
+                sum = amountOfTroops * archerCost;
+                costOfSpawning.text = "Spawning " + amountOfTroops + " archers will cost: " + sum.ToString();
+            }
+        }
     }
     IEnumerator SpawnWithDelay(){
         if (!inSpawningMethod){
@@ -71,6 +89,7 @@ public class EntitySpawning : MonoBehaviour
     public void setTroopAmount(){
         amountOfTroops = (int)troopSlider.value;
         troopText.text = amountOfTroops.ToString();
+
     }
     public void spawnCircle(){
         if (infantryToggle.isOn){
@@ -144,7 +163,6 @@ public class EntitySpawning : MonoBehaviour
                 while (amount-cost >= 0)
                 { //dirty solution to calculate how many troops player can afford to spawn 
                     amount -= cost;
-                    Debug.Log(amount);
                     x++;
                 }
                 if (EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel")){
@@ -207,7 +225,6 @@ public class EntitySpawning : MonoBehaviour
                 while (amount-cost >= 0)
                 { //dirty solution to calculate how many troops player can afford to spawn 
                     amount -= cost;
-                    Debug.Log(amount);
                     x++;
                 }
                 if (EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel")){ 
@@ -277,7 +294,6 @@ public class EntitySpawning : MonoBehaviour
                 while (amount - cost >= 0)
                 { //dirty solution to calculate how many troops player can afford to spawn 
                     amount -= cost;
-                    Debug.Log(amount);
                     x++;
                 }
                 if (EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel"))
