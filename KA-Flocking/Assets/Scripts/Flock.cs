@@ -57,6 +57,7 @@ public class Flock : MonoBehaviour
     List<Transform> GetNearbyObjects(FlockAgent agent)
     {
         List<Transform> context = new List<Transform>();
+
         Collider[] contextColliders;
         // Gets all nearby colliders
         if (agent.unit.GetType().ToString().Equals("Scout"))
@@ -72,10 +73,7 @@ public class Flock : MonoBehaviour
             {
                 context.Add(c.transform);
             } else if (c != agent.AgentCollider && c.CompareTag("Scout") ) {
-                for (int i = 0; i < 10; i++)
-                {
-                    context.Add(c.transform);
-                }
+                context.Add(c.transform);
             }
         }
         return context;
