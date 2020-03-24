@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 
 
+
+
 public class EntitySpawning : MonoBehaviour
 {
 
@@ -30,11 +32,24 @@ public class EntitySpawning : MonoBehaviour
     private int amountOfTroops = 1;
     public Text troopText;
     private bool inSpawningMethod = false;
+    public Text money;
+    int infantryCost = 100;
+    int archerCost = 300;
+    int pikeCost = 200;
+
+
+    void Start(){
+        //if statement is to get around a null pointer exception in flockscene (since the "money" text is not in flock scene)
+        if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) { 
+        money.text = "Money: " + flock.moneyAmount.ToString(); 
+        }
+    }
 
     private void Update(){
         if (Input.GetMouseButton(0)){
             StartCoroutine(SpawnWithDelay());
         }
+        
     }
     IEnumerator SpawnWithDelay(){
         if (!inSpawningMethod){
@@ -58,40 +73,40 @@ public class EntitySpawning : MonoBehaviour
     }
     public void spawnCircle(){
         if (infantryToggle.isOn){
-            spawnEntitiesCircular(infantryPrefab, defaultInfantryObject);
+            spawnEntitiesCircular(infantryPrefab, defaultInfantryObject, infantryCost);
         }
         else if (pikeToggle.isOn){
-            spawnEntitiesCircular(pikemanPrefab, defaultPikemanObject);
+            spawnEntitiesCircular(pikemanPrefab, defaultPikemanObject, pikeCost);
         }
         else if (archerToggle.isOn){
-            spawnEntitiesCircular(archerPrefab, defaultArcherObject);
+            spawnEntitiesCircular(archerPrefab, defaultArcherObject, archerCost);
         }
     }
     public void spawnRectangle(){
         if (infantryToggle.isOn){
-            spawnEntitiesRectangular(infantryPrefab, defaultInfantryObject);
+            spawnEntitiesRectangular(infantryPrefab, defaultInfantryObject, infantryCost);
         }
         else if (pikeToggle.isOn){
-            spawnEntitiesRectangular(pikemanPrefab, defaultPikemanObject);
+            spawnEntitiesRectangular(pikemanPrefab, defaultPikemanObject, pikeCost);
         }
         else if (archerToggle.isOn){
-            spawnEntitiesRectangular(archerPrefab, defaultArcherObject);
+            spawnEntitiesRectangular(archerPrefab, defaultArcherObject, archerCost);
         }
     }
 
     public void spawnTriangle(){
         if (infantryToggle.isOn){
-            spawnEntitiesTriangular(infantryPrefab, defaultInfantryObject);
+            spawnEntitiesTriangular(infantryPrefab, defaultInfantryObject, infantryCost);
         }
         else if (pikeToggle.isOn){
-            spawnEntitiesTriangular(pikemanPrefab, defaultPikemanObject);
+            spawnEntitiesTriangular(pikemanPrefab, defaultPikemanObject, pikeCost);
         }
         else if (archerToggle.isOn){
-            spawnEntitiesTriangular(archerPrefab, defaultArcherObject);
+            spawnEntitiesTriangular(archerPrefab, defaultArcherObject, archerCost);
         }
     }
     
-    public void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType){
+    public void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType, int cost){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
@@ -109,16 +124,22 @@ public class EntitySpawning : MonoBehaviour
                 if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ //raycast to get the exact y coordinate
                     FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
                 }
-                flock.CreateUnit( //spawn troops in formation
-                    agentPrefab,
-                    FinalWorldPos,
-                    Quaternion.Euler(Vector3.up),
-                    unitType
-                );
+                if(flock.moneyAmount - cost > 0) { //can afford to spawn
+                    flock.CreateUnit( //spawn troops in formation
+                        agentPrefab,
+                        FinalWorldPos,
+                        Quaternion.Euler(Vector3.up),
+                        unitType
+                    );
+                    flock.moneyAmount -= cost; //reduce money appropriately
+                }
+                
+                money.text = "Money: " + flock.moneyAmount.ToString();
             }
         }
     }
-    public void spawnEntitiesRectangular(FlockAgent agentPrefab, Unit unitType){
+    public void spawnEntitiesRectangular(FlockAgent agentPrefab, Unit unitType, int cost)
+    {
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
@@ -134,18 +155,23 @@ public class EntitySpawning : MonoBehaviour
                 if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ //raycast to get the exact y coordinate
                     FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
                 }
-                flock.CreateUnit( //spawn troops in formation
-                    agentPrefab,
-                    FinalWorldPos,
-                    Quaternion.Euler(Vector3.up),
-                    unitType
-                );
+                if(flock.moneyAmount - cost > 0) { //can afford to spawn
+                    flock.CreateUnit( //spawn troops in formation
+                        agentPrefab,
+                        FinalWorldPos,
+                        Quaternion.Euler(Vector3.up),
+                        unitType
+                    );
+                    flock.moneyAmount -= cost; //reduce money appropriately
+                }
+                
+                money.text = "Money: " + flock.moneyAmount.ToString();
             }
 
         }
 
     }
-    public void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType)
+    public void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType, int cost)
     {
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
@@ -160,18 +186,26 @@ public class EntitySpawning : MonoBehaviour
             int switchSide = 1; //variable to make spawning on each "side" of the arrow shape possible..
             int arrowDirection = -1; //arrow formation should be in opposite direction for the two players
             if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") arrowDirection *= -1;
-            for (int i = 0; i < amountOfTroops; i++){
+            for (int i = 0; i < amountOfTroops; i++)
+            {
                 Vector3 FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location 
-                if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ //raycast to get the exact y coordinate
+                if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer))
+                { //raycast to get the exact y coordinate
                     FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
                 }
-                flock.CreateUnit( //spawn troops in formation
-                    agentPrefab,
-                    FinalWorldPos,
-                    Quaternion.Euler(Vector3.up),
-                    unitType
-                );
+                if(flock.moneyAmount - cost > 0) { //can afford to spawn
+                    flock.CreateUnit( //spawn troops in formation
+                        agentPrefab,
+                        FinalWorldPos,
+                        Quaternion.Euler(Vector3.up),
+                        unitType
+                    );
+                    flock.moneyAmount -= cost; //reduce money appropriately
+                }
                 switchSide *= -1;
+
+               
+                money.text = "Money: " + flock.moneyAmount.ToString();
             }
 
         }

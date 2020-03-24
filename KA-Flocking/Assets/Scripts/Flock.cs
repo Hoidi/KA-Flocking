@@ -25,6 +25,8 @@ public class Flock : MonoBehaviour
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
 
+    public int moneyAmount = 50000;
+
     float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
 
