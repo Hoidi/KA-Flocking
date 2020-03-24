@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3097109650205871093}
   - component: {fileID: 4748517818133429992}
   - component: {fileID: 4452797866950765425}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CustomWallWithSnow
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

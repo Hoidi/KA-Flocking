@@ -16,14 +16,13 @@ public class Flock : MonoBehaviour
     public float maxSpeed = 5f;
     [Range(1f, 50f)]
     public float neighbourRadius = 1.5f;
-    [Range(1f, 100f)]
-    public float scoutNeighbourRadius = 30f;
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
+    // All layers that will be checked for collisions, currently Troop & Obstacle
+    int colliderLayers = (1 << 8) | (1<<10) ;
 
     float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
-
     public int CountDeadUnits{ get { return deadUnits.Count; } }
     // Start is called before the first frame update
     void Start()
@@ -59,20 +58,12 @@ public class Flock : MonoBehaviour
         List<Transform> context = new List<Transform>();
 
         Collider[] contextColliders;
-        // Gets all nearby colliders
-        if (agent.unit.GetType().ToString().Equals("Scout"))
-        {
-            contextColliders = Physics.OverlapSphere(agent.transform.position, scoutNeighbourRadius);
-        } else {
-            contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius);
-        }
-
+        
+        contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius, colliderLayers);
         foreach (Collider c in contextColliders)
         {
-            if ((c != agent.AgentCollider && c.CompareTag("Player")) || c.CompareTag("Obstacle"))
+            if (c != agent.AgentCollider)
             {
-                context.Add(c.transform);
-            } else if (c != agent.AgentCollider && c.CompareTag("Scout") ) {
                 context.Add(c.transform);
             }
         }

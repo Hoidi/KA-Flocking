@@ -18,7 +18,6 @@ public class SteeredCohesionBehaviour : FilteredFlockBehaviour
         List<Transform> filteredContext = (filter == null) ? context : filter.Filter(agent, context);
         foreach (Transform item in filteredContext)
         {
-            
             distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
             cohesionMove += item.position/distanceSqr;
         }

@@ -5,6 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Flock/Behaviour/FightOrFlight")]
 public class FightOrFlightBehaviour : FlockBehaviour
 {
+    int troopLayer = 1<<8;
+    [Range(0f,1000f)]
+    float scoutNeighbourRadius = 100f;
+
     Vector3 enemiesDirection = Vector3.zero;
     Vector3 friendsDirection = Vector3.zero; //is kept to enable more advanced behaviour in the future. 
 
@@ -12,6 +16,14 @@ public class FightOrFlightBehaviour : FlockBehaviour
     float friendsStrength = 1f;
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
+        // If the unit is a scout then look at a larger range
+        if (agent.unit.GetType().ToString().Equals("Scout")) {
+            Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, scoutNeighbourRadius, troopLayer);
+            foreach (Collider c in contextColliders)
+            {
+                context.Add(c.transform);
+            }
+        }
         if (context.Count == 0)
         {
             return Vector3.zero;
