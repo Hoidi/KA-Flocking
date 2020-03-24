@@ -36,9 +36,9 @@ public class EntitySpawning : MonoBehaviour
     private bool inSpawningMethod = false;
     public Text money;
     public Text costOfSpawning;
-    int infantryCost = 100;
-    int archerCost = 300;
-    int pikeCost = 200;
+    private int infantryCost = 100;
+    private int archerCost = 300;
+    private int pikeCost = 200;
 
 
     void Start(){
