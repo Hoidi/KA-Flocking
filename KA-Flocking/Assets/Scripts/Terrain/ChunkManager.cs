@@ -23,7 +23,7 @@ public class ChunkManager : MonoBehaviour
     [Range(1, 5)]
     public int octaves = 1;
     public GameObject wallPrefab;
-    [Range(1,25)]
+    [Range(1, 25)]
     public float wallScale = 10f;
 
 
@@ -31,9 +31,9 @@ public class ChunkManager : MonoBehaviour
     void Start()
     {
         // The starting positions for the walls, based on the chunksize and the amount of chunks in each direction
-        int wallpositionX = chunkSize*chunksX/2;
-        int wallpositionZ = chunkSize*chunksZ/2;
-        BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), Quaternion.identity);
+        int wallpositionX = chunkSize * chunksX / 2 + 1;
+        int wallpositionZ = chunkSize * chunksZ / 2 + 1;
+        BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ + 2), Quaternion.identity);
         BuildWall(new Vector3(-wallpositionX,0,wallpositionZ), Quaternion.identity);
         BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
         BuildWall(new Vector3(wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
