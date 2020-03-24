@@ -10,6 +10,7 @@ using UnityEditor;
 
 
 
+
 public class EntitySpawning : MonoBehaviour
 {
 
@@ -54,7 +55,8 @@ public class EntitySpawning : MonoBehaviour
         }
         int sum;
         //if statement is to get around a null pointer exception in flockscene (since the cost of spawning troops isnt relevant in the flocking scene)
-        if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded){
+        if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded)
+        {
         
             if (infantryToggle.isOn){
                 sum = amountOfTroops * infantryCost;
@@ -160,11 +162,11 @@ public class EntitySpawning : MonoBehaviour
                 int amount = flock.moneyAmount;
                 int x = 0;
                 if (amount == 0){
-                    #if UNITY_EDITOR
+                #if UNITY_EDITOR
                     EditorUtility.DisplayDialog("Insufficient money!", "You dont have any money left to spend", "Ok");
-                    #endif 
-                    return; }
-                    while (amount-cost >= 0){ //dirty solution to calculate how many troops player can afford to spawn 
+                #endif    
+                return; }
+                while (amount-cost >= 0){ //dirty solution to calculate how many troops player can afford to spawn 
                     amount -= cost;
                     x++;
                 }
@@ -173,11 +175,11 @@ public class EntitySpawning : MonoBehaviour
                     EditorUtility.DisplayDialog("Insufficient money!", "You dont have enough money to spawn a troop of this kind", "Ok");
                     #endif
                 }
-                bool prompt = false;
-                #if UNITY_EDITOR
-                prompt = EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel");
-                #endif
-                if (prompt){
+                else if (
+                    #if UNITY_EDITOR
+                    EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel")
+                    #endif
+                    ){
                     for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
                         location = Random.insideUnitSphere * amountOfTroops * 0.4f;
                         Vector3 FinalWorldPos = worldPos + location;
@@ -245,15 +247,15 @@ public class EntitySpawning : MonoBehaviour
                     x++;
                 }
                 if (x == 0) {
-                    #if UNITY_EDITOR
+                    #if UNITY_EDITOR   
                     EditorUtility.DisplayDialog("Insufficient money!", "You dont have enough money to spawn a troop of this kind", "Ok");
                     #endif
                 }
-                bool prompt = false;
+                else if (
                     #if UNITY_EDITOR
-                prompt = EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel");
+                    EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel")
                     #endif
-                if (prompt){
+                    ){ 
                     for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
                         Vector3 FinalWorldPos = new Vector3(worldPos.x + 1.5f * (y % Mathf.RoundToInt(Mathf.Sqrt(x))), worldPos.y, worldPos.z + 1.5f * Mathf.CeilToInt(y / Mathf.RoundToInt(Mathf.Sqrt(x))));
                         //raycast to get the exact y coordinate
@@ -315,10 +317,8 @@ public class EntitySpawning : MonoBehaviour
             else{
                 int amount = flock.moneyAmount;
                 int x = 0;
-                if (amount == 0) {
-                    #if UNITY_EDITOR
-                    EditorUtility.DisplayDialog("Insufficient money!", "You dont have any money left to spend", "Ok");
-                    #endif
+                if (amount == 0) { 
+                    EditorUtility.DisplayDialog("Insufficient money!", "You dont have any money left to spend", "Ok"); 
                     return; 
                 }
                 while (amount - cost >= 0){ //dirty solution to calculate how many troops player can afford to spawn 
@@ -326,16 +326,15 @@ public class EntitySpawning : MonoBehaviour
                     x++;
                 }
                 if(x == 0) {
-                #if UNITY_EDITOR
+                    #if UNITY_EDITOR
                     EditorUtility.DisplayDialog("Insufficient money!", "You dont have enough money to spawn a troop of this kind", "Ok");
-                #endif
+                    #endif
                 }
-                bool prompt = false;
-                #if UNITY_EDITOR
-                prompt = EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel");
-                #endif
-                if (prompt){
-
+                else if (
+                    #if UNITY_EDITOR
+                    EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel")
+                    #endif
+                    ){
                     for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
                         Vector3 FinalWorldPos = new Vector3(worldPos.x + 1.5f * (y % Mathf.RoundToInt(Mathf.Sqrt(x))), worldPos.y, worldPos.z + 1.5f * Mathf.CeilToInt(y / Mathf.RoundToInt(Mathf.Sqrt(x))));
                         //raycast to get the exact y coordinate
@@ -351,9 +350,9 @@ public class EntitySpawning : MonoBehaviour
                         switchSide *= -1;
                     }
                 }
-                else { //user pressed cancel
+                else { 
                     return; 
-                } 
+                } //user pressed cancel
                 flock.moneyAmount -= (x * cost); //reduce money appropriately
                 money.text = "Money: " + flock.moneyAmount.ToString();
             }
