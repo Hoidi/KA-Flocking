@@ -124,7 +124,7 @@ public class EntitySpawning : MonoBehaviour
                 if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ //raycast to get the exact y coordinate
                     FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
                 }
-                if(flock.moneyAmount - cost > 0) { //can afford to spawn
+                if(flock.moneyAmount - cost >= 0) { //can afford to spawn
                     flock.CreateUnit( //spawn troops in formation
                         agentPrefab,
                         FinalWorldPos,
@@ -155,7 +155,7 @@ public class EntitySpawning : MonoBehaviour
                 if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ //raycast to get the exact y coordinate
                     FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
                 }
-                if(flock.moneyAmount - cost > 0) { //can afford to spawn
+                if(flock.moneyAmount - cost >= 0) { //can afford to spawn
                     flock.CreateUnit( //spawn troops in formation
                         agentPrefab,
                         FinalWorldPos,
@@ -193,7 +193,7 @@ public class EntitySpawning : MonoBehaviour
                 { //raycast to get the exact y coordinate
                     FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
                 }
-                if(flock.moneyAmount - cost > 0) { //can afford to spawn
+                if(flock.moneyAmount - cost >= 0) { //can afford to spawn
                     flock.CreateUnit( //spawn troops in formation
                         agentPrefab,
                         FinalWorldPos,
