@@ -33,7 +33,7 @@ public class CameraManager : MonoBehaviour {
     Vector3 frameMove;
     float frameRotate;
     float frameZoom;
-    Camera camera;
+    new Camera camera;
 
     private void Awake() {
         inOutSpeed = originalInOutSpeed * (frameZoom / startingZoom);

@@ -5,23 +5,19 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
 
-    public FlockAgent agentPrefab;
-    const float agentDensity = 0.8f;
     // The lists of agent. Should only be modified via AddUnit and RemoveUnit
     private List<FlockAgent> _agents = new List<FlockAgent>();
     // Public Read Only reference to the agent list. 
     public IList<FlockAgent> agents { get { return _agents.AsReadOnly(); } }
-    public Unit defaultInfantryObject;
     private HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
-    public FlockBehaviour behaviour;
-    [Range(10, 1000)]
-    public int startingAmount = 50;
     [Range(1f, 100f)]
     public float driveFactor = 10f;
     [Range(1f, 100f)]
     public float maxSpeed = 5f;
     [Range(1f, 50f)]
     public float neighbourRadius = 1.5f;
+    [Range(1f, 100f)]
+    public float scoutNeighbourRadius = 30f;
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
 
@@ -45,7 +41,7 @@ public class Flock : MonoBehaviour
             List<Transform> context = GetNearbyObjects(agent);
             agent.unit.Attack(context, agent, this);
 
-            Vector3 move = behaviour.CalculateMove(agent, context, this);
+            Vector3 move = agent.unit.behaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
             if (move.sqrMagnitude > squareMaxSpeed)
             {
@@ -61,13 +57,25 @@ public class Flock : MonoBehaviour
     List<Transform> GetNearbyObjects(FlockAgent agent)
     {
         List<Transform> context = new List<Transform>();
-        Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius);
+        Collider[] contextColliders;
+        // Gets all nearby colliders
+        if (agent.unit.GetType().ToString().Equals("Scout"))
+        {
+            contextColliders = Physics.OverlapSphere(agent.transform.position, scoutNeighbourRadius);
+        } else {
+            contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius);
+        }
 
         foreach (Collider c in contextColliders)
         {
             if ((c != agent.AgentCollider && c.CompareTag("Player")) || c.CompareTag("Obstacle"))
             {
                 context.Add(c.transform);
+            } else if (c != agent.AgentCollider && c.CompareTag("Scout") ) {
+                for (int i = 0; i < 10; i++)
+                {
+                    context.Add(c.transform);
+                }
             }
         }
         return context;

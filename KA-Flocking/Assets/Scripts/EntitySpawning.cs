@@ -13,9 +13,9 @@ public class EntitySpawning : MonoBehaviour
     public FlockAgent infantryPrefab;
     public FlockAgent pikemanPrefab;
     public FlockAgent archerPrefab;
-    public Infantry defaultInfantryObject;
-    public Unit defaultArcherObject;
+    public Unit defaultInfantryObject;
     public Unit defaultPikemanObject;
+    public Unit defaultArcherObject;
     public Camera cam;
     RaycastHit collisionWithPlane;
     public Toggle infantryToggle;

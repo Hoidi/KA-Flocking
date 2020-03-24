@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1355593088120620635}
   m_Layer: 8
   m_Name: Army2 Pikeman
-  m_TagString: Player
+  m_TagString: Scout
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -9,7 +9,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
     Vector3 friendsDirection = Vector3.zero; //is kept to enable more advanced behaviour in the future. 
 
     float enemiesStrength = 0f;
-    float friendsStrength = 0f;
+    float friendsStrength = 1f;
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
         if (context.Count == 0)
@@ -34,7 +34,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
         Vector3 cohesionMove = Vector3.zero;
         friendsDirection = Vector3.zero;
         enemiesDirection = Vector3.zero;
-        friendsStrength = 0f;
+        friendsStrength = 1f;
         enemiesStrength = 0f;
 
         float distance;

@@ -10,7 +10,6 @@ public class FlockAgent : MonoBehaviour
     // The speed at which the rotation of the agents stabilises
     public float stabilisationSpeed = 2.0f;
     public Unit unit;
-
     Collider agentCollider;
     Rigidbody rb;
     public Collider AgentCollider { get { return agentCollider; } }

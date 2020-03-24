@@ -12,9 +12,9 @@ public class Infantry : Unit
     // The amount of damage this unit deals in one Time unit
     [Range(0f,1000f)]
     public float damage = 2f;
-    // The reach of the unit depending on the neighbourradius
-    [Range(0f,10f)]
-    public float reach = 1f;
+    // The reach of the unit, still limited by the neighbourradius
+    [Range(0f,50f)]
+    public float attackReach = 1f;
 
     public override void TakeDamage(float amount, FlockAgent agent) {
         amount *= Time.deltaTime;
@@ -41,7 +41,7 @@ public class Infantry : Unit
         for (int i = 0; i < targets.Count; i++)
         {
             sqrDistance = Vector3.SqrMagnitude(targets[i].position - attacker.transform.position);
-            if (sqrDistance < closestDistance && sqrDistance < reach) {
+            if (sqrDistance < closestDistance && sqrDistance < attackReach) {
                 closest = targets[i].GetComponentInParent<FlockAgent>();
                 closestDistance = sqrDistance;
             }
