@@ -13,14 +13,17 @@ public class EntitySpawning : MonoBehaviour
     public FlockAgent infantryPrefab;
     public FlockAgent pikemanPrefab;
     public FlockAgent archerPrefab;
+    public FlockAgent scoutPrefab;
     public Unit defaultInfantryObject;
     public Unit defaultPikemanObject;
     public Unit defaultArcherObject;
+    public Unit defaultScoutObject;
     public Camera cam;
     RaycastHit collisionWithPlane;
     public Toggle infantryToggle;
     public Toggle pikeToggle;
     public Toggle archerToggle;
+    public Toggle scoutToggle;
     public Toggle CircularToggle;
     public Toggle RectangularToggle;
     public Toggle ArrowToggle;
@@ -66,6 +69,9 @@ public class EntitySpawning : MonoBehaviour
         else if (archerToggle.isOn){
             spawnEntitiesCircular(archerPrefab, defaultArcherObject);
         }
+        else if (scoutToggle.isOn){
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject);
+        }
     }
     public void spawnRectangle(){
         if (infantryToggle.isOn){
@@ -76,6 +82,9 @@ public class EntitySpawning : MonoBehaviour
         }
         else if (archerToggle.isOn){
             spawnEntitiesRectangular(archerPrefab, defaultArcherObject);
+        }
+        else if (scoutToggle.isOn){
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject);
         }
     }
 
@@ -88,6 +97,9 @@ public class EntitySpawning : MonoBehaviour
         }
         else if (archerToggle.isOn){
             spawnEntitiesTriangular(archerPrefab, defaultArcherObject);
+        }
+        else if (scoutToggle.isOn){
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject);
         }
     }
     
