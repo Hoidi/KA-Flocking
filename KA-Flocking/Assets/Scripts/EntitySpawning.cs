@@ -172,18 +172,20 @@ public class EntitySpawning : MonoBehaviour
                     location = Random.insideUnitSphere * x * 0.4f;
                     Vector3 FinalWorldPos = worldPos + location;
                     //raycast to get the exact y coordinate
-                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
+                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){
                         FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+
+                        flock.CreateUnit( //spawn troops in formation
+                        agentPrefab,
+                        FinalWorldPos,
+                        Quaternion.Euler(Vector3.up),
+                        unitType
+                        );
+                        flock.moneyAmount -= cost; //reduce money appropriately
+                        money.text = "Money: " + flock.moneyAmount.ToString();
                     }
-                    flock.CreateUnit( //spawn troops in formation
-                    agentPrefab,
-                    FinalWorldPos,
-                    Quaternion.Euler(Vector3.up),
-                    unitType
-                    );
+                    else y--; //random location was inside a wall, so find a new location 
                 }
-                flock.moneyAmount -= (x * cost); //reduce money appropriately
-                money.text = "Money: " + flock.moneyAmount.ToString();
             }
         }
     }
@@ -233,16 +235,17 @@ public class EntitySpawning : MonoBehaviour
                     //raycast to get the exact y coordinate
                     if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
                         FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                        flock.CreateUnit( //spawn troops in formation
+                            agentPrefab,
+                            FinalWorldPos,
+                            Quaternion.Euler(Vector3.up),
+                            unitType
+                        );
+                        flock.moneyAmount -= cost; //reduce money appropriately
+                        money.text = "Money: " + flock.moneyAmount.ToString();
                     }
-                    flock.CreateUnit( //spawn troops in formation
-                    agentPrefab,
-                    FinalWorldPos,
-                    Quaternion.Euler(Vector3.up),
-                    unitType
-                    );
+                    else return; //spawned too close to a wall
                 }
-                flock.moneyAmount -= (x * cost); //reduce money appropriately
-                money.text = "Money: " + flock.moneyAmount.ToString();
             }
         }
     }
@@ -295,19 +298,20 @@ public class EntitySpawning : MonoBehaviour
                 for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
                     Vector3 FinalWorldPos = new Vector3(worldPos.x + (y * switchSide), worldPos.y, worldPos.z - y * arrowDirection); //spawn location
                     //raycast to get the exact y coordinate
-                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
+                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){
                         FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                        flock.CreateUnit( //spawn troops in formation
+                            agentPrefab,
+                            FinalWorldPos,
+                            Quaternion.Euler(Vector3.up),
+                            unitType
+                            );
+                        switchSide *= -1;
+                        flock.moneyAmount -= cost; //reduce money appropriately
+                        money.text = "Money: " + flock.moneyAmount.ToString();
                     }
-                    flock.CreateUnit( //spawn troops in formation
-                    agentPrefab,
-                    FinalWorldPos,
-                    Quaternion.Euler(Vector3.up),
-                    unitType
-                    );
-                    switchSide *= -1;
+                    else return; //spawned too close to a wall
                 }
-                flock.moneyAmount -= (x * cost); //reduce money appropriately
-                money.text = "Money: " + flock.moneyAmount.ToString();
             }
         }
     }
