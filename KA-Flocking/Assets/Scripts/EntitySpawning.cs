@@ -293,7 +293,7 @@ public class EntitySpawning : MonoBehaviour
                     //maybe add some indicator to the player here..
                 }
                 for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
-                    Vector3 FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location
+                    Vector3 FinalWorldPos = new Vector3(worldPos.x + (y * switchSide), worldPos.y, worldPos.z - y * arrowDirection); //spawn location
                     //raycast to get the exact y coordinate
                     if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
                         FinalWorldPos.y = hit.point.y; //location now has proper y coordinate

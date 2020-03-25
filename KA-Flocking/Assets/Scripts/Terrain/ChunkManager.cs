@@ -32,8 +32,8 @@ public class ChunkManager : MonoBehaviour
     {
         // The starting positions for the walls, based on the chunksize and the amount of chunks in each direction
         int wallpositionX = chunkSize * chunksX / 2 + 1;
-        int wallpositionZ = chunkSize * chunksZ / 2 + 1;
-        BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ + 2), Quaternion.identity);
+        float wallpositionZ = chunkSize * chunksZ / 2 + 0.8f;
+        BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), Quaternion.identity);
         BuildWall(new Vector3(-wallpositionX,0,wallpositionZ), Quaternion.identity);
         BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
         BuildWall(new Vector3(wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
