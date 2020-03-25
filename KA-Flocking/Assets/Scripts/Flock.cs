@@ -21,6 +21,9 @@ public class Flock : MonoBehaviour
     // All layers that will be checked for collisions, currently Troop & Obstacle
     int colliderLayers = (1 << 8) | (1<<10) ;
 
+    [System.NonSerialized]
+    public int moneyAmount = 50000;
+
     float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
     public int CountDeadUnits{ get { return deadUnits.Count; } }
