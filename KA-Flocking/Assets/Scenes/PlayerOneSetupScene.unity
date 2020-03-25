@@ -250,7 +250,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 7dfd7d51fac198d4394c6e4582bca61f, type: 3}
+    m_Font: {fileID: 12800000, guid: d9f3166e0c9b860439ab93bd15fef84b, type: 3}
     m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
@@ -1487,7 +1487,6 @@ MonoBehaviour:
   maxSpeed: 3
   neighbourRadius: 3.5
   avoidanceRadiusMultiplier: 0.4
-  moneyAmount: 50000
 --- !u!4 &437747587
 Transform:
   m_ObjectHideFlags: 0
@@ -2161,7 +2160,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Infantry
+  m_Text: 'Infantry: 100'
 --- !u!222 &721998795
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3935,7 +3934,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Pike
+  m_Text: 'Pike: 200'
 --- !u!222 &1534782125
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4089,7 +4088,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Archer
+  m_Text: 'Archer: 300'
 --- !u!222 &1628380774
 CanvasRenderer:
   m_ObjectHideFlags: 0

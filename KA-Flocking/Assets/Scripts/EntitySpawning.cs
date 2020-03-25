@@ -42,7 +42,7 @@ public class EntitySpawning : MonoBehaviour
 
 
     void Start(){
-        //if statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
+        //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) { 
         money.text = "Money: " + flock.moneyAmount.ToString(); 
         }
@@ -53,7 +53,7 @@ public class EntitySpawning : MonoBehaviour
             StartCoroutine(SpawnWithDelay());
         }
         int sum;
-        //if statement is to get around a null pointer exception in flockscene (since the cost of spawning troops isnt relevant in the flocking scene)
+        //if-statement is to get around a null pointer exception in flockscene (since the cost of spawning troops isnt relevant in the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded){
         
             if (infantryToggle.isOn){
@@ -159,43 +159,30 @@ public class EntitySpawning : MonoBehaviour
             else{
                 int amount = flock.moneyAmount;
                 int x = 0;
-                if (amount == 0){
-                    #if UNITY_EDITOR
-                    EditorUtility.DisplayDialog("Insufficient money!", "You dont have any money left to spend", "Ok");
-                    #endif 
-                    return; }
-                    while (amount-cost >= 0){ //dirty solution to calculate how many troops player can afford to spawn 
+                while (amount-cost >= 0){ //dirty solution to calculate how many troops player can afford to spawn 
                     amount -= cost;
                     x++;
                 }
-                if (x == 0) {
-                    #if UNITY_EDITOR
-                    EditorUtility.DisplayDialog("Insufficient money!", "You dont have enough money to spawn a troop of this kind", "Ok");
-                    #endif
+                if (flock.moneyAmount == 0){ //if player doesnt have any money left
+                    return; 
                 }
-                bool prompt = false;
-                #if UNITY_EDITOR
-                prompt = EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel");
-                #endif
-                if (prompt){
-                    for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
-                        location = Random.insideUnitSphere * amountOfTroops * 0.4f;
-                        Vector3 FinalWorldPos = worldPos + location;
-                        //raycast to get the exact y coordinate
-                        if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
-                            FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
-                        }
-                        flock.CreateUnit( //spawn troops in formation
-                        agentPrefab,
-                        FinalWorldPos,
-                        Quaternion.Euler(Vector3.up),
-                        unitType
-                        );
+                else if (x == 0) { //if player doesnt have enough money to spawn a single troop of desired kind
+                    //maybe add some indicator to the player here..
+                }
+                for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
+                    location = Random.insideUnitSphere * x * 0.4f;
+                    Vector3 FinalWorldPos = worldPos + location;
+                    //raycast to get the exact y coordinate
+                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
+                        FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
                     }
+                    flock.CreateUnit( //spawn troops in formation
+                    agentPrefab,
+                    FinalWorldPos,
+                    Quaternion.Euler(Vector3.up),
+                    unitType
+                    );
                 }
-                else { //user pressed cancel
-                    return;
-                } 
                 flock.moneyAmount -= (x * cost); //reduce money appropriately
                 money.text = "Money: " + flock.moneyAmount.ToString();
             }
@@ -234,43 +221,29 @@ public class EntitySpawning : MonoBehaviour
             else{
                 int amount = flock.moneyAmount;
                 int x = 0;
-                if (amount == 0) {
-                    #if UNITY_EDITOR
-                    EditorUtility.DisplayDialog("Insufficient money!", "You dont have any money left to spend", "Ok");
-                    #endif
-                    return; 
-                }
                 while (amount-cost >= 0){ //dirty solution to calculate how many troops player can afford to spawn 
                     amount -= cost;
                     x++;
                 }
-                if (x == 0) {
-                    #if UNITY_EDITOR
-                    EditorUtility.DisplayDialog("Insufficient money!", "You dont have enough money to spawn a troop of this kind", "Ok");
-                    #endif
-                }
-                bool prompt = false;
-                    #if UNITY_EDITOR
-                prompt = EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel");
-                    #endif
-                if (prompt){
-                    for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
-                        Vector3 FinalWorldPos = new Vector3(worldPos.x + 1.5f * (y % Mathf.RoundToInt(Mathf.Sqrt(x))), worldPos.y, worldPos.z + 1.5f * Mathf.CeilToInt(y / Mathf.RoundToInt(Mathf.Sqrt(x))));
-                        //raycast to get the exact y coordinate
-                        if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
-                            FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
-                        }
-                        flock.CreateUnit( //spawn troops in formation
-                        agentPrefab,
-                        FinalWorldPos,
-                        Quaternion.Euler(Vector3.up),
-                        unitType
-                        );
-                    }
-                }
-                else { //user pressed cancel
+                if (flock.moneyAmount == 0) { //if player doesnt have any money left
                     return; 
-                } 
+                }
+                else if (x == 0) { //if player doesnt have enough money to spawn a single troop of desired kind
+                    //maybe add some indicator to the player here..
+                }
+                for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
+                    Vector3 FinalWorldPos = new Vector3(worldPos.x + 1.5f * (y % Mathf.RoundToInt(Mathf.Sqrt(x))), worldPos.y, worldPos.z + 1.5f * Mathf.CeilToInt(y / Mathf.RoundToInt(Mathf.Sqrt(x))));
+                    //raycast to get the exact y coordinate
+                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
+                        FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                    }
+                    flock.CreateUnit( //spawn troops in formation
+                    agentPrefab,
+                    FinalWorldPos,
+                    Quaternion.Euler(Vector3.up),
+                    unitType
+                    );
+                }
                 flock.moneyAmount -= (x * cost); //reduce money appropriately
                 money.text = "Money: " + flock.moneyAmount.ToString();
             }
@@ -315,49 +288,33 @@ public class EntitySpawning : MonoBehaviour
             else{
                 int amount = flock.moneyAmount;
                 int x = 0;
-                if (amount == 0) {
-                    #if UNITY_EDITOR
-                    EditorUtility.DisplayDialog("Insufficient money!", "You dont have any money left to spend", "Ok");
-                    #endif
-                    return; 
-                }
                 while (amount - cost >= 0){ //dirty solution to calculate how many troops player can afford to spawn 
                     amount -= cost;
                     x++;
                 }
-                if(x == 0) {
-                #if UNITY_EDITOR
-                    EditorUtility.DisplayDialog("Insufficient money!", "You dont have enough money to spawn a troop of this kind", "Ok");
-                #endif
-                }
-                bool prompt = false;
-                #if UNITY_EDITOR
-                prompt = EditorUtility.DisplayDialog("Insufficient money!", "You only have enough money to spawn " + x + " troop(s), go ahead?", "Ok", "Cancel");
-                #endif
-                if (prompt){
-
-                    for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
-                        Vector3 FinalWorldPos = new Vector3(worldPos.x + 1.5f * (y % Mathf.RoundToInt(Mathf.Sqrt(x))), worldPos.y, worldPos.z + 1.5f * Mathf.CeilToInt(y / Mathf.RoundToInt(Mathf.Sqrt(x))));
-                        //raycast to get the exact y coordinate
-                        if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
-                            FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
-                        }
-                        flock.CreateUnit( //spawn troops in formation
-                        agentPrefab,
-                        FinalWorldPos,
-                        Quaternion.Euler(Vector3.up),
-                        unitType
-                        );
-                        switchSide *= -1;
-                    }
-                }
-                else { //user pressed cancel
+                if (flock.moneyAmount == 0) { //if player doesnt have any money left
                     return; 
-                } 
+                }
+                else if(x == 0) { //if player doesnt have enough money to spawn a single troop of desired kind
+                    //maybe add some indicator to the player here..
+                }
+                for (int y = 0; y < x; y++){ //spawn the amount of troops that player affords
+                    Vector3 FinalWorldPos = new Vector3(worldPos.x + 1.5f * (y % Mathf.RoundToInt(Mathf.Sqrt(x))), worldPos.y, worldPos.z + 1.5f * Mathf.CeilToInt(y / Mathf.RoundToInt(Mathf.Sqrt(x))));
+                    //raycast to get the exact y coordinate
+                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){ 
+                        FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                    }
+                    flock.CreateUnit( //spawn troops in formation
+                    agentPrefab,
+                    FinalWorldPos,
+                    Quaternion.Euler(Vector3.up),
+                    unitType
+                    );
+                    switchSide *= -1;
+                }
                 flock.moneyAmount -= (x * cost); //reduce money appropriately
                 money.text = "Money: " + flock.moneyAmount.ToString();
             }
-            }
-
         }
     }
+}
