@@ -42,6 +42,7 @@ public class EntitySpawning : MonoBehaviour
     private int infantryCost = 100;
     private int archerCost = 300;
     private int pikeCost = 200;
+    private int scoutCost = 1000;
 
 
     void Start(){
@@ -105,7 +106,7 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesCircular(archerPrefab, defaultArcherObject, archerCost);
         }
         else if (scoutToggle.isOn){
-            spawnEntitiesCircular(scoutPrefab, defaultScoutObject);
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
     public void spawnRectangle(){
@@ -119,7 +120,7 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesRectangular(archerPrefab, defaultArcherObject, archerCost);
         }
         else if (scoutToggle.isOn){
-            spawnEntitiesCircular(scoutPrefab, defaultScoutObject);
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
 
@@ -134,7 +135,7 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesTriangular(archerPrefab, defaultArcherObject, archerCost);
         }
         else if (scoutToggle.isOn){
-            spawnEntitiesCircular(scoutPrefab, defaultScoutObject);
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
     
