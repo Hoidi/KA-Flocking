@@ -68,8 +68,11 @@ public class EntitySpawning : MonoBehaviour
                 sum = amountOfTroops * pikeCost;
                 costOfSpawning.text = "Spawning cost: " + sum.ToString();
             }
-            else { 
+            else if (archerToggle.isOn) { 
                 sum = amountOfTroops * archerCost;
+                costOfSpawning.text = "Spawning cost: " + sum.ToString();
+            } else {
+                sum = amountOfTroops * scoutCost;
                 costOfSpawning.text = "Spawning cost: " + sum.ToString();
             }
         }
