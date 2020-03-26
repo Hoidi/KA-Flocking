@@ -33,6 +33,7 @@ public class Settings : MonoBehaviour
             mapZ = previousSettings.mapZ;
             mountains = previousSettings.mountains;
             seed = previousSettings.seed;
+            inputSeed.text = seed.ToString();
             // Remove previous settings after copying
             Destroy(previousObject);
         }
@@ -41,7 +42,10 @@ public class Settings : MonoBehaviour
         inputMapX.text = mapX.ToString();
         inputMapZ.text = mapZ.ToString();
         inputMountains.value = mountains;
-        inputSeed.text = Random.Range(0, 10000).ToString();
+        // 0 is default value for ints
+        if (seed == 0) {
+            RandomizeSeed();
+        }
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -51,5 +55,11 @@ public class Settings : MonoBehaviour
         mapZ = int.Parse(inputMapZ.text);
         mountains = (int) inputMountains.value;
         seed = int.Parse(inputSeed.text);
+    }
+
+    // Used to randomize the seed
+    public void RandomizeSeed() {
+        seed = Random.Range(0, 10000);
+        inputSeed.text = seed.ToString();
     }
 }
