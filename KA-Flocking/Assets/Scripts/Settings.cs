@@ -20,6 +20,7 @@ public class Settings : MonoBehaviour
     public InputField inputMapZ;
     public Slider inputMountains;
     public InputField inputSeed;
+    public Text prevSeed;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,8 @@ public class Settings : MonoBehaviour
             mapZ = previousSettings.mapZ;
             mountains = previousSettings.mountains;
             seed = previousSettings.seed;
-            inputSeed.text = seed.ToString();
+            prevSeed.gameObject.SetActive(true);
+            GameObject.Find("PrevSeedNo").GetComponent<Text>().text= seed.ToString();
             // Remove previous settings after copying
             Destroy(previousObject);
         }
@@ -42,10 +44,8 @@ public class Settings : MonoBehaviour
         inputMapX.text = mapX.ToString();
         inputMapZ.text = mapZ.ToString();
         inputMountains.value = mountains;
-        // 0 is default value for ints
-        if (seed == 0) {
-            RandomizeSeed();
-        }
+        RandomizeSeed();
+
         DontDestroyOnLoad(this.gameObject);
     }
 
