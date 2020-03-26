@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -6723276856258825692}
   - component: {fileID: -3617908639792016736}
   m_Layer: 8
-  m_Name: Army1
+  m_Name: Army1 Infantry
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
       propertyPath: m_LocalPosition.x

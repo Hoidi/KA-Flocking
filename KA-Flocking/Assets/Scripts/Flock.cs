@@ -5,17 +5,11 @@ using UnityEngine;
 public class Flock : MonoBehaviour
 {
 
-    public FlockAgent agentPrefab;
-    const float agentDensity = 0.8f;
     // The lists of agent. Should only be modified via AddUnit and RemoveUnit
     private List<FlockAgent> _agents = new List<FlockAgent>();
     // Public Read Only reference to the agent list. 
     public IList<FlockAgent> agents { get { return _agents.AsReadOnly(); } }
-    public Unit defaultInfantryObject;
     private HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
-    public FlockBehaviour behaviour;
-    [Range(10, 1000)]
-    public int startingAmount = 50;
     [Range(1f, 100f)]
     public float driveFactor = 10f;
     [Range(1f, 100f)]
@@ -24,13 +18,14 @@ public class Flock : MonoBehaviour
     public float neighbourRadius = 1.5f;
     [Range(0f, 1f)]
     public float avoidanceRadiusMultiplier = 0.5f;
+    // All layers that will be checked for collisions, currently Troop & Obstacle
+    int colliderLayers = (1 << 8) | (1<<10) ;
 
     [System.NonSerialized]
     public int moneyAmount = 50000;
 
     float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
-
     public int CountDeadUnits{ get { return deadUnits.Count; } }
     // Start is called before the first frame update
     void Start()
@@ -48,7 +43,7 @@ public class Flock : MonoBehaviour
             List<Transform> context = GetNearbyObjects(agent);
             agent.unit.Attack(context, agent, this);
 
-            Vector3 move = behaviour.CalculateMove(agent, context, this);
+            Vector3 move = agent.unit.behaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
             if (move.sqrMagnitude > squareMaxSpeed)
             {
@@ -64,11 +59,13 @@ public class Flock : MonoBehaviour
     List<Transform> GetNearbyObjects(FlockAgent agent)
     {
         List<Transform> context = new List<Transform>();
-        Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius);
 
+        Collider[] contextColliders;
+        
+        contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius, colliderLayers);
         foreach (Collider c in contextColliders)
         {
-            if ((c != agent.AgentCollider && c.CompareTag("Player")) || c.CompareTag("Obstacle"))
+            if (c != agent.AgentCollider)
             {
                 context.Add(c.transform);
             }
