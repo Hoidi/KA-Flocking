@@ -6,8 +6,13 @@ using UnityEngine.UI;
 
 public class NextScene : MonoBehaviour
 {
+    private Settings settings;
     public void nextScene() {
+        if (SceneManager.GetActiveScene().name.Equals("Menu")) {
+            settings = GameObject.Find("Settings").GetComponent<Settings>();
+        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.sceneLoaded += ConfigureSettings;
     }
 
     public void restartGame() {
@@ -15,5 +20,22 @@ public class NextScene : MonoBehaviour
         Destroy(GameObject.Find("Team 2 Flock")); //remove gameobjects from finished game
         Destroy(GameObject.Find("VisualManager")); //remove gameobjects from finished game
         SceneManager.LoadScene(0);
+    }
+
+    // Configures settings depending on the scenes
+    void ConfigureSettings(Scene scene, LoadSceneMode mode) {
+        if (scene.name.Equals("PlayerOneSetupScene")) {
+            ChunkManager chunkManager = GameObject.Find("VisualManager").GetComponent<ChunkManager>();
+            chunkManager.pointyBreakOff = settings.inputMountains.value;
+            chunkManager.chunksX = int.Parse(settings.inputMapX.text);
+            chunkManager.chunksZ = int.Parse(settings.inputMapZ.text);
+            chunkManager.seed = int.Parse(settings.inputSeed.text);
+
+            Flock flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
+            flock.moneyAmount = int.Parse(settings.inputStartingMoney.text);
+        } else if (scene.name.Equals("PlayerTwoSetupScene")) {
+            Flock flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();
+            flock.moneyAmount = int.Parse(settings.inputStartingMoney.text);
+        }
     }
 }

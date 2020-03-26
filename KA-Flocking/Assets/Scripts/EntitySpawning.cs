@@ -48,7 +48,7 @@ public class EntitySpawning : MonoBehaviour
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) { 
-        money.text = "Money: " + flock.moneyAmount.ToString(); 
+            money.text = "Money: " + flock.moneyAmount.ToString(); 
         }
     }
 

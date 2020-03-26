@@ -39,7 +39,6 @@ public class ChunkManager : MonoBehaviour
         BuildWall(new Vector3(wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
 
         //generates the chunks 
-        seed = Random.Range(0, 10000);
         chunks = new Chunk[chunksX, chunksZ];
         for (int x = 0; x < chunksX; x++)
         {
