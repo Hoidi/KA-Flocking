@@ -34,6 +34,7 @@ public class FlockAgent : MonoBehaviour
                 transform.forward = velocity;
             }
         }
+        stabiliseY();
     }
 
     public void Initialize(Flock flock, Unit unitType)
@@ -42,7 +43,7 @@ public class FlockAgent : MonoBehaviour
         unit = Instantiate(unitType);
     }
 
-    void FixedUpdate()
+    void stabiliseY()
     {
         Vector3 predictedUp = Quaternion.AngleAxis(
             rb.angularVelocity.magnitude * Mathf.Rad2Deg * stability / stabilisationSpeed,

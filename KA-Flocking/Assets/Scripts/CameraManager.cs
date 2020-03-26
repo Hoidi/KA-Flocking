@@ -34,6 +34,7 @@ public class CameraManager : MonoBehaviour {
     float frameRotate;
     float frameZoom;
     new Camera camera;
+    float lastFrameTime;
 
     private void Awake() {
         inOutSpeed = originalInOutSpeed * (frameZoom / startingZoom);
@@ -44,6 +45,8 @@ public class CameraManager : MonoBehaviour {
 
         zoomStrategy = camera.orthographic ? (IZoomStrategy) new OrthographicZoomStrategy(camera, startingZoom) : new PerspectiveZoomStrategy(camera, cameraOffset, startingZoom); ;
         camera.transform.LookAt(transform.position + Vector3.up * lookAtOffset);
+
+        lastFrameTime = Time.realtimeSinceStartup;
     }
 
     private void OnEnable() {
@@ -83,26 +86,28 @@ public class CameraManager : MonoBehaviour {
     }
 
     private void LateUpdate() {
+        float myDeltaTime = Time.realtimeSinceStartup - lastFrameTime;
+        lastFrameTime = Time.realtimeSinceStartup;
         if (frameMove != Vector3.zero) {
             Vector3 speedModFrameMove = new Vector3(frameMove.x * lateralSpeed, frameMove.y, frameMove.z * inOutSpeed);
-            transform.position += transform.TransformDirection(speedModFrameMove) * Time.deltaTime;
+            transform.position += transform.TransformDirection(speedModFrameMove) * myDeltaTime;
             LookPositionInBouds();
             frameMove = Vector3.zero;
             
         }
 
         if (frameRotate != 0f) {
-            transform.Rotate(Vector3.up, frameRotate * Time.deltaTime * rotateSpeed);
+            transform.Rotate(Vector3.up, frameRotate * myDeltaTime * rotateSpeed);
             frameRotate = 0f;
         }
 
         if (frameZoom < 0f) {
-            zoomStrategy.ZoomIn(camera, Time.deltaTime * Mathf.Abs(frameZoom) * zoomSpeed * (zoomStrategy.getCurrentZoomLevel()/startingZoom), nearZoomLimit);
+            zoomStrategy.ZoomIn(camera, myDeltaTime * Mathf.Abs(frameZoom) * zoomSpeed * (zoomStrategy.getCurrentZoomLevel()/startingZoom), nearZoomLimit);
             frameZoom = 0f;
         }
 
         if (frameZoom > 0f) {
-            zoomStrategy.ZoomOut(camera, Time.deltaTime * frameZoom * zoomSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom), farZoomLimit);
+            zoomStrategy.ZoomOut(camera, myDeltaTime * frameZoom * zoomSpeed * (zoomStrategy.getCurrentZoomLevel() / startingZoom), farZoomLimit);
             frameZoom = 0f;
         }
 
