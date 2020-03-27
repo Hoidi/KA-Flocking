@@ -9,7 +9,7 @@ public class Flock : MonoBehaviour
     private List<FlockAgent> _agents = new List<FlockAgent>();
     // Public Read Only reference to the agent list. 
     public IList<FlockAgent> agents { get { return _agents.AsReadOnly(); } }
-    private HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
+    public HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
     [Range(1f, 100f)]
     public float driveFactor = 10f;
     [Range(1f, 100f)]
@@ -26,7 +26,6 @@ public class Flock : MonoBehaviour
 
     float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
-    public int CountDeadUnits{ get { return deadUnits.Count; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -104,7 +103,6 @@ public class Flock : MonoBehaviour
         foreach (FlockAgent deadUnit in deadUnits){ //for testing purposes, until we know what to do with dead units
             deadUnit.gameObject.SetActive(false); //make dead troops invisible
         }
-        
     }
 }
 
