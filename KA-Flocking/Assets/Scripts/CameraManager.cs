@@ -47,6 +47,15 @@ public class CameraManager : MonoBehaviour {
         camera.transform.LookAt(transform.position + Vector3.up * lookAtOffset);
 
         lastFrameTime = Time.realtimeSinceStartup;
+
+        GameObject settingsObject = GameObject.Find("SettingsObject");
+        if (settingsObject != null) {
+            Settings settings = settingsObject.GetComponent<Settings>();
+            minBounds.x = -(settings.mapX*13);
+            minBounds.y = -(settings.mapZ*13);
+            maxBounds.x = settings.mapX*13;
+            maxBounds.y = settings.mapZ*13;
+        }
     }
 
     private void OnEnable() {
