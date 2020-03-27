@@ -17,7 +17,7 @@ public class winningText : MonoBehaviour
         flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
         flock2 = GameObject.Find("Team 2 Flock").GetComponent<Flock>();
         winText.text = ScorePanel.winningText;
-        //team1kills.text += flock2.CountDeadUnits.ToString();
-        //team2kills.text += flock.CountDeadUnits.ToString();
+        team1kills.text += flock2.deadUnits.Count.ToString();
+        team2kills.text += flock.deadUnits.Count.ToString();
     }
 }

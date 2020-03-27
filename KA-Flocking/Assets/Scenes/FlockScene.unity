@@ -266,7 +266,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0)
+  m_Text: 0
 --- !u!222 &111387777
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -550,7 +550,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0)
+  m_Text: 0
 --- !u!222 &471766482
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -864,6 +864,7 @@ GameObject:
   - component: {fileID: 764110928}
   - component: {fileID: 764110927}
   - component: {fileID: 764110929}
+  - component: {fileID: 764110930}
   m_Layer: 5
   m_Name: Red team panel
   m_TagString: Untagged
@@ -952,22 +953,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamFlockName: Team 2 Flock
-  next: {fileID: 0}
-  infantryNoText: {fileID: 422496239}
-  deadInfantryText: {fileID: 1213947057}
-  pikemanNoText: {fileID: 0}
-  deadPikemanText: {fileID: 0}
-  archerNoText: {fileID: 0}
-  deadArcherText: {fileID: 0}
-  scoutNoText: {fileID: 0}
-  deadScoutText: {fileID: 0}
-  troopNoTexts: []
-  troopNoDeadTexts: []
+  next: {fileID: 764110930}
+  troopNoTexts:
+  - {fileID: 422496239}
+  - {fileID: 81147276}
+  - {fileID: 1787716512}
+  - {fileID: 1891780266}
+  troopNoDeadTexts:
+  - {fileID: 1213947057}
+  - {fileID: 471766481}
+  - {fileID: 1118206993}
+  - {fileID: 2039460768}
   troopTypes:
-  - 
-  - 
-  - 
-  - 
+  - Infantry
+  - Pikeman
+  - Archer
+  - Scout
+--- !u!114 &764110930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764110925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597f569ae060c01458304dd84cf2e342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &825832687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,7 +1203,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0)
+  m_Text: 0
 --- !u!222 &901678097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1442,6 +1455,7 @@ GameObject:
   - component: {fileID: 990400822}
   - component: {fileID: 990400821}
   - component: {fileID: 990400823}
+  - component: {fileID: 990400824}
   m_Layer: 5
   m_Name: Blue team panel
   m_TagString: Untagged
@@ -1530,15 +1544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamFlockName: Team 1 Flock
-  next: {fileID: 0}
-  infantryNoText: {fileID: 942863195}
-  deadInfantryText: {fileID: 2137135736}
-  pikemanNoText: {fileID: 1237514845}
-  deadPikemanText: {fileID: 1929590782}
-  archerNoText: {fileID: 651072043}
-  deadArcherText: {fileID: 111387776}
-  scoutNoText: {fileID: 1446254230}
-  deadScoutText: {fileID: 901678096}
+  next: {fileID: 990400824}
   troopNoTexts:
   - {fileID: 942863195}
   - {fileID: 1237514845}
@@ -1554,6 +1560,18 @@ MonoBehaviour:
   - Pikeman
   - Archer
   - Scout
+--- !u!114 &990400824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990400819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 597f569ae060c01458304dd84cf2e342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1118206991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1622,7 +1640,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0)
+  m_Text: 0
 --- !u!222 &1118206994
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1756,7 +1774,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0)
+  m_Text: 0
 --- !u!222 &1213947058
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2689,7 +2707,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0)
+  m_Text: 0
 --- !u!222 &1929590783
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2843,7 +2861,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0)
+  m_Text: 0
 --- !u!222 &2039460769
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2997,7 +3015,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0)
+  m_Text: 0
 --- !u!222 &2137135737
 CanvasRenderer:
   m_ObjectHideFlags: 0
