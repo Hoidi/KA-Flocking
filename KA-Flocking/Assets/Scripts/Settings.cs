@@ -53,6 +53,9 @@ public class Settings : MonoBehaviour
         startingMoney = int.Parse(inputStartingMoney.text);
         mapX = int.Parse(inputMapX.text);
         mapZ = int.Parse(inputMapZ.text);
+        // Adjust such that the amount of chunks is an even number
+        mapX += mapX % 2;
+        mapZ += mapZ % 2;
         mountains = (int) inputMountains.value;
         seed = int.Parse(inputSeed.text);
     }
