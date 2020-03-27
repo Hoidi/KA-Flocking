@@ -14,14 +14,17 @@ public class EntitySpawning : MonoBehaviour
     public FlockAgent infantryPrefab;
     public FlockAgent pikemanPrefab;
     public FlockAgent archerPrefab;
-    public Infantry defaultInfantryObject;
-    public Unit defaultArcherObject;
+    public FlockAgent scoutPrefab;
+    public Unit defaultInfantryObject;
     public Unit defaultPikemanObject;
+    public Unit defaultArcherObject;
+    public Unit defaultScoutObject;
     public Camera cam;
     RaycastHit collisionWithPlane;
     public Toggle infantryToggle;
     public Toggle pikeToggle;
     public Toggle archerToggle;
+    public Toggle scoutToggle;
     public Toggle CircularToggle;
     public Toggle RectangularToggle;
     public Toggle ArrowToggle;
@@ -37,6 +40,7 @@ public class EntitySpawning : MonoBehaviour
     private int infantryCost = 100;
     private int archerCost = 300;
     private int pikeCost = 200;
+    private int scoutCost = 1000;
 
 
     void Start(){
@@ -62,8 +66,11 @@ public class EntitySpawning : MonoBehaviour
                 sum = amountOfTroops * pikeCost;
                 costOfSpawning.text = "Spawning cost: " + sum.ToString();
             }
-            else { 
+            else if (archerToggle.isOn) { 
                 sum = amountOfTroops * archerCost;
+                costOfSpawning.text = "Spawning cost: " + sum.ToString();
+            } else {
+                sum = amountOfTroops * scoutCost;
                 costOfSpawning.text = "Spawning cost: " + sum.ToString();
             }
         }
@@ -99,6 +106,9 @@ public class EntitySpawning : MonoBehaviour
         else if (archerToggle.isOn){
             spawnEntitiesCircular(archerPrefab, defaultArcherObject, archerCost);
         }
+        else if (scoutToggle.isOn){
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
+        }
     }
     public void spawnRectangle(){
         if (infantryToggle.isOn){
@@ -109,6 +119,9 @@ public class EntitySpawning : MonoBehaviour
         }
         else if (archerToggle.isOn){
             spawnEntitiesRectangular(archerPrefab, defaultArcherObject, archerCost);
+        }
+        else if (scoutToggle.isOn){
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
 
@@ -121,6 +134,9 @@ public class EntitySpawning : MonoBehaviour
         }
         else if (archerToggle.isOn){
             spawnEntitiesTriangular(archerPrefab, defaultArcherObject, archerCost);
+        }
+        else if (scoutToggle.isOn){
+            spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
     
