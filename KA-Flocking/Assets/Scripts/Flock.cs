@@ -32,6 +32,7 @@ public class Flock : MonoBehaviour
         squareMaxSpeed = maxSpeed * maxSpeed;
         squareNeighbourRadius = neighbourRadius * neighbourRadius;
         squareAvoidanceRadius = avoidanceRadiusMultiplier * avoidanceRadiusMultiplier * squareNeighbourRadius;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
