@@ -57,5 +57,5 @@ public class EntityDeletion : MonoBehaviour{
     private void destroyTroop(GameObject troop) {
         troop.SetActive(false);
         flock.agents.Remove(troop.GetComponent<FlockAgent>());
-        }
+    }
 }
