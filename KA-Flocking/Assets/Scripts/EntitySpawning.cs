@@ -123,7 +123,7 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesRectangular(archerPrefab, defaultArcherObject, archerCost);
         }
         else if (scoutToggle.isOn){
-            spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
+            spawnEntitiesRectangular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
 
@@ -138,7 +138,7 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesTriangular(archerPrefab, defaultArcherObject, archerCost);
         }
         else if (scoutToggle.isOn){
-            spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
+            spawnEntitiesTriangular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
     
