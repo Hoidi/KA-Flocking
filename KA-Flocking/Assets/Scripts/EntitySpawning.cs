@@ -3,9 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.EventSystems;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 
 
@@ -59,7 +57,6 @@ public class EntitySpawning : MonoBehaviour
         int sum;
         //if-statement is to get around a null pointer exception in flockscene (since the cost of spawning troops isnt relevant in the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded){
-        
             if (infantryToggle.isOn){
                 sum = amountOfTroops * infantryCost;
                 costOfSpawning.text = "Spawning cost: " + sum.ToString();
@@ -93,12 +90,12 @@ public class EntitySpawning : MonoBehaviour
             inSpawningMethod = false;
         }
     }
-    public void setTroopAmount(){
+    private void setTroopAmount(){
         amountOfTroops = (int)troopSlider.value;
         troopText.text = amountOfTroops.ToString();
 
     }
-    public void spawnCircle(){
+    private void spawnCircle(){
         if (infantryToggle.isOn){
             spawnEntitiesCircular(infantryPrefab, defaultInfantryObject, infantryCost);
         }
@@ -112,7 +109,7 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
-    public void spawnRectangle(){
+    private void spawnRectangle(){
         if (infantryToggle.isOn){
             spawnEntitiesRectangular(infantryPrefab, defaultInfantryObject, infantryCost);
         }
@@ -127,7 +124,7 @@ public class EntitySpawning : MonoBehaviour
         }
     }
 
-    public void spawnTriangle(){
+    private void spawnTriangle(){
         if (infantryToggle.isOn){
             spawnEntitiesTriangular(infantryPrefab, defaultInfantryObject, infantryCost);
         }
@@ -141,9 +138,8 @@ public class EntitySpawning : MonoBehaviour
             spawnEntitiesCircular(scoutPrefab, defaultScoutObject, scoutCost);
         }
     }
-    
-    public void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType, int cost){
-        Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
+
+    private void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType, int cost){
         if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
@@ -205,7 +201,7 @@ public class EntitySpawning : MonoBehaviour
         }
             
         }
-    public void spawnEntitiesRectangular(FlockAgent agentPrefab, Unit unitType, int cost){
+    private void spawnEntitiesRectangular(FlockAgent agentPrefab, Unit unitType, int cost){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
@@ -267,7 +263,7 @@ public class EntitySpawning : MonoBehaviour
         }
 
     }
-    public void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType, int cost){
+    private void spawnEntitiesTriangular(FlockAgent agentPrefab, Unit unitType, int cost){
         Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f);
         if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);

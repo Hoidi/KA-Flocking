@@ -6,10 +6,9 @@ public class Flock : MonoBehaviour
 {
 
     // The lists of agent. Should only be modified via AddUnit and RemoveUnit
-    private List<FlockAgent> _agents = new List<FlockAgent>();
-    // Public Read Only reference to the agent list. 
-    public IList<FlockAgent> agents { get { return _agents.AsReadOnly(); } }
-    private HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
+    public List<FlockAgent> agents = new List<FlockAgent>();
+    // Public Read Only reference to the agent list.
+    public HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
     [Range(1f, 100f)]
     public float driveFactor = 10f;
     [Range(1f, 100f)]
@@ -39,7 +38,7 @@ public class Flock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (FlockAgent agent in _agents)
+        foreach (FlockAgent agent in agents)
         {
             List<Transform> context = GetNearbyObjects(agent);
             agent.unit.Attack(context, agent, this);
@@ -87,7 +86,7 @@ public class Flock : MonoBehaviour
         // Calls the agent's initialize function
         newAgent.Initialize(this, unitType);
         // Adds the agent to the list of agents
-        _agents.Add(newAgent);
+        agents.Add(newAgent);
     }
 
     // Adds the agent to the dead units, this will disable them at the end of the update()
@@ -101,7 +100,7 @@ public class Flock : MonoBehaviour
     // Note: This can be effectivised by clearing the deadUnits list after function call.
     private void RemoveUnitsFromFlock()
     {
-        _agents.RemoveAll(deadUnits.Contains);
+        agents.RemoveAll(deadUnits.Contains);
         foreach (FlockAgent deadUnit in deadUnits){ //for testing purposes, until we know what to do with dead units
             deadUnit.gameObject.SetActive(false); //make dead troops invisible
         }
