@@ -7,6 +7,7 @@ TagManager:
   - '*Boundary*'
   - Dead
   - Obstacle
+  - Scout
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - 
   - Troop
   - Plane
-  - 
+  - Obstacle
   - 
   - 
   - 

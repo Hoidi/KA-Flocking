@@ -23,7 +23,7 @@ public class ChunkManager : MonoBehaviour
     [Range(1, 5)]
     public int octaves = 1;
     public GameObject wallPrefab;
-    [Range(1,25)]
+    [Range(1, 25)]
     public float wallScale = 10f;
 
 
@@ -31,15 +31,14 @@ public class ChunkManager : MonoBehaviour
     void Start()
     {
         // The starting positions for the walls, based on the chunksize and the amount of chunks in each direction
-        int wallpositionX = chunkSize*chunksX/2;
-        int wallpositionZ = chunkSize*chunksZ/2;
+        int wallpositionX = chunkSize * chunksX / 2 + 1;
+        float wallpositionZ = chunkSize * chunksZ / 2 + 0.8f;
         BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), Quaternion.identity);
         BuildWall(new Vector3(-wallpositionX,0,wallpositionZ), Quaternion.identity);
         BuildWall(new Vector3(-wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
         BuildWall(new Vector3(wallpositionX,0,-wallpositionZ), new Quaternion (0,0.7071f,0,0.7071f));
 
         //generates the chunks 
-        seed = Random.Range(0, 10000);
         chunks = new Chunk[chunksX, chunksZ];
         for (int x = 0; x < chunksX; x++)
         {
@@ -62,7 +61,8 @@ public class ChunkManager : MonoBehaviour
             direction = Vector3.forward;
         }
         // Depending on the size in X or Z, generate an appropriate amount of walls depending on the wallScale
-        for (int i = 0; i < Mathf.Ceil(Mathf.Min(chunkSize*chunksX,chunkSize*chunksZ)/(wallScale*5)); i++)
+        float max = rotation == Quaternion.identity ? chunkSize*chunksX/(wallScale*5) : chunkSize*chunksZ/(wallScale*5);
+        for (int i = 0; i < Mathf.Ceil(max); i++)
         {
             // Each wall has a size of around 5 before scaling
             GameObject go = Instantiate(wallPrefab, location + direction*i*wallScale*chunkSize/5 + direction*wallScale*chunkSize/10, rotation,transform);
