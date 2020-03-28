@@ -1379,7 +1379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 437747587}
   - component: {fileID: 437747586}
-  - component: {fileID: 437747588}
   m_Layer: 0
   m_Name: Team 1 Flock
   m_TagString: Untagged

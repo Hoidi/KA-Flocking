@@ -61,7 +61,8 @@ public class ChunkManager : MonoBehaviour
             direction = Vector3.forward;
         }
         // Depending on the size in X or Z, generate an appropriate amount of walls depending on the wallScale
-        for (int i = 0; i < Mathf.Ceil(Mathf.Min(chunkSize*chunksX,chunkSize*chunksZ)/(wallScale*5)); i++)
+        float max = rotation == Quaternion.identity ? chunkSize*chunksX/(wallScale*5) : chunkSize*chunksZ/(wallScale*5);
+        for (int i = 0; i < Mathf.Ceil(max); i++)
         {
             // Each wall has a size of around 5 before scaling
             GameObject go = Instantiate(wallPrefab, location + direction*i*wallScale*chunkSize/5 + direction*wallScale*chunkSize/10, rotation,transform);
