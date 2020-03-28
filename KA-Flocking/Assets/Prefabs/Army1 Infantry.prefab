@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -6723276856258825692}
   - component: {fileID: -3617908639792016736}
   m_Layer: 8
-  m_Name: Army1
+  m_Name: Army1 Infantry
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,6 +261,10 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: fd7d68a65822e4a44a9ef78850e64cfc, type: 3}
+    - target: {fileID: 9500000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1e36518c1f186394abc1739fabcbb5c2, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a17d30ccd767b3a40843c58d581f4128, type: 3}
 --- !u!4 &3346288672938658544 stripped
