@@ -13,12 +13,14 @@ public class FlockAgent : MonoBehaviour
     Collider agentCollider;
     Rigidbody rb;
     public Collider AgentCollider { get { return agentCollider; } }
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         agentCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     public void Move(Vector3 acceleration)
@@ -26,7 +28,16 @@ public class FlockAgent : MonoBehaviour
         if(rb != null)
         {
             rb.velocity += acceleration * Time.deltaTime * 3;
+            if (rb.velocity.sqrMagnitude >= 7)
+            {
+                animator.SetTrigger("running");
+                animator.ResetTrigger("walking");
+            }
+            else {
 
+                animator.SetTrigger("walking");
+                animator.ResetTrigger("running");
+            }
             if (rb.velocity != Vector3.zero)
             {
                 Vector3 velocity = rb.velocity;
