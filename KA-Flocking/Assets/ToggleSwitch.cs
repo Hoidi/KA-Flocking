@@ -118,4 +118,10 @@ public class ToggleSwitch : MonoBehaviour
 
 
     }
+
+    //Sword: https://thenounproject.com/search/?q=sword&i=2444713, ProSymbols US
+    //Spear: https://thenounproject.com/term/spear/313343/ Abhimanyu Bose, IN, 
+    //Bow: https://thenounproject.com/search/?q=bow&i=2851797 NicklasR, AT
+    //Flag: https://thenounproject.com/search/?q=flag&i=714884 Maxim Kulikov
+
 }
