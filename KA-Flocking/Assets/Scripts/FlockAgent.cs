@@ -12,6 +12,7 @@ public class FlockAgent : MonoBehaviour
     public Unit unit;
     Collider agentCollider;
     Rigidbody rb;
+    int animationCounter = 100;
     public Collider AgentCollider { get { return agentCollider; } }
     public Animator animator;
 
@@ -25,26 +26,84 @@ public class FlockAgent : MonoBehaviour
 
     public void Move(Vector3 acceleration)
     {
-        if(rb != null)
+        if (rb == null)
         {
-            rb.velocity += acceleration * Time.deltaTime * 3;
-            if (rb.velocity.sqrMagnitude >= 7)
-            {
-                animator.SetTrigger("running");
-                animator.ResetTrigger("walking");
-            }
-            else {
-
-                animator.SetTrigger("walking");
-                animator.ResetTrigger("running");
-            }
-            if (rb.velocity != Vector3.zero)
-            {
-                Vector3 velocity = rb.velocity;
-                velocity.y = 0;
-                transform.forward = velocity;
-            }
+            stabiliseY();
+            return;
         }
+
+        rb.velocity += acceleration * Time.deltaTime * 7;
+
+        if (rb.velocity != Vector3.zero)
+        {
+            Vector3 velocity = rb.velocity;
+            velocity.y = 0;
+            transform.forward = velocity;
+        }
+
+        if (animationCounter < 100)
+        {
+            animationCounter++;
+            stabiliseY();
+            return;
+        }
+        float sqrVelocity = rb.velocity.sqrMagnitude;
+        animator.ResetTrigger("idle");
+        animator.ResetTrigger("slowWalk");
+        animator.ResetTrigger("walk");
+        animator.ResetTrigger("fastWalk");
+        animator.ResetTrigger("slowRun");
+        animator.ResetTrigger("run");
+        animator.ResetTrigger("fastRun");
+        animator.ResetTrigger("slowNarutoRun");
+        animator.ResetTrigger("narutoRun");
+        animator.ResetTrigger("fastNarutoRun");
+        if (sqrVelocity >= 100)
+        {
+            animator.SetTrigger("fastNarutoRun");
+        }
+        else if (sqrVelocity >= 70)
+        {
+            animator.SetTrigger("narutoRun");
+        }
+        else if (sqrVelocity >= 48)
+        {
+            animator.SetTrigger("slowNarutoRun");
+        }
+        else if (sqrVelocity >= 25)
+        {
+            animator.SetTrigger("fastRun");
+            Debug.Log("fastRun");
+        }
+        else if (sqrVelocity >= 14)
+        {
+            animator.SetTrigger("run");
+
+            Debug.Log("run");
+        }
+        else if (sqrVelocity >= 9)
+        {
+            animator.SetTrigger("slowRun");
+
+            Debug.Log("slowRun");
+        }
+        else if (sqrVelocity >= 6)
+        {
+            animator.SetTrigger("fastWalk");
+        }
+        else if (sqrVelocity >= 3)
+        {
+            animator.SetTrigger("walk");
+        }
+        else if (sqrVelocity >= 1.5)
+        {
+            animator.SetTrigger("slowWalk");
+        }
+        else
+        {
+            animator.SetTrigger("idle");
+        }
+        animationCounter = 0;
         stabiliseY();
     }
 
