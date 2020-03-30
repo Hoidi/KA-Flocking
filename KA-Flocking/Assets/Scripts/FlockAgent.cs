@@ -43,7 +43,7 @@ public class FlockAgent : MonoBehaviour
         }
 
         float sqrVelocity = rb.velocity.sqrMagnitude;
-        float[] sqrAnimationSpeeds = { 0, 1.5f, 3, 6, 9, 14, 25, 40, 60, 90,};
+        float[] sqrAnimationSpeeds = { 0, 1.3f, 2.5f, 4.5f, 8, 14, 25, 40, 60, 90,};
         int newAnimationMode = animationMode;
 
         //looks to see if the velocity has changed enough to enter a new range. 
