@@ -28,100 +28,34 @@ public class ToggleSwitch : MonoBehaviour
     public GameObject ScoutToggleOn;
     public GameObject ScoutToggleOff;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        //Toggle buttons for formation type
-        if (CircularToggle.isOn)
-        {
-            CircularToggleOn.SetActive(true);
-            CircularToggleOff.SetActive(false);
-        }
-        else if (!CircularToggle.isOn)
-        {
-            CircularToggleOn.SetActive(false);
-            CircularToggleOff.SetActive(true);
-        }
+        //Togglebuttons for formations
+        CircularToggleOn.SetActive(CircularToggle.isOn);
+        CircularToggleOff.SetActive(!CircularToggle.isOn);
 
-        if (RectangularToggle.isOn)
-        {
-            RectangularToggleOn.SetActive(true);
-            RectangularToggleOff.SetActive(false);
-        }
-        else if (!RectangularToggle.isOn)
-        {
-            RectangularToggleOn.SetActive(false);
-            RectangularToggleOff.SetActive(true);
-        }
+        RectangularToggleOn.SetActive(RectangularToggle.isOn);
+        RectangularToggleOff.SetActive(!RectangularToggle.isOn);
 
-        if (ArrowToggle.isOn)
-        {
-            ArrowToggleOn.SetActive(true);
-            ArrowToggleOff.SetActive(false);
-        }
-        else if (!ArrowToggle.isOn)
-        {
-            ArrowToggleOn.SetActive(false);
-            ArrowToggleOff.SetActive(true);
-        }
-        //Toggle buttons for troop type
-        if (InfantryToggle.isOn)
-        {
-            InfantryToggleOn.SetActive(true);
-            InfantryToggleOff.SetActive(false);
-        }
-        else if (!InfantryToggle.isOn)
-        {
-            InfantryToggleOn.SetActive(false);
-            InfantryToggleOff.SetActive(true);
-        }
+        ArrowToggleOn.SetActive(ArrowToggle.isOn);
+        ArrowToggleOff.SetActive(!ArrowToggle.isOn);
 
-        if (PikeToggle.isOn)
-        {
-            PikeToggleOn.SetActive(true);
-            PikeToggleOff.SetActive(false);
-        }
-        else if (!PikeToggle.isOn)
-        {
-            PikeToggleOn.SetActive(false);
-            PikeToggleOff.SetActive(true);
-        }
+        //Togglebuttons for troop type
+        InfantryToggleOn.SetActive(InfantryToggle.isOn);
+        InfantryToggleOff.SetActive(!InfantryToggle.isOn);
 
-        if (ArcherToggle.isOn)
-        {
-            ArcherToggleOn.SetActive(true);
-            ArcherToggleOff.SetActive(false);
-        }
-        else if (!ArcherToggle.isOn)
-        {
-            ArcherToggleOn.SetActive(false);
-            ArcherToggleOff.SetActive(true);
-        }
+        PikeToggleOn.SetActive(PikeToggle.isOn);
+        PikeToggleOff.SetActive(!PikeToggle.isOn);
 
-        if (ScoutToggle.isOn)
-        {
-            ScoutToggleOn.SetActive(true);
-            ScoutToggleOff.SetActive(false);
-        }
-        else if (!ScoutToggle.isOn)
-        {
-            ScoutToggleOn.SetActive(false);
-            ScoutToggleOff.SetActive(true);
-        }
+        ArcherToggleOn.SetActive(ArcherToggle.isOn);
+        ArcherToggleOff.SetActive(!ArcherToggle.isOn);
 
-
+        ScoutToggleOn.SetActive(ScoutToggle.isOn);
+        ScoutToggleOff.SetActive(!ScoutToggle.isOn);
     }
-
     //Sword: https://thenounproject.com/search/?q=sword&i=2444713, ProSymbols US
-    //Spear: https://thenounproject.com/term/spear/313343/ Abhimanyu Bose, IN, 
+    //Spear: https://thenounproject.com/search/?q=spear&i=819835, Hamish 
     //Bow: https://thenounproject.com/search/?q=bow&i=2851797 NicklasR, AT
     //Flag: https://thenounproject.com/search/?q=flag&i=714884 Maxim Kulikov
-
 }
