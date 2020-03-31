@@ -63,13 +63,11 @@ public class EntityDeletion : MonoBehaviour{
                             hits = Physics.SphereCastAll(new Vector3(Area.x, 100, Area.z), radius * 0.6f, Vector3.down * 1000f, 10000f, troopLayer); //all troops to be deleted
                             Area.y = getYPos.point.y; //location now has proper y coordinate
                             areaToDelete.transform.position = new Vector3(Area.x, Area.y+1, Area.z);
-                            Debug.DrawRay(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, Color.red);
                         }
                     }
                     if (hits.Length > 0){
                         troops = new GameObject[hits.Length];
                         for (int i = 0; i < hits.Length; i++) { //get colliders of all troops
-                            Debug.DrawRay(new Vector3(hits[i].point.x, 100, hits[i].point.z), Vector3.down * 100f, Color.blue);
                             troops[i] = hits[i].collider.gameObject;
                         }
                         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded){ //player 1 setup scene -> make sure only flock 1 troops can be deleted
