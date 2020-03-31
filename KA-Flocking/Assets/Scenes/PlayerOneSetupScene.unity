@@ -403,7 +403,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ff16ed658e2baa3468fd3208efbd5d66, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 421c629916720464c9f3aa4d58c524d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1737,7 +1737,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 7.71e-43, y: 7.1e-44, z: 0, w: -0.0000000014707462}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -3740,7 +3740,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ff16ed658e2baa3468fd3208efbd5d66, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 421c629916720464c9f3aa4d58c524d9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
