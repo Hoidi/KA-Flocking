@@ -857,6 +857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cf757bdd2943151a9b3c48182551a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agents: []
   driveFactor: 10
   maxSpeed: 3
   neighbourRadius: 3.5
@@ -3756,6 +3757,7 @@ MonoBehaviour:
     type: 3}
   cam: {fileID: 447764074}
   money: {fileID: 742455934}
+  areaColor: {fileID: 2100000, guid: ffdeb0c88d69da042a82579488a50337, type: 2}
 --- !u!1 &2049678495
 GameObject:
   m_ObjectHideFlags: 0
