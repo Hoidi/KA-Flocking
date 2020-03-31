@@ -137,30 +137,24 @@ public class EntitySpawning : MonoBehaviour
         }
     }
 
-    private void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType, int cost)
-    {
-        if (Input.GetMouseButton(0))
-        { //shortcut to place units, prone to change(?)
+    private void spawnEntitiesCircular(FlockAgent agentPrefab, Unit unitType, int cost){
+        if (Input.GetMouseButton(0)){ //shortcut to place units, prone to change(?)
             Vector3 worldPos = new Vector3(0, 0, 0);
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
-            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer | obstacleLayer) || EventSystem.current.IsPointerOverGameObject())
-            { //already a troop at location, or user clicked on UI, so dont spawn
+            //already a troop at location, or user clicked on UI, so dont spawn
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer | obstacleLayer) || EventSystem.current.IsPointerOverGameObject()){ 
                 return;
             }
-            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer))
-            { //raytracing to acquire spawn location
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
                 worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
             }
             Vector3 location;
-            if (flock.moneyAmount - (amountOfTroops * cost) >= 0)
-            { //can afford to spawn
-                for (int i = 0; i < amountOfTroops; i++)
-                {
+            if (flock.moneyAmount - (amountOfTroops * cost) >= 0){ //can afford to spawn
+                for (int i = 0; i < amountOfTroops; i++){
                     location = Random.insideUnitSphere * amountOfTroops * 0.4f;
                     Vector3 FinalWorldPos = worldPos + location;
                     //raycast to get the exact y coordinate
-                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer))
-                    {
+                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){
                         FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
                         flock.CreateUnit( //spawn troops in formation
                         agentPrefab,
@@ -174,21 +168,17 @@ public class EntitySpawning : MonoBehaviour
                 flock.moneyAmount -= (amountOfTroops * cost); //reduce money appropriately
                 money.text = "Money: " + flock.moneyAmount.ToString(); //update money text
             }
-            else
-            {
+            else{
                 int amount = flock.moneyAmount;
                 int x = 0;
-                while (amount - cost >= 0)
-                { //dirty solution to calculate how many troops player can afford to spawn 
+                while (amount - cost >= 0){ //dirty solution to calculate how many troops player can afford to spawn 
                     amount -= cost;
                     x++;
                 }
-                if (flock.moneyAmount == 0)
-                { //if player doesnt have any money left
+                if (flock.moneyAmount == 0){ //if player doesnt have any money left
                     return;
                 }
-                else if (x == 0)
-                { //if player doesnt have enough money to spawn a single troop of desired kind
+                else if (x == 0){ //if player doesnt have enough money to spawn a single troop of desired kind
                     //maybe add some indicator to the player here..
                 }
                 for (int y = 0; y < x; y++)
@@ -196,10 +186,8 @@ public class EntitySpawning : MonoBehaviour
                     location = Random.insideUnitSphere * x * 0.4f;
                     Vector3 FinalWorldPos = worldPos + location;
                     //raycast to get the exact y coordinate
-                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer))
-                    {
+                    if (Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){
                         FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
-
                         flock.CreateUnit( //spawn troops in formation
                         agentPrefab,
                         FinalWorldPos,

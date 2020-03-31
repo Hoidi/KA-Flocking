@@ -20,32 +20,56 @@ public class EntityDeletion : MonoBehaviour{
     private int pikeCost = 200;
     private int scoutCost = 1000;
     public Text money;
-    public int radius;
+    private int radius = 5;
+    GameObject areaToDelete;
+    public Material areaColor;
 
     // Start is called before the first frame update
     private void Start(){
-        
+        areaToDelete = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        areaToDelete.transform.localScale = new Vector3(radius, 0, radius);
+        areaToDelete.GetComponent<Renderer>().material = areaColor;
+        areaToDelete.GetComponent<Renderer>().material.color = new Color(0, 0, 0, 0.01f);
     }
 
     // Update is called once per frame
     private void Update(){
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f){ // forward
+            if(radius < 25) { 
             radius++;
+            areaToDelete.transform.localScale = new Vector3(radius, 0, radius);
+            }
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f){ // backwards
+            if(radius > 5) { 
             radius--;
+            areaToDelete.transform.localScale = new Vector3(radius, 0, radius);
+            }
         }
-
+        areaToDelete.SetActive(false);
         if (Input.GetMouseButton(1)){
+            areaToDelete.SetActive(true);
             if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded){
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
                 if (Physics.SphereCast(ray.origin, radius, ray.direction, out collisionWithTroop, 10000f, planeLayer)){ //if there is a troop in the area
-                    RaycastHit []hits = Physics.SphereCastAll(ray.origin, 10, ray.direction, 10000f, troopLayer); //all troops to be deleted
+                    RaycastHit[] hits = null;
                     GameObject[] troops;
+                    Vector3 Area = new Vector3(0, 0, 0);
+                    //raycast to get the exact y coordinate
+                    if (Physics.Raycast(ray, out RaycastHit deletionIndicator, 10000f, planeLayer)){ //raytracing to acquire position for deletion indicator
+                        Area = deletionIndicator.point; //convert pixel coordinates to normal coordinates
+                        if (Physics.Raycast(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, out RaycastHit getYPos, Mathf.Infinity, planeLayer)){
+                            hits = Physics.SphereCastAll(new Vector3(Area.x, 100, Area.z), radius * 0.6f, Vector3.down * 1000f, 10000f, troopLayer); //all troops to be deleted
+                            Area.y = getYPos.point.y; //location now has proper y coordinate
+                            areaToDelete.transform.position = new Vector3(Area.x, Area.y+1, Area.z);
+                            Debug.DrawRay(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, Color.red);
+                        }
+                    }
                     if (hits.Length > 0){
                         troops = new GameObject[hits.Length];
-                        for (int i = 0; i < hits.Length; i++){ //get colliders of all troops
+                        for (int i = 0; i < hits.Length; i++) { //get colliders of all troops
+                            Debug.DrawRay(new Vector3(hits[i].point.x, 100, hits[i].point.z), Vector3.down * 100f, Color.blue);
                             troops[i] = hits[i].collider.gameObject;
                         }
                         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded){ //player 1 setup scene -> make sure only flock 1 troops can be deleted

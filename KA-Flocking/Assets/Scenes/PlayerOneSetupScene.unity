@@ -4202,10 +4202,7 @@ MonoBehaviour:
     type: 3}
   cam: {fileID: 447764074}
   money: {fileID: 64169626}
-  radius: 0
-  segments: 50
-  xradius: 5
-  yradius: 5
+  areaColor: {fileID: 2100000, guid: 29af47a217a7fd548acd664a4ad4c334, type: 2}
 --- !u!120 &2012675551
 LineRenderer:
   m_ObjectHideFlags: 0
