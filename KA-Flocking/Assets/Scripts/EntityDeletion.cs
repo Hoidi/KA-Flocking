@@ -29,7 +29,6 @@ public class EntityDeletion : MonoBehaviour{
         areaToDelete = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         areaToDelete.transform.localScale = new Vector3(radius, 0, radius);
         areaToDelete.GetComponent<Renderer>().material = areaColor;
-        areaToDelete.GetComponent<Renderer>().material.color = new Color(0, 0, 0, 0.01f);
         areaToDelete.GetComponent<Collider>().enabled = false;
     }
 
