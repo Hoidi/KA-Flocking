@@ -928,6 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9cf757bdd2943151a9b3c48182551a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agents: []
   driveFactor: 10
   maxSpeed: 3
   neighbourRadius: 3.5
@@ -3234,6 +3235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2012675549}
   - component: {fileID: 2012675548}
+  - component: {fileID: 2012675550}
   m_Layer: 0
   m_Name: Spawning
   m_TagString: Untagged
@@ -3254,26 +3256,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flock: {fileID: 621886118}
-  infantryPrefab: {fileID: 2185900543212254752, guid: 108c9165f7b559c41919cbd9de40a4cd,
-    type: 3}
-  pikemanPrefab: {fileID: 650865145934470292, guid: 7f904e221ce1aa04da561cfcd0ee0cbe,
-    type: 3}
-  archerPrefab: {fileID: 6314128460190958362, guid: c51126b60c610e060a6b19e292a8ca6d,
-    type: 3}
-  scoutPrefab: {fileID: 3355002661725430932, guid: 7afaaf20f3d337046a6379f8a2931a67,
-    type: 3}
-  defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
-    type: 2}
-  defaultPikemanObject: {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72,
-    type: 2}
-  defaultArcherObject: {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975,
-    type: 2}
-  defaultScoutObject: {fileID: 11400000, guid: 6f6b5988e530931459dfececce5bc37b, type: 2}
+  troopPrefabs:
+  - {fileID: 2185900543212254752, guid: 108c9165f7b559c41919cbd9de40a4cd, type: 3}
+  - {fileID: 650865145934470292, guid: 7f904e221ce1aa04da561cfcd0ee0cbe, type: 3}
+  - {fileID: 6314128460190958362, guid: c51126b60c610e060a6b19e292a8ca6d, type: 3}
+  - {fileID: 3355002661725430932, guid: 7afaaf20f3d337046a6379f8a2931a67, type: 3}
+  defaultTroopObjects:
+  - {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901, type: 2}
+  - {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72, type: 2}
+  - {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975, type: 2}
+  - {fileID: 11400000, guid: 6f6b5988e530931459dfececce5bc37b, type: 2}
+  troopCosts: 64000000c80000002c010000e8030000
   cam: {fileID: 447764074}
-  infantryToggle: {fileID: 1110981720}
-  pikeToggle: {fileID: 1771521579}
-  archerToggle: {fileID: 1637917625}
-  scoutToggle: {fileID: 1409560679}
+  troopToggles:
+  - {fileID: 1110981720}
+  - {fileID: 1771521579}
+  - {fileID: 1637917625}
+  - {fileID: 1409560679}
   CircularToggle: {fileID: 212638729}
   RectangularToggle: {fileID: 1982409554}
   ArrowToggle: {fileID: 1405689111}
@@ -3295,6 +3294,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2012675550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012675547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e93a8f6c7334f54a94e03719cc40744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flock: {fileID: 621886118}
+  infantryPrefab: {fileID: 2185900543212254752, guid: 108c9165f7b559c41919cbd9de40a4cd,
+    type: 3}
+  pikemanPrefab: {fileID: 650865145934470292, guid: 7f904e221ce1aa04da561cfcd0ee0cbe,
+    type: 3}
+  archerPrefab: {fileID: 6314128460190958362, guid: c51126b60c610e060a6b19e292a8ca6d,
+    type: 3}
+  scoutPrefab: {fileID: 3355002661725430932, guid: 7afaaf20f3d337046a6379f8a2931a67,
+    type: 3}
+  cam: {fileID: 447764074}
+  money: {fileID: 742455934}
+  areaColor: {fileID: 2100000, guid: ffdeb0c88d69da042a82579488a50337, type: 2}
 --- !u!1 &2049678495
 GameObject:
   m_ObjectHideFlags: 0
