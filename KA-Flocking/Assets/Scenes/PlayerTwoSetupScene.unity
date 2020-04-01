@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3693,26 +3693,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flock: {fileID: 621886118}
-  infantryPrefab: {fileID: 2185900543212254752, guid: 108c9165f7b559c41919cbd9de40a4cd,
-    type: 3}
-  pikemanPrefab: {fileID: 650865145934470292, guid: 7f904e221ce1aa04da561cfcd0ee0cbe,
-    type: 3}
-  archerPrefab: {fileID: 6314128460190958362, guid: c51126b60c610e060a6b19e292a8ca6d,
-    type: 3}
-  scoutPrefab: {fileID: 3355002661725430932, guid: 7afaaf20f3d337046a6379f8a2931a67,
-    type: 3}
-  defaultInfantryObject: {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901,
-    type: 2}
-  defaultPikemanObject: {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72,
-    type: 2}
-  defaultArcherObject: {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975,
-    type: 2}
-  defaultScoutObject: {fileID: 11400000, guid: 6f6b5988e530931459dfececce5bc37b, type: 2}
+  troopPrefabs:
+  - {fileID: 2185900543212254752, guid: 108c9165f7b559c41919cbd9de40a4cd, type: 3}
+  - {fileID: 650865145934470292, guid: 7f904e221ce1aa04da561cfcd0ee0cbe, type: 3}
+  - {fileID: 6314128460190958362, guid: c51126b60c610e060a6b19e292a8ca6d, type: 3}
+  - {fileID: 3355002661725430932, guid: 7afaaf20f3d337046a6379f8a2931a67, type: 3}
+  defaultTroopObjects:
+  - {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901, type: 2}
+  - {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72, type: 2}
+  - {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975, type: 2}
+  - {fileID: 11400000, guid: 6f6b5988e530931459dfececce5bc37b, type: 2}
+  troopCosts: 64000000c80000002c010000e8030000
   cam: {fileID: 447764074}
-  infantryToggle: {fileID: 1110981720}
-  pikeToggle: {fileID: 1771521579}
-  archerToggle: {fileID: 1637917625}
-  scoutToggle: {fileID: 1409560679}
+  troopToggles:
+  - {fileID: 1110981720}
+  - {fileID: 1771521579}
+  - {fileID: 1637917625}
+  - {fileID: 1409560679}
   CircularToggle: {fileID: 212638729}
   RectangularToggle: {fileID: 1982409554}
   ArrowToggle: {fileID: 1405689111}
