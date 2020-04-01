@@ -148,7 +148,6 @@ public class EntitySpawning : MonoBehaviour
                 flock.moneyAmount -= cost; //reduce money appropriately
                 money.text = "Money: " + flock.moneyAmount.ToString();
             }
-            else return; //spawned too close to a wall
         }
     }
 }
