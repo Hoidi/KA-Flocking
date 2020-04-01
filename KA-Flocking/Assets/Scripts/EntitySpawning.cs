@@ -141,7 +141,7 @@ public class EntitySpawning : MonoBehaviour
                 flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
                     FinalWorldPos,
-                    Quaternion.Euler(Vector3.up),
+                    Quaternion.Euler(0, cam.transform.eulerAngles.y, 0),
                     unitType
                     );
                 switchSide *= -1;
