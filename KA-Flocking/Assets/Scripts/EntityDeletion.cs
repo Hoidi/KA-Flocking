@@ -30,6 +30,9 @@ public class EntityDeletion : MonoBehaviour{
         areaToDelete.transform.localScale = new Vector3(radius, 0, radius);
         areaToDelete.GetComponent<Renderer>().material = areaColor;
         areaToDelete.GetComponent<Collider>().enabled = false;
+        Color color = areaToDelete.GetComponent<Renderer>().material.color;
+        color.a = 0.1f;
+        areaToDelete.GetComponent<Renderer>().material.color = color;
     }
 
     // Update is called once per frame
