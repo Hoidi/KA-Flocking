@@ -25,7 +25,6 @@ public class Flock : MonoBehaviour
 
     float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
-    public int CountDeadUnits{ get { return deadUnits.Count; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -104,7 +103,6 @@ public class Flock : MonoBehaviour
         foreach (FlockAgent deadUnit in deadUnits){ //for testing purposes, until we know what to do with dead units
             deadUnit.gameObject.SetActive(false); //make dead troops invisible
         }
-        
     }
 }
 
