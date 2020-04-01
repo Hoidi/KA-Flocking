@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3625,8 +3625,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2012675549}
   - component: {fileID: 2012675548}
-  - component: {fileID: 2012675550}
   - component: {fileID: 2012675551}
+  - component: {fileID: 2033931117}
   m_Layer: 0
   m_Name: Spawning
   m_TagString: Untagged
@@ -3685,67 +3685,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2033931115
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2033931116}
-  - component: {fileID: 2033931118}
-  - component: {fileID: 2033931117}
-  m_Layer: 5
-  m_Name: PikeToggleOn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &2033931116
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2033931115}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1897713035}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -20}
-  m_SizeDelta: {x: 40, y: 40}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2033931117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2012675547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e93a8f6c7334f54a94e03719cc40744, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flock: {fileID: 437747586}
-  infantryPrefab: {fileID: -3617908639792016736, guid: 02c316c337429db48bfd05d9da4019bc,
-    type: 3}
-  pikemanPrefab: {fileID: 1687371051031696627, guid: 29277cd1a64b7d9148e5a3758491cc81,
-    type: 3}
-  archerPrefab: {fileID: 6785972329752564812, guid: 2486cfa5343d67ecc85a1700463a0207,
-    type: 3}
-  scoutPrefab: {fileID: 830114343603659779, guid: 5c71d256263b09d448f9d67c3ce0017e,
-    type: 3}
-  cam: {fileID: 447764074}
-  money: {fileID: 64169626}
-  areaColor: {fileID: 2100000, guid: 29af47a217a7fd548acd664a4ad4c334, type: 2}
 --- !u!120 &2012675551
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -3843,3 +3782,62 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1 &2033931115
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2033931116}
+  m_Layer: 5
+  m_Name: PikeToggleOn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2033931116
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033931115}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1897713035}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -20, y: -20}
+  m_SizeDelta: {x: 40, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2033931117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012675547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e93a8f6c7334f54a94e03719cc40744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flock: {fileID: 437747586}
+  infantryPrefab: {fileID: -3617908639792016736, guid: 02c316c337429db48bfd05d9da4019bc,
+    type: 3}
+  pikemanPrefab: {fileID: 1687371051031696627, guid: 29277cd1a64b7d9148e5a3758491cc81,
+    type: 3}
+  archerPrefab: {fileID: 6785972329752564812, guid: 2486cfa5343d67ecc85a1700463a0207,
+    type: 3}
+  scoutPrefab: {fileID: 830114343603659779, guid: 5c71d256263b09d448f9d67c3ce0017e,
+    type: 3}
+  cam: {fileID: 447764074}
+  money: {fileID: 64169626}
+  areaColor: {fileID: 2100000, guid: 29af47a217a7fd548acd664a4ad4c334, type: 2}
