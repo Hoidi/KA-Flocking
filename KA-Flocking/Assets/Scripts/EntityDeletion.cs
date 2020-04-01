@@ -62,7 +62,7 @@ public class EntityDeletion : MonoBehaviour{
                     if (Physics.Raycast(ray, out RaycastHit deletionIndicator, 10000f, planeLayer)){ //raytracing to acquire position for deletion indicator
                         Area = deletionIndicator.point; //convert pixel coordinates to normal coordinates
                         if (Physics.Raycast(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, out RaycastHit getYPos, Mathf.Infinity, planeLayer)){
-                            hits = Physics.SphereCastAll(new Vector3(Area.x, 100, Area.z), radius * 0.6f, Vector3.down * 1000f, 10000f, troopLayer); //all troops to be deleted
+                            hits = Physics.SphereCastAll(new Vector3(Area.x, 100, Area.z), radius * 0.5f, Vector3.down * 1000f, 10000f, troopLayer); //all troops to be deleted
                             Area.y = getYPos.point.y; //location now has proper y coordinate
                             areaToDelete.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
                         }
