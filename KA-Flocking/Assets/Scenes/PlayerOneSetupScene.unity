@@ -3866,7 +3866,7 @@ MonoBehaviour:
   - {fileID: 1687371051031696627, guid: 29277cd1a64b7d9148e5a3758491cc81, type: 3}
   - {fileID: 6785972329752564812, guid: 2486cfa5343d67ecc85a1700463a0207, type: 3}
   - {fileID: 830114343603659779, guid: 5c71d256263b09d448f9d67c3ce0017e, type: 3}
-  - {fileID: 1453343159978836762, guid: 37dd510ffe7bc1f42ba6fe99db0545f1, type: 3}
+  - {fileID: 5128213788686491239, guid: 45fbc444515d0d24b95295e76a7b5ee8, type: 3}
   defaultTroopObjects:
   - {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901, type: 2}
   - {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72, type: 2}
