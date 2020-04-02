@@ -3871,7 +3871,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9004719d6abfed09282e5b1ac5539901, type: 2}
   - {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72, type: 2}
   - {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975, type: 2}
-  - {fileID: 11400000, guid: 6f6b5988e530931459dfececce5bc37b, type: 2}
+  - {fileID: 11400000, guid: 63fa0fe3f2499664e85865ddb6371bf8, type: 2}
   - {fileID: 11400000, guid: 4748b2090a76a474697d1c354bc42fa0, type: 2}
   troopCosts: 64000000c80000002c010000e803000010270000
   cam: {fileID: 447764074}
