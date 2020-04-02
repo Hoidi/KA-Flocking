@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -120,6 +120,8 @@ public class EntitySpawning : MonoBehaviour
         int switchSide = 1; //variable to make spawning on each "side" of the arrow shape possible..
         int arrowDirection = -1; //arrow formation should be in opposite direction for the two players
         if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") arrowDirection *= -1;
+        // Only spawn if the location is on the correct piece of land. TODO: Error noise if true
+        if (worldPos.x * arrowDirection < 0) return;
         Vector3 FinalWorldPos = new Vector3(0, 0, 0);
         Vector3 location;
         // Bound the amountOfTroops to the amount that can be afforded
