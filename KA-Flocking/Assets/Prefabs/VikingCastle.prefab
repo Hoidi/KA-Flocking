@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 8009085632044823703}
   - component: {fileID: 4037052253752661997}
   - component: {fileID: 5128213788686491239}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: VikingCastle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
