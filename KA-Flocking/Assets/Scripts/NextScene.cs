@@ -8,6 +8,11 @@ public class NextScene : MonoBehaviour
 {
     private Settings settings;
     public void nextScene() {
+        if (SceneManager.GetActiveScene().name == "PlayerTwoSetupScene")
+        {
+            Time.timeScale = 1.0f;
+        }
+
         if (SceneManager.GetActiveScene().name.Equals("Menu")) {
             settings = GameObject.Find("SettingsObject").GetComponent<Settings>();
             settings.SaveValues();
