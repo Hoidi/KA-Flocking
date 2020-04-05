@@ -1400,8 +1400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   driveFactor: 10
   maxSpeed: 3
-  neighbourRadius: 3.5
-  avoidanceRadiusMultiplier: 0.4
+  neighbourRadius: 5
+  avoidanceRadiusMultiplier: 0.3
 --- !u!4 &437747587
 Transform:
   m_ObjectHideFlags: 0

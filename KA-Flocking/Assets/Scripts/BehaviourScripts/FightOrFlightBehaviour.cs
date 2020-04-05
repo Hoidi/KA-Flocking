@@ -8,12 +8,13 @@ public class FightOrFlightBehaviour : FlockBehaviour
     int troopLayer = 1<<8;
     [Range(0f,1000f)]
     float scoutNeighbourRadius = 100f;
+    bool attacking = false;
 
     Vector3 enemiesDirection = Vector3.zero;
     Vector3 friendsDirection = Vector3.zero; //is kept to enable more advanced behaviour in the future. 
 
     float enemiesStrength = 0f;
-    float friendsStrength = 1f;
+    float friendsStrength = 0f;
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
         // If the unit is a scout then look at a larger range
@@ -33,10 +34,12 @@ public class FightOrFlightBehaviour : FlockBehaviour
 
         if (enemiesStrength > friendsStrength)
         {
-            return enemiesDirection.normalized * -1;
+            attacking = false;
+            return (enemiesDirection * -1).normalized;
         }
         else
         {
+            attacking = true;
             return enemiesDirection.normalized;
         }
     }
@@ -68,5 +71,9 @@ public class FightOrFlightBehaviour : FlockBehaviour
                 }
             }
         }
+    }
+public bool isAttacking()
+    {
+        return attacking;
     }
 }

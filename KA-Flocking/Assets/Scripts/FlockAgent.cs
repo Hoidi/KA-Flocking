@@ -12,10 +12,15 @@ public class FlockAgent : MonoBehaviour
     public float speed = 20;
     public Unit unit;
     Collider agentCollider;
-    Rigidbody rb;
+    public Rigidbody rb;
     public Collider AgentCollider { get { return agentCollider; } }
     public Animator animator;
+    bool attacking = false;
+    float attackCountDown = 0f;
+    public float dragCoefficient = 0.1f;
     int animationMode = 0;
+    FightOrFlightBehaviour FOFH;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -23,17 +28,28 @@ public class FlockAgent : MonoBehaviour
         agentCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        FOFH = ScriptableObject.CreateInstance<FightOrFlightBehaviour>();
     }
 
     public void Move(Vector3 acceleration)
     {
         if (rb == null)
         {
-            stabiliseY();
+            StabiliseY();
+            return;
+        }
+        if (attacking)
+        {
+            attackCountDown -= Time.deltaTime;
+            rb.velocity = Vector3.zero;
+            if (attackCountDown <= 0) attacking = false;
+            StabiliseY();
             return;
         }
 
+        acceleration.y = 0f;
         rb.velocity += acceleration * Time.deltaTime * 10;
+        //rb.velocity += HorizontalDrag(rb.velocity); for some reason this breaks everything
 
         if (rb.velocity != Vector3.zero)
         {
@@ -43,7 +59,7 @@ public class FlockAgent : MonoBehaviour
         }
 
         float sqrVelocity = rb.velocity.sqrMagnitude;
-        float[] sqrAnimationSpeeds = { 0, 1.3f, 2.5f, 4.5f, 8, 14, 25, 40, 60, 90,};
+        float[] sqrAnimationSpeeds = { 0, 1.3f, 2.5f, 4.5f, 8, 14, 23, 35, 60, 90,};
         int newAnimationMode = animationMode;
 
         //looks to see if the velocity has changed enough to enter a new range. 
@@ -64,7 +80,7 @@ public class FlockAgent : MonoBehaviour
 
         if(newAnimationMode == animationMode)
         {
-            stabiliseY();
+            StabiliseY();
             return;
         }
         else
@@ -72,16 +88,7 @@ public class FlockAgent : MonoBehaviour
             animationMode = newAnimationMode;
         }
 
-        animator.ResetTrigger("idle");
-        animator.ResetTrigger("slowWalk");
-        animator.ResetTrigger("walk");
-        animator.ResetTrigger("fastWalk");
-        animator.ResetTrigger("slowRun");
-        animator.ResetTrigger("run");
-        animator.ResetTrigger("fastRun");
-        animator.ResetTrigger("slowNarutoRun");
-        animator.ResetTrigger("narutoRun");
-        animator.ResetTrigger("fastNarutoRun");
+        ResetAnimations();
 
         switch (animationMode)
         {
@@ -113,10 +120,10 @@ public class FlockAgent : MonoBehaviour
                 animator.SetTrigger("narutoRun");
                 break;
             case 9:
-                animator.SetTrigger("fastNarutorun");
+                animator.SetTrigger("fastNarutoRun");
                 break;
         }
-        stabiliseY();
+        StabiliseY();
     }
 
     public void Initialize(Flock flock, Unit unitType)
@@ -125,7 +132,7 @@ public class FlockAgent : MonoBehaviour
         unit = Instantiate(unitType);
     }
 
-    void stabiliseY()
+    void StabiliseY()
     {
         Vector3 predictedUp = Quaternion.AngleAxis(
             rb.angularVelocity.magnitude * Mathf.Rad2Deg * stability / stabilisationSpeed,
@@ -133,5 +140,46 @@ public class FlockAgent : MonoBehaviour
         ) * transform.up;
         Vector3 torqueVector = Vector3.Cross(predictedUp, Vector3.up);
         rb.AddTorque(torqueVector * stabilisationSpeed * stabilisationSpeed);
+    }
+
+    Vector3 HorizontalDrag(Vector3 speed)
+    {
+        Vector3 horizontalSpeed = speed;
+        horizontalSpeed.y = 0f;
+        return -horizontalSpeed.normalized * horizontalSpeed.sqrMagnitude * 0.1f;
+        
+    }
+
+    public void Attack(List<Transform> targets, FlockAgent attacker, Flock flock)
+    {
+        if (FOFH != null)
+        {
+            FOFH.CalculateMove(attacker, targets, flock); //it´s ugly. But what is a coder to do when behaviour objects are involved....
+            if (attacking == false && FOFH.isAttacking())
+            {
+                attacking = unit.Attack(targets, attacker, flock);
+                if (attacking)
+                {
+                    attackCountDown = 1.4f;
+                    ResetAnimations();
+                    animator.SetTrigger("meleeAttack");
+                }
+            }
+        }
+    }
+
+    void ResetAnimations()
+    {
+        animator.ResetTrigger("idle");
+        animator.ResetTrigger("slowWalk");
+        animator.ResetTrigger("walk");
+        animator.ResetTrigger("fastWalk");
+        animator.ResetTrigger("slowRun");
+        animator.ResetTrigger("run");
+        animator.ResetTrigger("fastRun");
+        animator.ResetTrigger("slowNarutoRun");
+        animator.ResetTrigger("narutoRun");
+        animator.ResetTrigger("fastNarutoRun");
+        animator.ResetTrigger("meleeAttack");
     }
 }
