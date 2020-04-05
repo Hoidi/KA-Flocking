@@ -46,6 +46,8 @@ public class Settings : MonoBehaviour
         inputMountains.value = mountains;
         RandomizeSeed();
 
+        Time.timeScale = 0.0f; // pauses the game so that the troops stand still
+
         DontDestroyOnLoad(this.gameObject);
     }
 
