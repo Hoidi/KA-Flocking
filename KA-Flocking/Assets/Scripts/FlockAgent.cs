@@ -16,6 +16,7 @@ public class FlockAgent : MonoBehaviour
     public Collider AgentCollider { get { return agentCollider; } }
     public Animator animator;
     bool attacking = false;
+    Vector3 attackAlignment = Vector3.zero;
     float attackCountDown = 0f;
     public float dragCoefficient = 0.1f;
     int animationMode = 0;
@@ -43,11 +44,13 @@ public class FlockAgent : MonoBehaviour
             attackCountDown -= Time.deltaTime;
             rb.velocity = Vector3.zero;
             if (attackCountDown <= 0) attacking = false;
+            transform.forward = attackAlignment;
             StabiliseY();
             return;
         }
 
         acceleration.y = 0f;
+        //Debug.Log(acceleration.ToString());
         rb.velocity += acceleration * Time.deltaTime * 10;
         //rb.velocity += HorizontalDrag(rb.velocity); for some reason this breaks everything
 
@@ -163,6 +166,10 @@ public class FlockAgent : MonoBehaviour
                     attackCountDown = 1.4f;
                     ResetAnimations();
                     animator.SetTrigger("meleeAttack");
+
+                    Vector3 velocity = rb.velocity;
+                    velocity.y = 0;
+                    attackAlignment = velocity;  //for making the character still stand up right while fighting. 
                 }
             }
         }

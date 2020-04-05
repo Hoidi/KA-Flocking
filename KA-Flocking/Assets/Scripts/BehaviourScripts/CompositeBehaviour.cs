@@ -29,7 +29,14 @@ public class CompositeBehaviour : FlockBehaviour
             }
             move += partialMove;
         }
-        return move;
+        if (!double.IsNaN(move.x) && !double.IsNaN(move.x) && !double.IsNaN(move.x))
+        {
+            return move;
+        }
+        else
+        {
+            return Vector3.zero;
+        }
     }
 
 }

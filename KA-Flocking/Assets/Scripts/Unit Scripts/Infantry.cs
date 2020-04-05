@@ -8,10 +8,10 @@ public class Infantry : Unit
 
     public ContextFilter attackFilter;
     [Range(1f,1000f)]
-     float health = 100f;
+    public float health = 100f;
     // The amount of damage this unit deals in one Time unit
     [Range(0f,1000f)]
-    float damage = 30f;
+    public float damage = 40f;
     // The reach of the unit, still limited by the neighbourradius
     [Range(0f,50f)]
     public float attackReach = 1f;
@@ -55,7 +55,7 @@ public class Infantry : Unit
 
             float currentDistance = Vector3.Distance(attackerPosition, closestPosition);
             float nextDistance = Vector3.Distance(attackerPosition + heading, closestPosition);
-            if(System.Math.Abs(currentDistance) > System.Math.Abs(nextDistance))
+            if (System.Math.Abs(currentDistance) > System.Math.Abs(nextDistance))
             {
                 closest.unit.TakeDamage(damage, closest);
                 return true;
