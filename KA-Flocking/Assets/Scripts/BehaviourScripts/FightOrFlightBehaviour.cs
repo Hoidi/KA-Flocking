@@ -35,12 +35,12 @@ public class FightOrFlightBehaviour : FlockBehaviour
         if (enemiesStrength > friendsStrength)
         {
             attacking = false;
-            return (enemiesDirection * -1).normalized;
+            return (enemiesDirection * -1);
         }
         else
         {
             attacking = true;
-            return enemiesDirection.normalized;
+            return enemiesDirection;
         }
     }
 

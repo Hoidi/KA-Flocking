@@ -9,7 +9,8 @@ public class FlockAgent : MonoBehaviour
     public float stability = 0.3f;
     // The speed at which the rotation of the agents stabilises
     public float stabilisationSpeed = 2.0f;
-    public float speed = 20;
+    private readonly float acceleration = 15;
+    private readonly float maxAcceleration = 25;
     public Unit unit;
     Collider agentCollider;
     public Rigidbody rb;
@@ -21,6 +22,7 @@ public class FlockAgent : MonoBehaviour
     public float dragCoefficient = 0.1f;
     int animationMode = 0;
     FightOrFlightBehaviour FOFH;
+    Vector3 accelerationBuffer = Vector3.zero;
 
 
     // Start is called before the first frame update
@@ -43,6 +45,7 @@ public class FlockAgent : MonoBehaviour
         {
             attackCountDown -= Time.deltaTime;
             rb.velocity = Vector3.zero;
+            accelerationBuffer = Vector3.zero;
             if (attackCountDown <= 0) attacking = false;
             transform.forward = attackAlignment;
             StabiliseY();
@@ -51,7 +54,9 @@ public class FlockAgent : MonoBehaviour
 
         acceleration.y = 0f;
         //Debug.Log(acceleration.ToString());
-        rb.velocity += acceleration * Time.deltaTime * 10;
+        accelerationBuffer += acceleration * Time.deltaTime * this.acceleration;
+        if (accelerationBuffer.sqrMagnitude > maxAcceleration*maxAcceleration) accelerationBuffer = accelerationBuffer.normalized * maxAcceleration;
+        rb.velocity += accelerationBuffer * Time.deltaTime;
         //rb.velocity += HorizontalDrag(rb.velocity); for some reason this breaks everything
 
         if (rb.velocity != Vector3.zero)

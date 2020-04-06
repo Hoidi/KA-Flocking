@@ -8,13 +8,13 @@ public class Infantry : Unit
 
     public ContextFilter attackFilter;
     [Range(1f,1000f)]
-    public float health = 100f;
+    private float health = 100f;
     // The amount of damage this unit deals in one Time unit
     [Range(0f,1000f)]
-    public float damage = 40f;
+    private readonly float damage = 40f;
     // The reach of the unit, still limited by the neighbourradius
     [Range(0f,50f)]
-    public float attackReach = 1f;
+    private readonly float attackReach = 4f;
 
     public override void TakeDamage(float amount, FlockAgent agent) {
         amount *= Time.deltaTime;
