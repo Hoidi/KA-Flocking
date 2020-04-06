@@ -27,7 +27,7 @@ public class EntitySpawning : MonoBehaviour
     private bool inSpawningMethod = false;
     public Text money;
     public Text costOfSpawning;
-
+    public ErrorChat errorChat;
 
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
@@ -58,6 +58,7 @@ public class EntitySpawning : MonoBehaviour
             inSpawningMethod = true;
             if (CircularToggle.isOn){
                 spawnCircle();
+                errorChat.ShowError("Spawned circle ");
             }
             else if (RectangularToggle.isOn){
                 spawnRectangle();
