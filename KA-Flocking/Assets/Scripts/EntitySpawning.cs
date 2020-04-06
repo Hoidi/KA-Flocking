@@ -124,7 +124,12 @@ public class EntitySpawning : MonoBehaviour
                 FinalWorldPos = worldPos + location;
             }
             else if(formationType == 'r') {
-                FinalWorldPos = new Vector3(worldPos.x + 1.5f * (i % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))), worldPos.y, worldPos.z + 1.5f * Mathf.CeilToInt(i / Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))));
+                float xoffset = worldPos.x + 1.5f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))); //x pos of last troop of largest square
+                float zoffset = worldPos.z + 1.5f * Mathf.CeilToInt((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) / Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)));//z pos of last troop of largest square
+                FinalWorldPos = new Vector3(
+                    worldPos.x + 1.5f * (i % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))) + (worldPos.x - xoffset) / 2, 
+                    worldPos.y,
+                    worldPos.z + 1.5f * Mathf.CeilToInt(i / Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))) + (worldPos.z - zoffset) / 2.4f);
             }
             else if(formationType == 'a') {
                 FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location
