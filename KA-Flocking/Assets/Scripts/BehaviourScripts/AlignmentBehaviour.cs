@@ -19,14 +19,15 @@ public class AlignmentBehaviour : FilteredFlockBehaviour
             FlockAgent a = item.GetComponentInParent<FlockAgent>();
             distanceSqr = Vector3.SqrMagnitude(item.position - agent.transform.position);
             if (a.unit.GetType().ToString().Equals("Scout") ) {
-                aligntmentMove += 20*item.transform.forward/distanceSqr;
 
-            } else {
-                aligntmentMove += item.transform.forward/distanceSqr;
+                if (distanceSqr != 0) aligntmentMove += 20*item.transform.forward/distanceSqr;
+
+            } 
+            else {
+                if (distanceSqr != 0) aligntmentMove += item.transform.forward/distanceSqr;
             }
         }
         aligntmentMove /= context.Count;
-        
         return aligntmentMove;
     }
 }
