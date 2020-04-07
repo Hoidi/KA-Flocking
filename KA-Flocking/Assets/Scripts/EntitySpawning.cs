@@ -117,19 +117,19 @@ public class EntitySpawning : MonoBehaviour
         Vector3 FinalWorldPos = new Vector3(0, 0, 0);
         Vector3 location;
         // Bound the amountOfTroops to the amount that can be afforded
-        amountOfTroops = Mathf.Min(amountOfTroops, flock.moneyAmount/(cost == 0 ? 1:cost));
-        for (int i = 0; i < amountOfTroops; i++){
+        int maxTroopsAfforded = Mathf.Min(amountOfTroops, flock.moneyAmount/(cost == 0 ? 1:cost));
+        for (int i = 0; i < maxTroopsAfforded; i++){
             if(formationType == 'c') {
-                location = Random.insideUnitSphere * amountOfTroops * 0.4f;
+                location = Random.insideUnitSphere * maxTroopsAfforded * 0.4f;
                 FinalWorldPos = worldPos + location;
             }
             else if(formationType == 'r') {
-                float xoffset = worldPos.x + 1.5f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))); //x pos of last troop of largest square
-                float zoffset = worldPos.z + 1.5f * Mathf.CeilToInt((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) / Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)));//z pos of last troop of largest square
+                float xoffset = worldPos.x + 1.5f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded))); //x pos of last troop of largest square
+                float zoffset = worldPos.z + 1.5f * Mathf.CeilToInt((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded)), 2) - 1) / Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded)));//z pos of last troop of largest square
                 FinalWorldPos = new Vector3(
-                    worldPos.x + 1.5f * (i % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))) + (worldPos.x - xoffset) / 2, 
+                    worldPos.x + 1.5f * (i % Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded))) + (worldPos.x - xoffset) / 2, 
                     worldPos.y,
-                    worldPos.z + 1.5f * Mathf.CeilToInt(i / Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))) + (worldPos.z - zoffset) / 2.4f);
+                    worldPos.z + 1.5f * Mathf.CeilToInt(i / Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded))) + (worldPos.z - zoffset) / 2.4f);
             }
             else if(formationType == 'a') {
                 FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location
