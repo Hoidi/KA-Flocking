@@ -8,7 +8,7 @@ public class PixelatedChunk : Chunk
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer; 
     protected Vector2[] uvs;
-    protected override void updateColors()
+    protected override void updateColors(int currentX, int maxX)
     {
         int adjustedXSize = xSize * resolution;
         int adjustedZSize = zSize * resolution;
@@ -29,6 +29,12 @@ public class PixelatedChunk : Chunk
 
         mesh.uv = uvs;
         meshRenderer.sharedMaterial = new Material(meshRenderer.sharedMaterial);
-        meshRenderer.sharedMaterial.mainTexture = TextureGenerator.TextureFromHeightMap(heightMap, gradient);
+        if (currentX < maxX/2) {
+            meshRenderer.sharedMaterial.mainTexture = TextureGenerator.TextureFromHeightMap(heightMap, gradient);
+        } else if (currentX == maxX/2) {
+            meshRenderer.sharedMaterial.mainTexture = TextureGenerator.TextureFromHeightMap(heightMap, gradient, gradient2);
+        } else {
+            meshRenderer.sharedMaterial.mainTexture = TextureGenerator.TextureFromHeightMap(heightMap, gradient2);
+        }
     }
 }

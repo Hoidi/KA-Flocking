@@ -6,7 +6,7 @@ using UnityEngine;
 public class SmoothChunk : Chunk
 {
     protected Color[] colors;
-    protected override void updateColors()
+    protected override void updateColors(int currentX, int maxX)
     {
         //sets the colors of the mesh from a gradiant depending on the height.
         colors = new Color[vertices.Length];

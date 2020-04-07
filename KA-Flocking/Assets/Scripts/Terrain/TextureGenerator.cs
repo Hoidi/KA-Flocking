@@ -32,4 +32,23 @@ public class TextureGenerator
         }
         return TextureFromColorMap(colors, width, height);
     }
+
+    // Between two gradients
+    public static Texture2D TextureFromHeightMap(float[,] heightMap, Gradient gradient1, Gradient gradient2)
+    {
+        int width = heightMap.GetLength(0);
+        int height = heightMap.GetLength(1);
+
+        Color[] colors = new Color[width * height];
+        for(int z = 0; z < height; z++)
+        {
+            for (int x = 0; x<width; x++)
+            {
+                colors[z * width + x] = Color.Lerp(Color.white, Color.black, heightMap[x, z]); 
+                colors[z * width + x] = Util.Gradient.Lerp(gradient1,gradient2,z/((float)height)).Evaluate(heightMap[x, z]);
+
+            }
+        }
+        return TextureFromColorMap(colors, width, height);
+    }
 }

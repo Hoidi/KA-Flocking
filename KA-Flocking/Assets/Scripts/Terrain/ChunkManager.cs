@@ -103,7 +103,7 @@ public class ChunkManager : MonoBehaviour
                 chunks[x, z].lacunarity = lacunarity;
                 chunks[x, z].octaves = octaves;
 
-                chunks[x, z].updateChunk(-1, 1); // to make them have max and min values. 
+                chunks[x, z].updateChunk(-1, 1, x, chunksX); // to make them have max and min values. 
 
                 float chunkMaxHeight = chunks[x, z].getMaxHeight();
                 float chunkMinHeight = chunks[x, z].getMinHeight();
@@ -122,7 +122,7 @@ public class ChunkManager : MonoBehaviour
         {
             for (int z = 0; z < chunksZ; z++)
             {
-                chunks[x, z].updateChunk(minHeight, maxHeight);
+                chunks[x, z].updateChunk(minHeight, maxHeight, x, chunksX);
             }
         }
     }
