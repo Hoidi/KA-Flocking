@@ -7,18 +7,11 @@ using UnityEngine.SceneManagement;
 public class EntityDeletion : MonoBehaviour{
 
     public Flock flock;
-    public FlockAgent infantryPrefab;
-    public FlockAgent pikemanPrefab;
-    public FlockAgent archerPrefab;
-    public FlockAgent scoutPrefab;
+    public TroopType[] troopTypes;
     public Camera cam;
     RaycastHit collisionWithTroop;
     int troopLayer = 1 << 8;
     int planeLayer = 1 << 9;
-    private int infantryCost = 100;
-    private int archerCost = 300;
-    private int pikeCost = 200;
-    private int scoutCost = 1000;
     public Text money;
     private int radius = 5;
     GameObject areaToDelete;
@@ -84,49 +77,16 @@ public class EntityDeletion : MonoBehaviour{
     }
 
     private void removeTroops(GameObject[] troops){
-        if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded){ //player 1 setup scene -> make sure only flock 1 troops can be deleted
-            foreach (GameObject troop in troops) {
-                if (troop.transform.parent.gameObject.name == "Team 1 Flock") { //make sure you can only delete troops from your own team
-                    if (troop.name.StartsWith("Infantry")) {
-                        flock.moneyAmount += infantryCost;
+        foreach (GameObject troop in troops) {
+            //make sure you can only delete troops from your own team
+            if (troop.transform.parent.gameObject.name == flock.name) {
+                foreach (TroopType type in troopTypes)
+                {
+                    if (troop.name.StartsWith(type.unitType.name)) {
+                        flock.moneyAmount += type.cost;
                         money.text = "Money: " + flock.moneyAmount.ToString();
+                        destroyTroop(troop); //removes the troop
                     }
-                    else if (troop.name.StartsWith("Pikemen")) {
-                        flock.moneyAmount += pikeCost;
-                        money.text = "Money: " + flock.moneyAmount.ToString();
-                    }
-                    else if (troop.name.StartsWith("Archer")) {
-                        flock.moneyAmount += archerCost;
-                        money.text = "Money: " + flock.moneyAmount.ToString();
-                    }
-                    else {
-                        flock.moneyAmount += scoutCost;
-                        money.text = "Money: " + flock.moneyAmount.ToString();
-                    }
-                    destroyTroop(troop); //removes the troop
-                }
-            }
-        }
-        else{ //player 2 setup scene -> make sure only flock 2 troops can be deleted
-            foreach (GameObject troop2 in troops){
-                if (troop2.transform.parent.gameObject.name == "Team 2 Flock"){ //make sure you can only delete troops from your own team
-                    if (troop2.name.StartsWith("Infantry")){
-                        flock.moneyAmount += infantryCost;
-                        money.text = "Money: " + flock.moneyAmount.ToString();
-                    }
-                    else if (troop2.name.StartsWith("Pikemen")) {
-                        flock.moneyAmount += pikeCost;
-                        money.text = "Money: " + flock.moneyAmount.ToString();
-                    }
-                    else if (troop2.name.StartsWith("Archer")){
-                        flock.moneyAmount += archerCost;
-                        money.text = "Money: " + flock.moneyAmount.ToString();
-                    }
-                    else{
-                        flock.moneyAmount += scoutCost;
-                        money.text = "Money: " + flock.moneyAmount.ToString();
-                    }
-                    destroyTroop(troop2); //removes the troop
                 }
             }
         }
