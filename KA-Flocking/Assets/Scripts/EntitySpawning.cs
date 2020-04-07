@@ -135,8 +135,8 @@ public class EntitySpawning : MonoBehaviour
                 FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location
             }
             //raycast to get the exact y coordinate
-            if (!Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)) return;
-            if (!validateColliders(FinalWorldPos, unitType)) return;
+            if (!Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)) continue;
+            if (!validateColliders(FinalWorldPos, unitType)) continue;
             FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
             flock.CreateUnit( //spawn troops in formation
                 agentPrefab,
