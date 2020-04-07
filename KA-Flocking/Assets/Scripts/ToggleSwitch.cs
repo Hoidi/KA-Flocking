@@ -19,6 +19,7 @@ public class ToggleSwitch : MonoBehaviour
     public Toggle PikeToggle;
     public Toggle ArcherToggle;
     public Toggle ScoutToggle;
+    public Toggle CastleToggle;
     public GameObject InfantryToggleOn;
     public GameObject InfantryToggleOff;
     public GameObject PikeToggleOn;
@@ -27,6 +28,8 @@ public class ToggleSwitch : MonoBehaviour
     public GameObject ArcherToggleOff;
     public GameObject ScoutToggleOn;
     public GameObject ScoutToggleOff;
+    public GameObject CastleToggleOn;
+    public GameObject CastleToggleOff;
 
     // Update is called once per frame
     void Update()
@@ -53,6 +56,9 @@ public class ToggleSwitch : MonoBehaviour
 
         ScoutToggleOn.SetActive(ScoutToggle.isOn);
         ScoutToggleOff.SetActive(!ScoutToggle.isOn);
+
+        CastleToggleOn.SetActive(CastleToggle.isOn);
+        CastleToggleOff.SetActive(!CastleToggle.isOn);
     }
     //Sword: https://thenounproject.com/search/?q=sword&i=2444713, ProSymbols US
     //Spear: https://thenounproject.com/search/?q=spear&i=819835, Hamish 

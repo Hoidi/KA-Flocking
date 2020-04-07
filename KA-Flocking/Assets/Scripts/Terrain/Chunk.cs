@@ -31,12 +31,12 @@ public abstract class Chunk : MonoBehaviour
     public float offsetX = 0;
     public float offsetZ = 0;
     public Gradient gradient;
-
+    public Gradient gradient2;
     public float colorMin;
     public float colorMax;
 
     //updated the colors
-    protected abstract void updateColors();
+    protected abstract void updateColors(int currentX, int maxX);
 
     //Creates a new mesh based on the public varables. 
     protected void CreateShape()
@@ -146,7 +146,7 @@ public abstract class Chunk : MonoBehaviour
             }
         }
     }
-    public void updateChunk(float minHeight, float maxHeight)
+    public void updateChunk(float minHeight, float maxHeight, int currentX, int maxX)
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
@@ -155,7 +155,7 @@ public abstract class Chunk : MonoBehaviour
         renormaliseHeight(minHeight, maxHeight);
         mesh.vertices = vertices;
         mesh.triangles = triangles;
-        updateColors();
+        updateColors(currentX, maxX);
         mesh.RecalculateNormals();  //makes sure that lighting is good.
         GetComponent<MeshCollider>().sharedMesh = mesh;  // updates the mesh in Unity.
     }
