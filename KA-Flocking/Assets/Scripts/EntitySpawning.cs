@@ -87,11 +87,13 @@ public class EntitySpawning : MonoBehaviour
         // user clicked on UI, so dont spawn
         if (EventSystem.current.IsPointerOverGameObject()) return false;
         // already a troop at location
-        if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer | obstacleLayer) || EventSystem.current.IsPointerOverGameObject()){ 
+        if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer | obstacleLayer)){ 
             errorChat.ShowError("Already a unit or obstacle at location");
             return false;
+        } else if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)) {
+            return true;
         }
-        return true;
+        return false;
     }
     // Validates if there are any troop colliders within a small radius (dependent on if the unit is a Castle) of the position
     private bool validateColliders(Vector3 worldPos, Unit unitType) {
@@ -103,6 +105,14 @@ public class EntitySpawning : MonoBehaviour
                 errorChat.ShowError("Overlap of unit(s)' position");
                 return false;
             }
+        }
+        return true;
+    }
+
+    private bool validateHeight(Vector3 worldPos) {
+        if (worldPos.y > 10) {
+            errorChat.ShowError("Cannot spawn on mountains");
+            return false;
         }
         return true;
     }
@@ -144,8 +154,8 @@ public class EntitySpawning : MonoBehaviour
             }
             //raycast to get the exact y coordinate
             Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer);
-            if (!validateColliders(FinalWorldPos, unitType)) continue;
             FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+            if (!validateColliders(FinalWorldPos, unitType) || !validateHeight(FinalWorldPos)) continue;
             flock.CreateUnit( //spawn troops in formation
                 agentPrefab,
                 FinalWorldPos,
