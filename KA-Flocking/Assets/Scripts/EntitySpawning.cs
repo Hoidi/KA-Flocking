@@ -24,6 +24,7 @@ public class EntitySpawning : MonoBehaviour
     public Text costOfSpawning;
     private bool spawnedFirstCastle = false;
     public ErrorChat errorChat;
+    public SpawnQueue spawnQueue;
 
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
@@ -75,11 +76,12 @@ public class EntitySpawning : MonoBehaviour
         foreach (Toggle toggle in troopToggles.ActiveToggles())
         {
             TroopType troop = toggle.GetComponent<TroopType>();
-            if (!spawnedFirstCastle && troop.unitType.name.StartsWith("Castle")) {
-                troopSpawning(troop.prefab, troop.unitType, 0, formation);
-            } else {
-                troopSpawning(troop.prefab, troop.unitType, troop.cost, formation);
-            }
+            spawnQueue.addToQueue(troop, (int) troopSlider.value, toggle.GetComponentInChildren<Image>().sprite);
+            // if (!spawnedFirstCastle && troop.unitType.name.StartsWith("Castle")) {
+            //     troopSpawning(troop.prefab, troop.unitType, 0, formation);
+            // } else {
+            //     troopSpawning(troop.prefab, troop.unitType, troop.cost, formation);
+            // }
         }
     }
 
