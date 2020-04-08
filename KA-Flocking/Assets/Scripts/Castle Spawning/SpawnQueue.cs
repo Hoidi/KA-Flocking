@@ -18,6 +18,7 @@ public class SpawnQueue : MonoBehaviour
     }
 
     void UpdateQueue() {
+        // The amount of buttons in the content
         int i = 1;
         // Clear the list
         foreach (GameObject item in currentSpawnedItems)
@@ -40,11 +41,12 @@ public class SpawnQueue : MonoBehaviour
             ItemDetails itemDetails = spawnedItem.GetComponent<ItemDetails>();
             itemDetails.text.text = item.Item2.ToString();
             itemDetails.image.sprite = item.Item3;
-
+            // Set button listener for delete
             Button button = spawnedItem.GetComponent<Button>();
-            button.onClick.AddListener(delegate () {this.deleteFromQueue(spawnedItem, item); });
+            button.onClick.AddListener(delegate () {this.deleteFromQueue(spawnedItem); });
         }
         content.sizeDelta = new Vector2 (0,30*(i/4)-60);
+        Debug.Log(currentSpawnedItems.Count);
     }
 
     public void addToQueue(TroopType type, int n, Sprite sprite) {
@@ -65,11 +67,25 @@ public class SpawnQueue : MonoBehaviour
         }
     }
 
-    public void deleteFromQueue(GameObject spawnedItem, (TroopType,int,Sprite) item) {
-        Debug.Log(item.Item2);
+    public void deleteFromQueue(GameObject spawnedItem) {
         int i = currentSpawnedItems.IndexOf(spawnedItem);
+
+        // Merge troop amount
+        if (i > 0 && i+1 < items.Count 
+                && items[i-1].Item1 == items[i+1].Item1) {
+            // Update amount
+            var v = items[i-1];
+            v.Item2 += items[i+1].Item2;
+            items[i-1] = v;
+            // Remove item
+            items.RemoveAt(i+1);
+            Destroy (currentSpawnedItems[i+1]);
+        }
+        // Remove item
         items.RemoveAt(i);
         Destroy (spawnedItem);
+        // Update the SpawnQueue
+        UpdateQueue();
     }
 
     public TroopType spawnTroop() {
@@ -80,6 +96,7 @@ public class SpawnQueue : MonoBehaviour
             items[0] = v;
             return v.Item1;
         } else {
+            Destroy (currentSpawnedItems[0]);
             items.RemoveAt(0);
             return v.Item1;
         }
