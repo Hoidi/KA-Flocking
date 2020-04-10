@@ -7,5 +7,5 @@ public abstract class Unit : ScriptableObject
     public FlockBehaviour behaviour;
     public abstract void Attack(List<Transform> targets, FlockAgent attacker, Flock flock);
 
-    public abstract void TakeDamage(float amount, FlockAgent agent);
+    public abstract bool TakeDamage(float amount, FlockAgent agent);
 }

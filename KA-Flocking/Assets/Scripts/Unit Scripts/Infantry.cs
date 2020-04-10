@@ -16,15 +16,17 @@ public class Infantry : Unit
     [Range(0f,50f)]
     public float attackReach = 1f;
 
-    public override void TakeDamage(float amount, FlockAgent agent) {
+    // Returns if the target dies
+    public override bool TakeDamage(float amount, FlockAgent agent) {
         amount *= Time.deltaTime;
         if (amount < health) {
             health -= amount;
+            return false;
         } else {
             health = 0;
-            // Debug.Log(agent.name + " Died");
             agent.tag = "Dead";
             agent.AgentFlock.RemoveUnit(agent);
+            return true;
         }
     }
 
@@ -48,7 +50,9 @@ public class Infantry : Unit
                 closestDistance = sqrDistance;
             }
         }
-        if (closest != null) closest.unit.TakeDamage(damage, closest);
+        if (closest != null) {
+            if (closest.unit.TakeDamage(damage, closest)) flock.moneyAmount += 50;
+        }
     }
 
 

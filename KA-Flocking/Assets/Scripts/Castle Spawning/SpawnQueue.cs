@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SpawnQueue : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class SpawnQueue : MonoBehaviour
     public List<GameObject> currentSpawnedItems = new List<GameObject>();
     public RectTransform content;
     private Button addButton;
+    [System.NonSerialized]
     public Castle castle = null;
     public ErrorChat errorChat;
     public Flock flock;
@@ -21,6 +23,12 @@ public class SpawnQueue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) { 
+            flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
+        } else if (SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) {
+            flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();	
+        }
+        money.text = "Money: " + flock.moneyAmount.ToString(); 
         addButton = GetComponentInChildren<Button>(spawnPoint);
         ToggleGroup troopToggles = GameObject.Find("TroopToggles").GetComponent<ToggleGroup>();
         Slider troopSlider = GameObject.Find("troopAmountSlider").GetComponent<Slider>();
@@ -99,6 +107,7 @@ public class SpawnQueue : MonoBehaviour
         }
         // Remove item
         flock.moneyAmount += castle.items[i].Item1*castle.items[i].Item4;
+        money.text = "Money: " + flock.moneyAmount.ToString(); 
         castle.items.RemoveAt(i);
         Destroy (spawnedItem);
         // Update the SpawnQueue

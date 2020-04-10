@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class NextScene : MonoBehaviour
 {
     private Settings settings;
+    private bool foo = false;
     public void nextScene() {
         if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") {
             if (!validateTroopSetup(GameObject.Find("Team 1 Flock").GetComponent<Flock>())) return;
@@ -21,8 +22,8 @@ public class NextScene : MonoBehaviour
             settings = GameObject.Find("SettingsObject").GetComponent<Settings>();
             settings.SaveValues();
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         SceneManager.sceneLoaded += ConfigureSettings;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private bool validateTroopSetup(Flock flock) {
@@ -54,6 +55,8 @@ public class NextScene : MonoBehaviour
     void ConfigureSettings(Scene scene, LoadSceneMode mode) {
         if (settings == null) return;
         if (scene.name.Equals("PlayerOneSetupScene")) {
+            if (foo == true) return;
+            foo = true;
             ChunkManager chunkManager = GameObject.Find("VisualManager").GetComponent<ChunkManager>();
             chunkManager.pointyBreakOff = settings.inputMountains.value;
             chunkManager.chunksX = settings.mapX;

@@ -29,6 +29,10 @@ public class Flock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameObject.FindObjectsOfType(this.GetType()).Length > 2) {
+            Destroy (this.gameObject);
+            return;
+        }
         squareMaxSpeed = maxSpeed * maxSpeed;
         squareNeighbourRadius = neighbourRadius * neighbourRadius;
         squareAvoidanceRadius = avoidanceRadiusMultiplier * avoidanceRadiusMultiplier * squareNeighbourRadius;
@@ -91,7 +95,7 @@ public class Flock : MonoBehaviour
         newUnits.Add(newAgent);
     }
 
-    public void test(Castle castle, FlockAgent flockAgent, Flock flock) {
+    public void StartSpawning(Castle castle, FlockAgent flockAgent, Flock flock) {
         StartCoroutine(castle.SpawningRoutine(flockAgent, flock));
     }
 
