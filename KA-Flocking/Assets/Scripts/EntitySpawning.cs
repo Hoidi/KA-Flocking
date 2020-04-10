@@ -121,6 +121,7 @@ public class EntitySpawning : MonoBehaviour
         Vector3 location;
         // Bound the amountOfTroops to the amount that can be afforded
         int maxTroopsAfforded = Mathf.Min(amountOfTroops, flock.moneyAmount/(cost == 0 ? 1:cost));
+        if (maxTroopsAfforded != amountOfTroops) errorChat.ShowError("All units could not be afforded");
         for (int i = 0; i < maxTroopsAfforded; i++){
             if(formationType == 'c') {
                 location = Random.insideUnitSphere * maxTroopsAfforded * 0.4f;
