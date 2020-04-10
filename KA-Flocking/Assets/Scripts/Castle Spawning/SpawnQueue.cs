@@ -7,26 +7,61 @@ public class SpawnQueue : MonoBehaviour
 {
     public Transform spawnPoint;
     public GameObject defaultItem;
+    [System.NonSerialized]
+    public List<GameObject> currentSpawnedItems = new List<GameObject>();
     public RectTransform content;
-    private List<(TroopType,int,Sprite)> items = new List<(TroopType,int,Sprite)>();
-    private List<GameObject> currentSpawnedItems = new List<GameObject>();
+    private Button addButton;
+    public Castle castle = null;
+    public ErrorChat errorChat;
+    public Flock flock;
+    public Text money;
+    // Timer is not applicable since we cannot see the queue when the game is running
+    // public Image timer;
 
     // Start is called before the first frame update
     void Start()
     {
-        UpdateQueue();
+        addButton = GetComponentInChildren<Button>(spawnPoint);
+        ToggleGroup troopToggles = GameObject.Find("TroopToggles").GetComponent<ToggleGroup>();
+        Slider troopSlider = GameObject.Find("troopAmountSlider").GetComponent<Slider>();
+        addButton.onClick.AddListener(delegate () {this.addButtonClicked(troopToggles, troopSlider);});
+        // timer = addButton.transform.GetChild(0).GetComponent<Image>();
     }
 
-    void UpdateQueue() {
-        // The amount of buttons in the content
-        int i = 1;
-        // Clear the list
+    /*public void ResetTimer(float spawnTime, Castle castle) {
+        if (castle == this.castle) {
+            timer.fillAmount = 0;
+            StartCoroutine(UpdateTimer(spawnTime));
+        }
+    }
+    private IEnumerator UpdateTimer(float spawnTime) {
+        while (timer.fillAmount < 1) {
+            timer.fillAmount += Time.deltaTime/spawnTime;
+            yield return new WaitForEndOfFrame();
+        }
+    }*/
+
+    public void replaceQueue(Castle newCastle) {
+        if (castle == newCastle) return;
+        addButton.gameObject.SetActive(true);
+        if (castle != null) ClearItems();
+        castle = newCastle;
+        UpdateUI();
+        // timer.fillAmount = 0;
+    }
+
+    void ClearItems() {
         foreach (GameObject item in currentSpawnedItems)
         {
             Destroy(item);
         }
         currentSpawnedItems.Clear();
-        foreach ((TroopType,int,Sprite) item in items)
+    }
+    public void UpdateUI() {
+        // The amount of buttons in the content
+        int i = 1;
+        ClearItems();
+        foreach ((int, FlockAgent, Unit, int,Sprite) item in castle.items)
         {
             float offsetY = (i/4) * 30;
             float offsetX = (i%4) * 30;
@@ -39,66 +74,65 @@ public class SpawnQueue : MonoBehaviour
             currentSpawnedItems.Add(spawnedItem);
             // Set the item details
             ItemDetails itemDetails = spawnedItem.GetComponent<ItemDetails>();
-            itemDetails.text.text = item.Item2.ToString();
-            itemDetails.image.sprite = item.Item3;
+            itemDetails.text.text = item.Item4.ToString();
+            itemDetails.image.sprite = item.Item5;
             // Set button listener for delete
             Button button = spawnedItem.GetComponent<Button>();
             button.onClick.AddListener(delegate () {this.deleteFromQueue(spawnedItem); });
         }
         content.sizeDelta = new Vector2 (0,30*(i/4)-60);
-        Debug.Log(currentSpawnedItems.Count);
-    }
-
-    public void addToQueue(TroopType type, int n, Sprite sprite) {
-        int lastIndex = items.Count-1;
-        // If the last thing in queue is the same type, update the number instead
-        if (lastIndex >= 0 && items[lastIndex].Item1 == type) {
-            var v = items[lastIndex];
-            v.Item2 += n;
-            items[lastIndex] = v;
-            // Updates the item text
-            ItemDetails itemDetails = currentSpawnedItems[lastIndex].GetComponent<ItemDetails>();
-            itemDetails.text.text = v.Item2.ToString();
-        }
-        else {
-            (TroopType,int,Sprite) item = (type,n,sprite);
-            items.Add(item);
-            UpdateQueue();
-        }
     }
 
     public void deleteFromQueue(GameObject spawnedItem) {
         int i = currentSpawnedItems.IndexOf(spawnedItem);
 
         // Merge troop amount
-        if (i > 0 && i+1 < items.Count 
-                && items[i-1].Item1 == items[i+1].Item1) {
+        if (i > 0 && i+1 < castle.items.Count 
+                && castle.items[i-1].Item3 == castle.items[i+1].Item3) {
             // Update amount
-            var v = items[i-1];
-            v.Item2 += items[i+1].Item2;
-            items[i-1] = v;
+            var v = castle.items[i-1];
+            v.Item4 += castle.items[i+1].Item4;
+            castle.items[i-1] = v;
             // Remove item
-            items.RemoveAt(i+1);
+            castle.items.RemoveAt(i+1);
             Destroy (currentSpawnedItems[i+1]);
         }
         // Remove item
-        items.RemoveAt(i);
+        flock.moneyAmount += castle.items[i].Item1*castle.items[i].Item4;
+        castle.items.RemoveAt(i);
         Destroy (spawnedItem);
         // Update the SpawnQueue
-        UpdateQueue();
+        UpdateUI();
     }
 
-    public TroopType spawnTroop() {
-        if (items.Count == 0) return null;
-        var v = items[0];
-        if (v.Item2 > 1) {
-            v.Item2--;
-            items[0] = v;
-            return v.Item1;
-        } else {
-            Destroy (currentSpawnedItems[0]);
-            items.RemoveAt(0);
-            return v.Item1;
+    public void addButtonClicked(ToggleGroup troopToggles, Slider troopSlider) {
+        foreach (Toggle toggle in troopToggles.ActiveToggles())
+        {
+            TroopType troop = toggle.GetComponent<TroopType>();
+            if (troop.unitType is Castle) { errorChat.ShowError("Invalid unit type"); return;}
+            int maxTroopsAfforded = Mathf.Min((int) troopSlider.value, flock.moneyAmount/(troop.cost == 0 ? 1:troop.cost));
+            flock.moneyAmount -= maxTroopsAfforded*troop.cost;
+            money.text = "Money: " + flock.moneyAmount.ToString();
+            addToQueue(troop, maxTroopsAfforded, toggle.GetComponentInChildren<Image>().sprite);
+            UpdateUI();
+        }
+    }
+
+    public void addToQueue(TroopType type, int n, Sprite sprite) {
+        int lastIndex = castle.items.Count-1;
+        // If the last thing in queue is the same type, update the number instead
+        if (lastIndex >= 0 && castle.items[lastIndex].Item3 == type.unitType) {
+            var v = castle.items[lastIndex];
+            v.Item4 += n;
+            castle.items[lastIndex] = v;
+            // Updates the item text
+            ItemDetails itemDetails = currentSpawnedItems[lastIndex].GetComponent<ItemDetails>();
+            itemDetails.text.text = v.Item2.ToString();
+        }
+        else {
+            // Required to extract TroopType since it's bound to a component
+            (int, FlockAgent, Unit, int, Sprite) item = (type.cost, type.prefab, type.unitType, n, sprite);
+            castle.items.Add(item);
         }
     }
 }

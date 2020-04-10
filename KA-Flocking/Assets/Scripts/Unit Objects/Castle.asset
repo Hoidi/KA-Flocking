@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be15c3b0079c7b7c6afe31228968f02d, type: 3}
+  m_Script: {fileID: 11500000, guid: d5132c2f07b97cd4baf89d7cc95e1b5b, type: 3}
   m_Name: Castle
   m_EditorClassIdentifier: 
   behaviour: {fileID: 11400000, guid: c608a10b44ef2434f95e56fba3087e56, type: 2}

@@ -24,13 +24,14 @@ public class EntitySpawning : MonoBehaviour
     public Text costOfSpawning;
     private bool spawnedFirstCastle = false;
     public ErrorChat errorChat;
-    public SpawnQueue spawnQueue;
+    public GameObject spawningWindow;
 
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) { 
             money.text = "Money: " + flock.moneyAmount.ToString(); 
         }
+        spawningWindow = GameObject.Find("SpawnScrollView");
     }
 
     private void Update(){
@@ -76,21 +77,35 @@ public class EntitySpawning : MonoBehaviour
         foreach (Toggle toggle in troopToggles.ActiveToggles())
         {
             TroopType troop = toggle.GetComponent<TroopType>();
-            spawnQueue.addToQueue(troop, (int) troopSlider.value, toggle.GetComponentInChildren<Image>().sprite);
-            // if (!spawnedFirstCastle && troop.unitType.name.StartsWith("Castle")) {
-            //     troopSpawning(troop.prefab, troop.unitType, 0, formation);
-            // } else {
-            //     troopSpawning(troop.prefab, troop.unitType, troop.cost, formation);
-            // }
+            if (!spawnedFirstCastle && troop.unitType.name.StartsWith("Castle")) {
+                troopSpawning(troop.prefab, troop.unitType, 0, formation);
+            } else {
+                troopSpawning(troop.prefab, troop.unitType, troop.cost, formation);
+            }
         }
+    }
+
+    private bool selectCastle() {
+        FlockAgent flockAgent = collisionWithPlane.transform.gameObject.GetComponent<FlockAgent>();
+        if (flockAgent.unit is Castle) { 
+            Castle spawnCastle = (Castle) flockAgent.unit;
+            SpawnQueue currentQueue = spawningWindow.GetComponent<SpawnQueue>();
+            currentQueue.replaceQueue(spawnCastle);
+            // Start spawning routine if not active
+            if (spawnCastle.spawning == false) flock.test(spawnCastle, flockAgent, flock);
+            // if (spawnCastle.spawning == false) StartCoroutine(spawnCastle.SpawningRoutine(flockAgent, flock));
+            return true;
+        }
+        return false;
     }
 
     private bool validateLayers(Ray ray) {
         // user clicked on UI, so dont spawn
         if (EventSystem.current.IsPointerOverGameObject()) return false;
         // already a troop at location
-        if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer | obstacleLayer)){ 
-            errorChat.ShowError("Already a unit or obstacle at location");
+        if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer)){ 
+            if (!selectCastle()) errorChat.ShowError("Already a unit at location");
+            if (Physics.Raycast(ray, out collisionWithPlane, 10000f, obstacleLayer)) errorChat.ShowError("An obstacle obstructs the location");
             return false;
         } else if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)) {
             return true;
@@ -133,6 +148,7 @@ public class EntitySpawning : MonoBehaviour
         Vector3 location;
         // Bound the amountOfTroops to the amount that can be afforded
         int maxTroopsAfforded = Mathf.Min(amountOfTroops, flock.moneyAmount/(cost == 0 ? 1:cost));
+        if (maxTroopsAfforded != amountOfTroops) errorChat.ShowError("All units could not be afforded");
         for (int i = 0; i < maxTroopsAfforded; i++){
             if(formationType == 'c') {
                 location = Random.insideUnitSphere * maxTroopsAfforded * 0.4f;
@@ -167,7 +183,7 @@ public class EntitySpawning : MonoBehaviour
             switchSide *= -1;
             flock.moneyAmount -= cost; //reduce money appropriately
             money.text = "Money: " + flock.moneyAmount.ToString();
-            if (!spawnedFirstCastle && unitType.name.StartsWith("Castle")) spawnedFirstCastle = true;
+            if (!spawnedFirstCastle && unitType is Castle) spawnedFirstCastle = true;
         }
     }
 }

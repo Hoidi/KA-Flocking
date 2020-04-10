@@ -9,6 +9,7 @@ public class Flock : MonoBehaviour
     public List<FlockAgent> agents = new List<FlockAgent>();
     // Public Read Only reference to the agent list.
     public HashSet<FlockAgent> deadUnits = new HashSet<FlockAgent>();
+    public List<FlockAgent> newUnits = new List<FlockAgent>();
     [Range(1f, 100f)]
     public float driveFactor = 10f;
     [Range(1f, 100f)]
@@ -52,6 +53,8 @@ public class Flock : MonoBehaviour
         }
         // Clears all dead units from the flock
         RemoveUnitsFromFlock();
+        // Adds all new units to the flock
+        AddUnitsToFlock();
     }
 
     // Returns a list of all nearby collider's transforms with the tag "Player"
@@ -72,7 +75,7 @@ public class Flock : MonoBehaviour
         return context;
     }
 
-    // The preferred way to create an agent
+    // The preferred threadsafe way to create an agent
     public void CreateUnit(FlockAgent prefab, Vector3 location, Quaternion rotation, Unit unitType) {
         FlockAgent newAgent = Instantiate(
             prefab,   // The prefab of the new agent, should correspond to the unitType
@@ -85,7 +88,18 @@ public class Flock : MonoBehaviour
         // Calls the agent's initialize function
         newAgent.Initialize(this, unitType);
         // Adds the agent to the list of agents
-        agents.Add(newAgent);
+        newUnits.Add(newAgent);
+    }
+
+    public void test(Castle castle, FlockAgent flockAgent, Flock flock) {
+        StartCoroutine(castle.SpawningRoutine(flockAgent, flock));
+    }
+
+    private void AddUnitsToFlock() {
+        foreach (FlockAgent newUnit in newUnits){ 
+            agents.Add(newUnit);
+        }
+        newUnits.Clear();
     }
 
     // Adds the agent to the dead units, this will disable them at the end of the update()
