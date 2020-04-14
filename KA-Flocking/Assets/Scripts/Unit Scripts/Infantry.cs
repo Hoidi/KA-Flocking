@@ -39,7 +39,9 @@ public class Infantry : Unit
         float sqrDistance;
         for (int i = 0; i < targets.Count; i++)
         {
-            sqrDistance = Vector3.SqrMagnitude(targets[i].position - attacker.transform.position);
+            // Only relevant for units with large colliders such as castles
+            Vector3 closestPoint = targets[i].GetComponent<Collider>().ClosestPoint(attacker.transform.position);
+            sqrDistance = Vector3.SqrMagnitude(closestPoint - attacker.transform.position);
             if (sqrDistance < closestDistance && sqrDistance < attackReach) {
                 closest = targets[i].GetComponentInParent<FlockAgent>();
                 closestDistance = sqrDistance;

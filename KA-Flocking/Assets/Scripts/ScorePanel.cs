@@ -31,12 +31,20 @@ public class ScorePanel : MonoBehaviour
         countAlive();
         countDead();
 
-        if(totalAlive == 0)
+        for (int i = 0; i < troopTypes.Length; i++)
         {
-            if (flock.name == "Team 1 Flock") winningText = "Team 2 won!";
-            else winningText = "Team 1 won!";
-            next.nextScene(); //go to end screen if all soldiers in one of the teams are dead
+            // Lose if the amount of castles is 0 or if there's only castles alive
+            if (troopTypes[i] == "Castle" && 
+                (troopAlive[i] == 0 || totalAlive <= troopAlive[i])) {
+                Lose();
+            }
         }
+    }
+
+    private void Lose() {
+        if (flock.name == "Team 1 Flock") winningText = "Team 2 won!";
+        else winningText = "Team 1 won!";
+        next.nextScene(); //go to end screen if all soldiers in one of the teams are dead
     }
 
     private void countAlive() {

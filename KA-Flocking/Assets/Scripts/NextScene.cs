@@ -8,8 +8,12 @@ public class NextScene : MonoBehaviour
 {
     private Settings settings;
     public void nextScene() {
+        if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") {
+            if (!validateTroopSetup(GameObject.Find("Team 1 Flock").GetComponent<Flock>())) return;
+        }
         if (SceneManager.GetActiveScene().name == "PlayerTwoSetupScene")
         {
+            if (!validateTroopSetup(GameObject.Find("Team 2 Flock").GetComponent<Flock>())) return;
             Time.timeScale = 1.0f;
         }
 
@@ -19,6 +23,23 @@ public class NextScene : MonoBehaviour
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         SceneManager.sceneLoaded += ConfigureSettings;
+    }
+
+    private bool validateTroopSetup(Flock flock) {
+        int castles = 0;
+        foreach (FlockAgent agent in flock.agents)
+        {
+            if (agent.unit.name.StartsWith("Castle")) castles++;
+        }
+        ErrorChat errorChat = GameObject.Find("ErrorBoard").GetComponent<ErrorChat>();
+        if (castles == 0) {
+            errorChat.ShowError("Atleast one castle is required");
+            return false;
+        } else if (castles == flock.agents.Count) {
+            errorChat.ShowError("Atleast one unit is required");
+            return false;
+        }
+        return true;
     }
 
     public void restartGame() {
