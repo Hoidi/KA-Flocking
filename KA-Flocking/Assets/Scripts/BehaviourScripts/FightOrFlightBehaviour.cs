@@ -14,7 +14,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
     Vector3 friendsDirection = Vector3.zero; //is kept to enable more advanced behaviour in the future. 
 
     float enemiesStrength = 0f;
-    float friendsStrength = 0f;
+    float friendsStrength = 1f;
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
         // If the unit is a scout then look at a larger range
@@ -35,7 +35,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
         if (enemiesStrength > friendsStrength)
         {
             attacking = false;
-            return (enemiesDirection * -1);
+            return (enemiesDirection * -1 + friendsDirection);
         }
         else
         {
@@ -58,21 +58,23 @@ public class FightOrFlightBehaviour : FlockBehaviour
             FlockAgent itemAgent = item.GetComponent<FlockAgent>();
             if (itemAgent != null)
             {
-                distance = Vector3.Magnitude(item.position - agent.transform.position);
+                Vector3 unitVector = item.position - agent.transform.position;
+                distance = Vector3.Magnitude(unitVector);
+                float unitStrength = 1f / distance;
                 if (itemAgent.AgentFlock == flock)
                 {
-                    friendsDirection += item.position - agent.transform.position;
-                    friendsStrength += 1f / distance;
+                    friendsStrength += unitStrength;
+                    friendsDirection += unitVector.normalized * unitStrength;
                 }
                 else
                 {
-                    enemiesDirection += item.position - agent.transform.position;
-                    enemiesStrength += 1f / distance;
+                    enemiesStrength += unitStrength;
+                    enemiesDirection += unitVector.normalized * unitStrength;
                 }
             }
         }
     }
-public bool isAttacking()
+public bool IsAttacking()
     {
         return attacking;
     }

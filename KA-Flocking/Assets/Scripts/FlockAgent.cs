@@ -9,7 +9,7 @@ public class FlockAgent : MonoBehaviour
     public float stability = 0.3f;
     // The speed at which the rotation of the agents stabilises
     public float stabilisationSpeed = 2.0f;
-    private readonly float acceleration = 15;
+    private readonly float acceleration = 35;
     private readonly float maxAcceleration = 25;
     public Unit unit;
     Collider agentCollider;
@@ -163,7 +163,7 @@ public class FlockAgent : MonoBehaviour
         if (FOFH != null)
         {
             FOFH.CalculateMove(attacker, targets, flock); //it´s ugly. But what is a coder to do when behaviour objects are involved....
-            if (attacking == false && FOFH.isAttacking())
+            if (attacking == false && FOFH.IsAttacking())
             {
                 attacking = unit.Attack(targets, attacker, flock);
                 if (attacking)

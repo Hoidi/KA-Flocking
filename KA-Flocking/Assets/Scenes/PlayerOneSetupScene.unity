@@ -1173,7 +1173,7 @@ MonoBehaviour:
   driveFactor: 10
   maxSpeed: 3
   neighbourRadius: 5
-  avoidanceRadiusMultiplier: 0.3
+  avoidanceRadiusMultiplier: 0.2
 --- !u!4 &437747587
 Transform:
   m_ObjectHideFlags: 0

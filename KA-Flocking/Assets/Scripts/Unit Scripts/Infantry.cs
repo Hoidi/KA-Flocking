@@ -11,13 +11,12 @@ public class Infantry : Unit
     private float health = 100f;
     // The amount of damage this unit deals in one Time unit
     [Range(0f,1000f)]
-    private readonly float damage = 40f;
+    private readonly float damage = 10f;
     // The reach of the unit, still limited by the neighbourradius
     [Range(0f,50f)]
     private readonly float attackReach = 4f;
 
     public override void TakeDamage(float amount, FlockAgent agent) {
-        amount *= Time.deltaTime;
         if (amount < health) {
             health -= amount;
         } else {
