@@ -55,7 +55,7 @@ public class FlockAgent : MonoBehaviour
         acceleration.y = 0f;
         //Debug.Log(acceleration.ToString());
         accelerationBuffer += acceleration * Time.deltaTime * this.acceleration;
-        if (accelerationBuffer.sqrMagnitude > maxAcceleration*maxAcceleration) accelerationBuffer = accelerationBuffer.normalized * maxAcceleration;
+        if (accelerationBuffer.sqrMagnitude > maxAcceleration * maxAcceleration) accelerationBuffer = accelerationBuffer.normalized * maxAcceleration;
         rb.velocity += accelerationBuffer * Time.deltaTime;
         //rb.velocity += HorizontalDrag(rb.velocity); for some reason this breaks everything
 
@@ -65,7 +65,11 @@ public class FlockAgent : MonoBehaviour
             velocity.y = 0;
             transform.forward = velocity;
         }
+        Animate();
+        StabiliseY();
+    }
 
+    private void Animate() {
         float sqrVelocity = rb.velocity.sqrMagnitude;
         float[] sqrAnimationSpeeds = { 0, 1.3f, 2.5f, 4.5f, 8, 14, 23, 35, 60, 90, };
         int newAnimationMode = animationMode;
@@ -88,16 +92,31 @@ public class FlockAgent : MonoBehaviour
 
         if (newAnimationMode == animationMode)
         {
-            StabiliseY();
             return;
         }
         else
         {
             animationMode = newAnimationMode;
         }
-
         ResetAnimations();
+        SetAnimationMode();
+    }
+    private void ResetAnimations()
+    {
+        animator.ResetTrigger("idle");
+        animator.ResetTrigger("slowWalk");
+        animator.ResetTrigger("walk");
+        animator.ResetTrigger("fastWalk");
+        animator.ResetTrigger("slowRun");
+        animator.ResetTrigger("run");
+        animator.ResetTrigger("fastRun");
+        animator.ResetTrigger("slowNarutoRun");
+        animator.ResetTrigger("narutoRun");
+        animator.ResetTrigger("fastNarutoRun");
+        animator.ResetTrigger("meleeAttack");
+    }
 
+    private void SetAnimationMode () { 
         switch (animationMode)
         {
             case 0:
@@ -131,7 +150,6 @@ public class FlockAgent : MonoBehaviour
                 animator.SetTrigger("fastNarutoRun");
                 break;
         }
-        StabiliseY();
     }
 
     public void Initialize(Flock flock, Unit unitType)
@@ -140,7 +158,7 @@ public class FlockAgent : MonoBehaviour
         unit = Instantiate(unitType);
     }
 
-    void StabiliseY()
+    private void StabiliseY()
     {
         Vector3 predictedUp = Quaternion.AngleAxis(
             rb.angularVelocity.magnitude * Mathf.Rad2Deg * stability / stabilisationSpeed,
@@ -174,24 +192,10 @@ public class FlockAgent : MonoBehaviour
 
                     Vector3 velocity = rb.velocity;
                     velocity.y = 0;
-                    attackAlignment = velocity;  //for making the character still stand up right while fighting. 
+                    if (velocity.sqrMagnitude != 0)
+                        attackAlignment = velocity;  //for making the character still stand up right while fighting. 
                 }
             }
         }
-    }
-
-    void ResetAnimations()
-    {
-        animator.ResetTrigger("idle");
-        animator.ResetTrigger("slowWalk");
-        animator.ResetTrigger("walk");
-        animator.ResetTrigger("fastWalk");
-        animator.ResetTrigger("slowRun");
-        animator.ResetTrigger("run");
-        animator.ResetTrigger("fastRun");
-        animator.ResetTrigger("slowNarutoRun");
-        animator.ResetTrigger("narutoRun");
-        animator.ResetTrigger("fastNarutoRun");
-        animator.ResetTrigger("meleeAttack");
     }
 }
