@@ -23,7 +23,7 @@ public class EntitySpawning : MonoBehaviour
     public Text money;
     public Text costOfSpawning;
     private bool spawnedFirstCastle = false;
-
+    public ErrorChat errorChat;
 
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
@@ -84,7 +84,11 @@ public class EntitySpawning : MonoBehaviour
     }
 
     private bool validateLayers(Ray ray) {
-        if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer | obstacleLayer) || EventSystem.current.IsPointerOverGameObject()){ //already a troop at location, or user clicked on UI, so dont spawn
+        // user clicked on UI, so dont spawn
+        if (EventSystem.current.IsPointerOverGameObject()) return false;
+        // already a troop at location
+        if (Physics.Raycast(ray, out collisionWithPlane, 10000f, troopLayer | obstacleLayer) || EventSystem.current.IsPointerOverGameObject()){ 
+            errorChat.ShowError("Already a unit or obstacle at location");
             return false;
         }
         return true;
@@ -96,6 +100,7 @@ public class EntitySpawning : MonoBehaviour
         {
             // If there is a troop collider within a range of 10(^2) (if collider is castle) or 1 meters, don't spawn
             if ((collider.ClosestPoint(worldPos)-worldPos).sqrMagnitude < (unitType.name.StartsWith("Castle") ? 100:0.5)) {
+                errorChat.ShowError("Overlap of unit(s)' position");
                 return false;
             }
         }
@@ -112,12 +117,11 @@ public class EntitySpawning : MonoBehaviour
         int switchSide = 1; //variable to make spawning on each "side" of the arrow shape possible..
         int arrowDirection = -1; //arrow formation should be in opposite direction for the two players
         if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") arrowDirection *= -1;
-        // Only spawn if the location is on the correct piece of land. TODO: Error noise if true
-        if (worldPos.x * arrowDirection < 0) return;
         Vector3 FinalWorldPos = new Vector3(0, 0, 0);
         Vector3 location;
         // Bound the amountOfTroops to the amount that can be afforded
         int maxTroopsAfforded = Mathf.Min(amountOfTroops, flock.moneyAmount/(cost == 0 ? 1:cost));
+        if (maxTroopsAfforded != amountOfTroops) errorChat.ShowError("All units could not be afforded");
         for (int i = 0; i < maxTroopsAfforded; i++){
             if(formationType == 'c') {
                 location = Random.insideUnitSphere * maxTroopsAfforded * 0.4f;
@@ -134,8 +138,13 @@ public class EntitySpawning : MonoBehaviour
             else if(formationType == 'a') {
                 FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location
             }
+            // Only spawn if the location is on the correct piece of land. TODO: Error noise if true
+            if (FinalWorldPos.x * arrowDirection < 0) {
+                errorChat.ShowError("Invalid spawnside");
+                continue;
+            }
             //raycast to get the exact y coordinate
-            if (!Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)) continue;
+            Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer);
             if (!validateColliders(FinalWorldPos, unitType)) continue;
             FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
             flock.CreateUnit( //spawn troops in formation
