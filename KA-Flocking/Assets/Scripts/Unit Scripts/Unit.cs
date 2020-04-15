@@ -48,7 +48,7 @@ public abstract class Unit : ScriptableObject
 
         if (closest != null)
         {
-            closest.GetUnit().TakeDamage(damage, closest);
+            closest.unit.TakeDamage(damage, closest);
             return true;
         }
         else 
@@ -65,7 +65,7 @@ public abstract class Unit : ScriptableObject
         {
             health = 0;
             agent.tag = "Dead";
-            agent.GetAgentFlock().RemoveUnit(agent);
+            agent.AgentFlock.RemoveUnit(agent);
         }
     }
 

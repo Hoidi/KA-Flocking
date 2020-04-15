@@ -47,7 +47,7 @@ public class Flock : MonoBehaviour
             List<Transform> context = GetNearbyObjects(agent);
             agent.Attack(context, agent, this);
 
-            Vector3 move = agent.GetUnit().behaviour.CalculateMove(agent, context, this);
+            Vector3 move = agent.unit.behaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
             if (move.sqrMagnitude > squareMaxSpeed)
             {
@@ -71,7 +71,7 @@ public class Flock : MonoBehaviour
         contextColliders = Physics.OverlapSphere(agent.transform.position, neighbourRadius, colliderLayers);
         foreach (Collider c in contextColliders)
         {
-            if (c != agent.AgentCollider)
+            if (c != agent.agentCollider)
             {
                 context.Add(c.transform);
             }
