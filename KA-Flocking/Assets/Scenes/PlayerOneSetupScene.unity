@@ -1822,7 +1822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 300
   prefab: {fileID: 6785972329752564812, guid: 2486cfa5343d67ecc85a1700463a0207, type: 3}
-  unitType: {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975, type: 2}
+  unitType: {fileID: 11400000, guid: fddc702707569da4ebf2d8b346b8db12, type: 2}
 --- !u!1 &498275121
 GameObject:
   m_ObjectHideFlags: 0
@@ -3704,11 +3704,9 @@ MonoBehaviour:
   spawnPoint: {fileID: 498275122}
   defaultItem: {fileID: 1530154708}
   content: {fileID: 1040849893}
-  castle: {fileID: 0}
   errorChat: {fileID: 942441400}
   flock: {fileID: 437747586}
   money: {fileID: 64169626}
-  timer: {fileID: 0}
 --- !u!114 &1108836261
 MonoBehaviour:
   m_ObjectHideFlags: 0
