@@ -29,7 +29,7 @@ public class CompositeBehaviour : FlockBehaviour
             }
             move += partialMove;
         }
-        return move;
+            return move;
     }
 
 }

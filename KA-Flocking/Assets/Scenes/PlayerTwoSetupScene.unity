@@ -1171,8 +1171,8 @@ MonoBehaviour:
   agents: []
   driveFactor: 10
   maxSpeed: 3
-  neighbourRadius: 3.5
-  avoidanceRadiusMultiplier: 0.4
+  neighbourRadius: 7
+  avoidanceRadiusMultiplier: 0.15
 --- !u!4 &621886119
 Transform:
   m_ObjectHideFlags: 0
@@ -3048,7 +3048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 300
   prefab: {fileID: 6314128460190958362, guid: c51126b60c610e060a6b19e292a8ca6d, type: 3}
-  unitType: {fileID: 11400000, guid: d6f642ed3071cfeca9ea879df8dff975, type: 2}
+  unitType: {fileID: 11400000, guid: fddc702707569da4ebf2d8b346b8db12, type: 2}
 --- !u!1 &1638217960
 GameObject:
   m_ObjectHideFlags: 0
