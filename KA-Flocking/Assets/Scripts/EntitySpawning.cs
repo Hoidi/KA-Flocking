@@ -119,7 +119,12 @@ public class EntitySpawning : MonoBehaviour
         Vector3 FinalWorldPos = new Vector3(0, 0, 0);
         Vector3 location;
         // Bound the amountOfTroops to the amount that can be afforded
-        int maxTroopsAfforded = Mathf.Min(amountOfTroops, flock.moneyAmount/(cost == 0 ? 1:cost));
+        int maxTroopsAfforded;
+        if (cost == 0) {
+            maxTroopsAfforded = amountOfTroops;
+        } else {
+            maxTroopsAfforded = Mathf.Min(amountOfTroops, flock.moneyAmount/cost);
+        }
         if (maxTroopsAfforded != amountOfTroops) errorChat.ShowError("All units could not be afforded");
         // Two bools to keep track of if errors should be shown.
         bool errorSpawnside = false;
