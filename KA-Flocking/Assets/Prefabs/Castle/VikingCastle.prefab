@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 5128213788686491239}
   m_Layer: 8
   m_Name: VikingCastle
-  m_TagString: Untagged
+  m_TagString: Castle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -473,10 +473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c74dea28e8c19f771a9aa6ee7ff6bcec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentFlock: {fileID: 0}
   stability: 0.3
   stabilisationSpeed: 2
-  unit: {fileID: 0}
+  dragCoefficient: 0.1
 --- !u!1 &6162036668252941036
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +18,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
         // If the unit is a scout then look at a larger range
-        if (agent.unit.GetType().ToString().Equals("Scout")) {
+        if (agent.unit is Scout) {
             Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, scoutNeighbourRadius, troopLayer);
             foreach (Collider c in contextColliders)
             {
