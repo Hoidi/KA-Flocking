@@ -5,19 +5,17 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class FlockAgent : MonoBehaviour
 {
-    public Flock AgentFlock;
+    private Flock AgentFlock;
     public float stability = 0.3f;
-    // The speed at which the rotation of the agents stabilises
-    public float stabilisationSpeed = 2.0f;
+    public float stabilisationSpeed = 2.0f; // The speed at which the rotation of the agents stabilises
     private readonly float acceleration = 35;
     private readonly float maxAcceleration = 25;
-    public Unit unit;
+    private Unit unit;
     Collider agentCollider;
-    public Rigidbody rb;
+    private Rigidbody rb;
     public Collider AgentCollider { get { return agentCollider; } }
-    public Animator animator;
+    private Animator animator;
     bool attacking = false;
-    Vector3 attackAlignment = Vector3.zero;
     float attackCountDown = 0f;
     public float dragCoefficient = 0.1f;
     int animationMode = 0;
@@ -28,6 +26,7 @@ public class FlockAgent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        unit.Initialize();
         agentCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
@@ -43,17 +42,12 @@ public class FlockAgent : MonoBehaviour
         }
         if (attacking)
         {
-            attackCountDown -= Time.deltaTime;
-            rb.velocity = Vector3.zero;
-            accelerationBuffer = Vector3.zero;
-            if (attackCountDown <= 0) attacking = false;
-            transform.forward = attackAlignment;
+            AnimateAttack();
             StabiliseY();
             return;
         }
 
         acceleration.y = 0f;
-        //Debug.Log(acceleration.ToString());
         accelerationBuffer += acceleration * Time.deltaTime * this.acceleration;
         if (accelerationBuffer.sqrMagnitude > maxAcceleration * maxAcceleration) accelerationBuffer = accelerationBuffer.normalized * maxAcceleration;
         rb.velocity += accelerationBuffer * Time.deltaTime;
@@ -65,11 +59,20 @@ public class FlockAgent : MonoBehaviour
             velocity.y = 0;
             transform.forward = velocity;
         }
-        Animate();
+        AnimateMove();
         StabiliseY();
     }
 
-    private void Animate() {
+    private void AnimateAttack()
+    {
+        attackCountDown -= Time.deltaTime;
+        rb.velocity = Vector3.zero;
+        accelerationBuffer = Vector3.zero;
+        if (attackCountDown <= 0) attacking = false;
+        transform.forward = unit.attackDirection;
+    }
+
+    private void AnimateMove() {
         float sqrVelocity = rb.velocity.sqrMagnitude;
         float[] sqrAnimationSpeeds = { 0, 1.3f, 2.5f, 4.5f, 8, 14, 23, 35, 60, 90, };
         int newAnimationMode = animationMode;
@@ -99,7 +102,7 @@ public class FlockAgent : MonoBehaviour
             animationMode = newAnimationMode;
         }
         ResetAnimations();
-        SetAnimationMode();
+        SetMoveAnimation();
     }
     private void ResetAnimations()
     {
@@ -114,9 +117,10 @@ public class FlockAgent : MonoBehaviour
         animator.ResetTrigger("narutoRun");
         animator.ResetTrigger("fastNarutoRun");
         animator.ResetTrigger("meleeAttack");
+        animator.ResetTrigger("gunAttack");
     }
 
-    private void SetAnimationMode () { 
+    private void SetMoveAnimation () { 
         switch (animationMode)
         {
             case 0:
@@ -186,16 +190,23 @@ public class FlockAgent : MonoBehaviour
                 attacking = unit.Attack(targets, attacker, flock);
                 if (attacking)
                 {
-                    attackCountDown = 1.4f;
+                    attackCountDown = unit.GetAttackTime();
                     ResetAnimations();
-                    animator.SetTrigger("meleeAttack");
+                    animator.SetTrigger(unit.GetAttackMode());
 
                     Vector3 velocity = rb.velocity;
                     velocity.y = 0;
-                    if (velocity.sqrMagnitude != 0)
-                        attackAlignment = velocity;  //for making the character still stand up right while fighting. 
                 }
             }
         }
+    }
+    public Unit GetUnit()
+    {
+        return unit;
+    }
+
+    public Flock GetAgentFlock()
+    {
+        return AgentFlock;
     }
 }
