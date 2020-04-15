@@ -30,13 +30,13 @@ public class EntityDeletion : MonoBehaviour{
 
     // Update is called once per frame
     private void Update(){
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f){ // forward
+        if (Input.GetMouseButton(1) && Input.GetAxis("Mouse ScrollWheel") > 0f){ // forward
             if (radius < 25){
                 radius++;
                 areaToDelete.transform.localScale = new Vector3(radius, 0, radius);
             }
         }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0f){ // backwards
+        else if (Input.GetMouseButton(1) && Input.GetAxis("Mouse ScrollWheel") < 0f){ // backwards
             if (radius > 5){
                 radius--;
                 areaToDelete.transform.localScale = new Vector3(radius, 0, radius);

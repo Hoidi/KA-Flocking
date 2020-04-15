@@ -63,6 +63,9 @@ public class CameraManager : MonoBehaviour {
         KeyboardInputManager.OnRotateInput += UpdateFrameRotate;
         KeyboardInputManager.OnZoomInput += UpdateFrameZoom;
         KeyboardInputManager.OnSpeedInput += UpdateFrameSpeed;
+        MouseInputManager.OnMoveInput += UpdateFrameMove;
+        MouseInputManager.OnRotateInput += UpdateFrameRotate;
+        MouseInputManager.OnZoomInput += UpdateFrameZoom;
     }
 
     private void UpdateFrameSpeed(float speed) {
@@ -91,7 +94,10 @@ public class CameraManager : MonoBehaviour {
         KeyboardInputManager.OnMoveInput -= UpdateFrameMove;
         KeyboardInputManager.OnRotateInput -= UpdateFrameRotate;
         KeyboardInputManager.OnZoomInput -= UpdateFrameZoom;
-        KeyboardInputManager.OnSpeedInput -= UpdateFrameSpeed;       
+        KeyboardInputManager.OnSpeedInput -= UpdateFrameSpeed;
+        MouseInputManager.OnMoveInput -= UpdateFrameMove;
+        MouseInputManager.OnRotateInput -= UpdateFrameRotate;
+        MouseInputManager.OnZoomInput -= UpdateFrameZoom;
     }
 
     private void LateUpdate() {
