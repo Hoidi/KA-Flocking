@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1053,8 +1053,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -58, y: -80.6}
-  m_SizeDelta: {x: 115, y: 160}
+  m_AnchoredPosition: {x: -57.5, y: -69.999985}
+  m_SizeDelta: {x: 115, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &764110927
 MonoBehaviour:
@@ -1673,8 +1673,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 57.5, y: -79.8}
-  m_SizeDelta: {x: 115, y: 160}
+  m_AnchoredPosition: {x: 57.5, y: -69.7}
+  m_SizeDelta: {x: 115, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &990400821
 MonoBehaviour:
@@ -2366,9 +2366,9 @@ RectTransform:
   m_Father: {fileID: 990400820}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 43.395, y: 60.566}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 43.395, y: -12.433998}
   m_SizeDelta: {x: 86.79, y: 21.68}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1550700810
@@ -2393,7 +2393,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 1dc97f4813d37944387f21b57d4d52df, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
@@ -2545,7 +2545,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Archers:'
+  m_Text: 'Gunmen:'
 --- !u!222 &1779967179
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2751,6 +2751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1855139059}
   - component: {fileID: 1855139058}
+  - component: {fileID: 1855139060}
   m_Layer: 0
   m_Name: Input Manager
   m_TagString: Untagged
@@ -2784,6 +2785,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1855139060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855139057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c374801df8bd84a901e2db3e249662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1866842310
 GameObject:
   m_ObjectHideFlags: 0
@@ -2852,7 +2865,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Archers:'
+  m_Text: 'Gunmen:'
 --- !u!222 &1866842313
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3267,9 +3280,9 @@ RectTransform:
   m_Father: {fileID: 764110926}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 43.395, y: 60.566}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 43.395, y: -12.434}
   m_SizeDelta: {x: 86.79, y: 21.68}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1975036318

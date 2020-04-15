@@ -124,7 +124,6 @@ public class EntitySpawning : MonoBehaviour
         {
             // If there is a troop collider within a range of 10(^2) (if collider is castle) or 1 meters, don't spawn
             if ((collider.ClosestPoint(worldPos)-worldPos).sqrMagnitude < (unitType.name.StartsWith("Castle") ? 100:0.5)) {
-                errorChat.ShowError("Overlap of unit(s)' position");
                 return false;
             }
         }
@@ -154,6 +153,9 @@ public class EntitySpawning : MonoBehaviour
         // Bound the amountOfTroops to the amount that can be afforded
         int maxTroopsAfforded = Mathf.Min(amountOfTroops, flock.moneyAmount/(cost == 0 ? 1:cost));
         if (maxTroopsAfforded != amountOfTroops) errorChat.ShowError("All units could not be afforded");
+        // Two bools to keep track of if errors should be shown.
+        bool errorSpawnside = false;
+        bool errorUnitOverlap = false;
         for (int i = 0; i < maxTroopsAfforded; i++){
             if(formationType == 'c') {
                 location = Random.insideUnitSphere * maxTroopsAfforded * 0.4f;
@@ -170,13 +172,17 @@ public class EntitySpawning : MonoBehaviour
             else if(formationType == 'a') {
                 FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location
             }
-            // Only spawn if the location is on the correct piece of land. TODO: Error noise if true
+            // Only spawn if the location is on the correct piece of land
             if (FinalWorldPos.x * arrowDirection < 0) {
-                errorChat.ShowError("Invalid spawnside");
+                errorSpawnside = true;
                 continue;
             }
             //raycast to get the exact y coordinate
             Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer);
+            if (!validateColliders(FinalWorldPos, unitType)) {
+                errorUnitOverlap = true;
+                continue;
+            }
             FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
             if (!validateColliders(FinalWorldPos, unitType) || !validateHeight(FinalWorldPos)) continue;
             flock.CreateUnit( //spawn troops in formation
@@ -190,5 +196,7 @@ public class EntitySpawning : MonoBehaviour
             money.text = "Money: " + flock.moneyAmount.ToString();
             if (!spawnedFirstCastle && unitType is Castle) spawnedFirstCastle = true;
         }
+        if (errorSpawnside) errorChat.ShowError("Invalid Spawnside");
+        if (errorUnitOverlap) errorChat.ShowError("Overlap of unit(s)' position");
     }
 }

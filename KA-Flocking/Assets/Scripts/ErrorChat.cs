@@ -8,7 +8,7 @@ public class ErrorChat : MonoBehaviour
 {
     public GameObject board;
     private Text[] errorTexts;
-    public float fadeSpeed = 0.2f;
+    public float fadeSpeed = 0.3f;
 
     void Start()
     {
@@ -20,7 +20,7 @@ public class ErrorChat : MonoBehaviour
     {
         foreach (Text text in errorTexts)
         {
-            text.color = Color.Lerp(text.color, new Color(1.0f,0,0,0), Time.unscaledDeltaTime*fadeSpeed);
+            text.color = Color.Lerp(text.color, new Color(1.0f,0,0,0), Time.unscaledDeltaTime*fadeSpeed/text.color.a);
         }
     }
 
