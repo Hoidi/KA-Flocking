@@ -11,7 +11,7 @@ public class OtherFlockFilter : ContextFilter
         foreach (var item in original)
         {
             FlockAgent itemAgent = item.GetComponent<FlockAgent>();
-            if (itemAgent != null && itemAgent.AgentFlock != agent.AgentFlock)
+            if (itemAgent != null && itemAgent.GetAgentFlock() != agent.GetAgentFlock())
             {
                 filtered.Add(itemAgent.transform);
             }

@@ -42,7 +42,7 @@ public class Flock : MonoBehaviour
             List<Transform> context = GetNearbyObjects(agent);
             agent.Attack(context, agent, this);
 
-            Vector3 move = agent.unit.behaviour.CalculateMove(agent, context, this);
+            Vector3 move = agent.GetUnit().behaviour.CalculateMove(agent, context, this);
             move *= driveFactor;
             if (move.sqrMagnitude > squareMaxSpeed)
             {

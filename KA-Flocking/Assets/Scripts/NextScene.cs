@@ -29,7 +29,7 @@ public class NextScene : MonoBehaviour
         int castles = 0;
         foreach (FlockAgent agent in flock.agents)
         {
-            if (agent.unit.name.StartsWith("Castle")) castles++;
+            if (agent.GetUnit().name.StartsWith("Castle")) castles++;
         }
         ErrorChat errorChat = GameObject.Find("ErrorBoard").GetComponent<ErrorChat>();
         if (castles == 0) {
