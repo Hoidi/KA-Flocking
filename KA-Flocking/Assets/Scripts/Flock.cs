@@ -20,6 +20,7 @@ public class Flock : MonoBehaviour
     public float avoidanceRadiusMultiplier = 0.5f;
     // All layers that will be checked for collisions, currently Troop & Obstacle
     int colliderLayers = (1 << 8) | (1<<10) ;
+    public bool spawnedFirstCastle = false;
 
     [System.NonSerialized]
     public int moneyAmount = 50000;

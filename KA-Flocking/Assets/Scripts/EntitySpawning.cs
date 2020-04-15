@@ -22,7 +22,6 @@ public class EntitySpawning : MonoBehaviour
     private bool inSpawningMethod = false;
     public Text money;
     public Text costOfSpawning;
-    private bool spawnedFirstCastle = false;
     public ErrorChat errorChat;
     public GameObject spawningWindow;
 
@@ -30,10 +29,8 @@ public class EntitySpawning : MonoBehaviour
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) { 
             flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
-            spawnedFirstCastle = true;
         } else if (SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) {
             flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();	
-            spawnedFirstCastle = true;
         }
         money.text = "Money: " + flock.moneyAmount.ToString(); 
         spawningWindow = GameObject.Find("SpawnScrollView");
@@ -51,7 +48,7 @@ public class EntitySpawning : MonoBehaviour
             {
                 TroopType troop = toggle.GetComponent<TroopType>();
                 // Sum depends on if you spawned your first castle
-                sum = (!spawnedFirstCastle && troop.unitType.name.StartsWith("Castle")) ? 0 : amountOfTroops * troop.cost;
+                sum = (!flock.spawnedFirstCastle && troop.unitType is Castle) ? 0 : (amountOfTroops * troop.cost);
                 costOfSpawning.text = "Spawning cost: " + sum.ToString();
             }
         }
@@ -82,7 +79,7 @@ public class EntitySpawning : MonoBehaviour
         foreach (Toggle toggle in troopToggles.ActiveToggles())
         {
             TroopType troop = toggle.GetComponent<TroopType>();
-            if (!spawnedFirstCastle && troop.unitType.name.StartsWith("Castle")) {
+            if (!flock.spawnedFirstCastle && troop.unitType is Castle) {
                 troopSpawning(troop.prefab, troop.unitType, 0, formation);
             } else {
                 troopSpawning(troop.prefab, troop.unitType, troop.cost, formation);
@@ -199,7 +196,7 @@ public class EntitySpawning : MonoBehaviour
             switchSide *= -1;
             flock.moneyAmount -= cost; //reduce money appropriately
             money.text = "Money: " + flock.moneyAmount.ToString();
-            if (!spawnedFirstCastle && unitType is Castle) spawnedFirstCastle = true;
+            if (!flock.spawnedFirstCastle && unitType is Castle) flock.spawnedFirstCastle = true;
         }
         if (errorSpawnside) errorChat.ShowError("Invalid Spawnside");
         if (errorUnitOverlap) errorChat.ShowError("Overlap of unit(s)' position");
