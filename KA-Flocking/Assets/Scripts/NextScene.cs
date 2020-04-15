@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class NextScene : MonoBehaviour
 {
     private Settings settings;
-    private bool foo = false;
+    private bool foo,bar  = false;
     public void nextScene() {
         if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") {
             if (!validateTroopSetup(GameObject.Find("Team 1 Flock").GetComponent<Flock>())) return;
@@ -30,7 +30,7 @@ public class NextScene : MonoBehaviour
         int castles = 0;
         foreach (FlockAgent agent in flock.agents)
         {
-            if (agent.unit.name.StartsWith("Castle")) castles++;
+            if (agent.unit is Castle) castles++;
         }
         ErrorChat errorChat = GameObject.Find("ErrorBoard").GetComponent<ErrorChat>();
         if (castles == 0) {
@@ -66,6 +66,8 @@ public class NextScene : MonoBehaviour
             Flock flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
             flock.moneyAmount = settings.startingMoney;
         } else if (scene.name.Equals("PlayerTwoSetupScene")) {
+            if (bar == true) return;
+            bar = true;
             Flock flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();
             flock.moneyAmount = settings.startingMoney;
         }
