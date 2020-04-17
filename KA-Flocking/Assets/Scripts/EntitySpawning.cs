@@ -90,6 +90,7 @@ public class EntitySpawning : MonoBehaviour
         //raycast to get the exact y coordinate
         if (Physics.Raycast(ray, out RaycastHit spawnIndicator, 10000f, planeLayer)){ //raytracing to acquire position for spawning indicator
             Area = spawnIndicator.point; //convert pixel coordinates to normal coordinates
+            float offset = Area.x - (Area.x + 1.75f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))));
             if (Physics.Raycast(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, out RaycastHit getYPos, Mathf.Infinity, planeLayer)){
                 Area.y = getYPos.point.y; //location now has proper y coordinate
                 circleAreaToSpawn.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
@@ -97,7 +98,7 @@ public class EntitySpawning : MonoBehaviour
                 //triAreaToSpawn.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
                 float circleRadius = amountOfTroops * 0.8f;
                 circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius);
-                rectAreaToSpawn.transform.localScale = new Vector3(amountOfTroops * 0.8f, 0, amountOfTroops * 0.8f);
+                rectAreaToSpawn.transform.localScale = new Vector3(offset, 0, offset);
             }
         }
         if (formationType == 'c'){
@@ -105,10 +106,8 @@ public class EntitySpawning : MonoBehaviour
         }
         else if (formationType == 'r') {
             rectAreaToSpawn.SetActive(true);
-            Debug.Log("asd");
         }
         else if(formationType == 'a') { 
-            Debug.Log("helo");
         }
 
     }
