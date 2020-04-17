@@ -15,32 +15,36 @@ public class MouseInputManager : InputManager
     public static event RotateInputHandler OnRotateInput;
     public static event ZoomInputHandler OnZoomInput;
 
-    private void Awake()
-    {
-        screen = new Vector2Int(Screen.width,Screen.height);
-    }
-
     private void Update()
     {
-        // change the area where the camera goes right depending on if it's in the setup scene or not
-        float screenEdgeDif = 0; // SceneManager.GetActiveScene().name.Equals("FlockScene") ? 0f : screen.x * 0.1f;
-
-        // mouse position is valid if no more than 5% outside of screen
+        screen = new Vector2Int(Screen.width, Screen.height);
         Vector3 mp = Input.mousePosition;
-        bool mouseValid = (mp.y <= screen.y * 1.15f && mp.y >= screen.y * -0.15f &&
-                           mp.x <= screen.x * 1.15f && mp.x >= screen.x * -0.15f);
 
         // do nothing if mouse position is not valid (outside of screen)
-        if (!mouseValid)
+        if (!MouseValid(mp))
         {
             return;
         }
 
-        //movement
-        if(mp.y > screen.y -1)
+        Move(mp);
+        Rotate(mp);
+        Zoom();
+    }
+
+    private bool MouseValid(Vector3 mp)
+    {
+        // mouse position is valid if no more than 15% outside of screen
+        return mp.y <= screen.y * 1.15f && mp.y >= screen.y * -0.15f &&
+               mp.x <= screen.x * 1.15f && mp.x >= screen.x * -0.15f;
+    }
+
+    private void Move(Vector3 mp)
+    {
+        if (mp.y > screen.y - 1)
         {
             OnMoveInput?.Invoke(Vector3.forward);
-        } else if (mp.y < 1)
+        }
+        else if (mp.y < 1)
         {
             OnMoveInput?.Invoke(-Vector3.forward);
         }
@@ -51,23 +55,29 @@ public class MouseInputManager : InputManager
         else if (mp.x < 1)
         {
             OnMoveInput?.Invoke(Vector3.left);
-        }        
+        }
+    }
 
-        //rotation
+    private void Rotate(Vector3 mp)
+    {
         if (Input.GetMouseButtonDown(2)) // if pressing down scroll button
         {
             mousePositionOnRotate = mp.x;
-        } else if (Input.GetMouseButton(2)) // still holding down
+        }
+        else if (Input.GetMouseButton(2)) // still holding down
         {
-            OnRotateInput?.Invoke(-((mousePositionOnRotate - mp.x)*95 )/ screen.x);
+            OnRotateInput?.Invoke(-((mousePositionOnRotate - mp.x) * 95) / screen.x);
             mousePositionOnRotate = mp.x;
         }
+    }
 
-        //zoom
-        if(!Input.GetMouseButton(1) && Input.mouseScrollDelta.y > 0)
+    private void Zoom()
+    {
+        if (!Input.GetMouseButton(1) && Input.mouseScrollDelta.y > 0)
         {
             OnZoomInput?.Invoke(-5f);
-        } else if (!Input.GetMouseButton(1) && Input.mouseScrollDelta.y < 0)
+        }
+        else if (!Input.GetMouseButton(1) && Input.mouseScrollDelta.y < 0)
         {
             OnZoomInput?.Invoke(5f);
         }
