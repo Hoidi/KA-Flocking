@@ -22,6 +22,8 @@ public class MouseInputManager : InputManager
 
     private void Update()
     {
+        screen = new Vector2Int(Screen.width, Screen.height);
+
         // mouse position is valid if no more than 5% outside of screen
         Vector3 mp = Input.mousePosition;
         bool mouseValid = (mp.y <= screen.y * 1.15f && mp.y >= screen.y * -0.15f &&
