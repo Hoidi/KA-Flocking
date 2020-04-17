@@ -22,9 +22,6 @@ public class MouseInputManager : InputManager
 
     private void Update()
     {
-        // change the area where the camera goes right depending on if it's in the setup scene or not
-        float screenEdgeDif = 0; // SceneManager.GetActiveScene().name.Equals("FlockScene") ? 0f : screen.x * 0.1f;
-
         // mouse position is valid if no more than 5% outside of screen
         Vector3 mp = Input.mousePosition;
         bool mouseValid = (mp.y <= screen.y * 1.15f && mp.y >= screen.y * -0.15f &&
