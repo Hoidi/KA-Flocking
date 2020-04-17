@@ -24,17 +24,37 @@ public class EntitySpawning : MonoBehaviour
     public Text costOfSpawning;
     private bool spawnedFirstCastle = false;
     public ErrorChat errorChat;
-
+    GameObject circleAreaToSpawn;
+    GameObject rectAreaToSpawn;
+    GameObject triAreaToSpawn;
+    GameObject[] formationAreaArray = new GameObject[3];
+    public Material spawnAreaColor;
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) { 
-            money.text = "Money: " + flock.moneyAmount.ToString(); 
+            money.text = "Money: " + flock.moneyAmount.ToString();
+            circleAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            rectAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            triAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            formationAreaArray[0] = circleAreaToSpawn;
+            formationAreaArray[1] = rectAreaToSpawn;
+            formationAreaArray[2] = triAreaToSpawn;
+            setIndicatorColors(formationAreaArray);
         }
     }
 
     private void Update(){
+        // There should only be one
+        foreach (Toggle formationType in formationToggles.ActiveToggles()){
+            spawnIndicator(char.ToLower(formationType.ToString()[0]));
+        }
         if (Input.GetMouseButton(0)){
             StartCoroutine(SpawnWithDelay());
+        }
+        if (Input.GetMouseButton(1)){ //remove spawning indicator while deleting
+            foreach(GameObject formation in formationAreaArray){
+                formation.SetActive(false);
+            }
         }
         int sum;
         //if-statement is to get around a null pointer exception in flockscene (since the cost of spawning troops isnt relevant in the flocking scene)
@@ -48,6 +68,49 @@ public class EntitySpawning : MonoBehaviour
                 costOfSpawning.text = "Spawning cost: " + sum.ToString();
             }
         }
+    }
+
+    private void setIndicatorColors(GameObject [] formationAreaArray) {
+        foreach (GameObject formation in formationAreaArray) {
+            formation.GetComponent<Renderer>().material = spawnAreaColor;
+            formation.GetComponent<Collider>().enabled = false;
+            Color color = formation.GetComponent<Renderer>().material.color;
+            color.a = 0.1f;
+            formation.GetComponent<Renderer>().material.color = color;
+        }
+
+
+    }
+    private void spawnIndicator(char formationType) {
+        circleAreaToSpawn.SetActive(false);
+        rectAreaToSpawn.SetActive(false);
+        //triAreaToSpawn.SetActive(false);
+        Vector3 Area = new Vector3(0, 0, 0);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        //raycast to get the exact y coordinate
+        if (Physics.Raycast(ray, out RaycastHit spawnIndicator, 10000f, planeLayer)){ //raytracing to acquire position for spawning indicator
+            Area = spawnIndicator.point; //convert pixel coordinates to normal coordinates
+            if (Physics.Raycast(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, out RaycastHit getYPos, Mathf.Infinity, planeLayer)){
+                Area.y = getYPos.point.y; //location now has proper y coordinate
+                circleAreaToSpawn.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
+                rectAreaToSpawn.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
+                //triAreaToSpawn.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
+                float circleRadius = amountOfTroops * 0.8f;
+                circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius);
+                rectAreaToSpawn.transform.localScale = new Vector3(amountOfTroops * 0.8f, 0, amountOfTroops * 0.8f);
+            }
+        }
+        if (formationType == 'c'){
+            circleAreaToSpawn.SetActive(true);
+        }
+        else if (formationType == 'r') {
+            rectAreaToSpawn.SetActive(true);
+            Debug.Log("asd");
+        }
+        else if(formationType == 'a') { 
+            Debug.Log("helo");
+        }
+
     }
     IEnumerator SpawnWithDelay(){
         if (!inSpawningMethod){
