@@ -29,20 +29,23 @@ public class EntitySpawning : MonoBehaviour
     GameObject triAreaToSpawn;
     GameObject[] formationAreaArray = new GameObject[3];
     public Material spawnAreaColor;
+    private Mesh triangleMesh;
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) { 
             money.text = "Money: " + flock.moneyAmount.ToString();
             circleAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             rectAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            triAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            triAreaToSpawn = new GameObject();
+            triAreaToSpawn.transform.Rotate(90, -45, 0, 0);
             formationAreaArray[0] = circleAreaToSpawn;
             formationAreaArray[1] = rectAreaToSpawn;
             formationAreaArray[2] = triAreaToSpawn;
+            initTriangleIndicator();
             setIndicatorColors(formationAreaArray);
         }
     }
-
+    
     private void Update(){
         // There should only be one
         foreach (Toggle formationType in formationToggles.ActiveToggles()){
@@ -69,22 +72,31 @@ public class EntitySpawning : MonoBehaviour
             }
         }
     }
-
+    private void initTriangleIndicator(){
+        triAreaToSpawn.AddComponent<MeshFilter>();
+        triAreaToSpawn.AddComponent<MeshRenderer>();
+        triangleMesh = triAreaToSpawn.GetComponent<MeshFilter>().mesh;
+        triangleMesh.Clear();
+        triangleMesh.vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, 2, 0), new Vector3(2, 2, 0) };
+        triangleMesh.uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1) };
+        triangleMesh.triangles = new int[] { 0, 1, 2 };
+    }
     private void setIndicatorColors(GameObject [] formationAreaArray) {
         foreach (GameObject formation in formationAreaArray) {
             formation.GetComponent<Renderer>().material = spawnAreaColor;
+            if(formation.GetComponent<Collider>() != null) { // triangle doesnt have collider so this is needed
             formation.GetComponent<Collider>().enabled = false;
+            }
             Color color = formation.GetComponent<Renderer>().material.color;
             color.a = 0.1f;
             formation.GetComponent<Renderer>().material.color = color;
         }
-
-
     }
     private void spawnIndicator(char formationType) {
-        circleAreaToSpawn.SetActive(false);
-        rectAreaToSpawn.SetActive(false);
-        //triAreaToSpawn.SetActive(false);
+        foreach (GameObject formation in formationAreaArray){ //disable indicators by default
+            formation.SetActive(false);
+        }
+        Mesh mesh = triAreaToSpawn.GetComponent<MeshFilter>().mesh;
         Vector3 Area = new Vector3(0, 0, 0);
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         //raycast to get the exact y coordinate
@@ -93,21 +105,25 @@ public class EntitySpawning : MonoBehaviour
             float offset = Area.x - (Area.x + 1.75f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))));
             if (Physics.Raycast(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, out RaycastHit getYPos, Mathf.Infinity, planeLayer)){
                 Area.y = getYPos.point.y; //location now has proper y coordinate
-                circleAreaToSpawn.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
-                rectAreaToSpawn.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
-                //triAreaToSpawn.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
+                foreach (GameObject formation in formationAreaArray){ //set proper coordinates
+                    formation.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
+                }
                 float circleRadius = amountOfTroops * 0.8f;
                 circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius);
                 rectAreaToSpawn.transform.localScale = new Vector3(offset, 0, offset);
-            }
+                triangleMesh.vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, amountOfTroops*0.7f, 0), new Vector3(-amountOfTroops * 0.7f, 0, 0) };
+
+            }   
         }
+        //enable relevant indicator
         if (formationType == 'c'){
             circleAreaToSpawn.SetActive(true);
         }
         else if (formationType == 'r') {
             rectAreaToSpawn.SetActive(true);
         }
-        else if(formationType == 'a') { 
+        else if(formationType == 'a') {
+            triAreaToSpawn.SetActive(true);
         }
 
     }
@@ -205,7 +221,7 @@ public class EntitySpawning : MonoBehaviour
                     worldPos.z + 1.5f * Mathf.CeilToInt(i / Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded))) + (worldPos.z - zoffset) / 2.4f);
             }
             else if(formationType == 'a') {
-                FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location
+                FinalWorldPos = new Vector3(worldPos.x - (i * arrowDirection*-1) * 0.7f, worldPos.y, worldPos.z + (i * switchSide) * 0.7f); //spawn location
             }
             // Only spawn if the location is on the correct piece of land
             if (FinalWorldPos.x * arrowDirection < 0) {
