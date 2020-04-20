@@ -37,13 +37,7 @@ public class AudioManager : MonoBehaviour
 
     private void Play(AudioSource audioSource, AudioClip clip)
     {
-        // if the audiosource is outside of max hearing range from the camera, and the clip is relatively short then don't play at all.
-        // the clip length of 1 is an arbitrary value, if it is a longer soundtrack/sfx then the
-        // player might pan into hearing range of the sound, and therefore making it relevant to play anyhow.
-        // Otherwise we avoid sounds playing too far away to hear, and thereby occupying some of the slots for more relevant sfx.
-
-        Vector3 distanceToListener = audioSource.transform.position - AudioListenerObject.transform.position;
-        if (distanceToListener.magnitude > audioSource.maxDistance && clip.length < 1)
+        if (AudioListenerObject == null)
         {
             return;
         }

@@ -74,7 +74,10 @@ public abstract class Unit : ScriptableObject
     {
         AudioManager audioManager = FindObjectOfType<AudioManager>();
         AudioSource audioSource = agent.GetComponent<AudioSource>();
-        audioManager.PlayRandomSFX(audioSource);
+        if (audioSource != null)
+        {
+            audioManager.PlayRandomSFX(audioSource);
+        }
     }
 
 
