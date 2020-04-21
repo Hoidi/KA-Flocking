@@ -39,7 +39,7 @@ public class AudioManager : MonoBehaviour
     {
         if (AudioListenerObject == null)
         {
-            return;
+            AudioListenerObject = FindObjectOfType<Camera>();
         }
 
         if(!audioSource.isPlaying && currentlyPlayingSFXCount < MaxConcurrentSFX)
