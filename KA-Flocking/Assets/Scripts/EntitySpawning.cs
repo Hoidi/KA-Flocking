@@ -37,9 +37,11 @@ public class EntitySpawning : MonoBehaviour
             circleAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             rectAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Cube);
             triAreaToSpawn = new GameObject();
+            if(SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) triAreaToSpawn.transform.Rotate(0, 0, 180, 0); //rotate triangle properly depending on setup scene
             triAreaToSpawn.transform.Rotate(90, -45, 0, 0);
             formationAreaArray[0] = circleAreaToSpawn;
             formationAreaArray[1] = rectAreaToSpawn;
+            rectAreaToSpawn.transform.localScale = new Vector3(5, 0, 5); //otherwise its invisible when amountToSpawn is 1
             formationAreaArray[2] = triAreaToSpawn;
             initTriangleIndicator();
             setIndicatorColors(formationAreaArray);
@@ -63,8 +65,7 @@ public class EntitySpawning : MonoBehaviour
         //if-statement is to get around a null pointer exception in flockscene (since the cost of spawning troops isnt relevant in the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded){
             // Check which toggle is on, there should only be one
-            foreach (Toggle toggle in troopToggles.ActiveToggles())
-            {
+            foreach (Toggle toggle in troopToggles.ActiveToggles()){
                 TroopType troop = toggle.GetComponent<TroopType>();
                 // Sum depends on if you spawned your first castle
                 sum = (!spawnedFirstCastle && troop.unitType.name.StartsWith("Castle")) ? 0 : amountOfTroops * troop.cost;
@@ -77,7 +78,7 @@ public class EntitySpawning : MonoBehaviour
         triAreaToSpawn.AddComponent<MeshRenderer>();
         triangleMesh = triAreaToSpawn.GetComponent<MeshFilter>().mesh;
         triangleMesh.Clear();
-        triangleMesh.vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, 2, 0), new Vector3(2, 2, 0) };
+        triangleMesh.vertices = new Vector3[] { new Vector3(-2, 0, 2), new Vector3(-2, 0, -2), new Vector3(2, 0, -2) };
         triangleMesh.uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1) };
         triangleMesh.triangles = new int[] { 0, 1, 2 };
     }
@@ -106,13 +107,24 @@ public class EntitySpawning : MonoBehaviour
             if (Physics.Raycast(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, out RaycastHit getYPos, Mathf.Infinity, planeLayer)){
                 Area.y = getYPos.point.y; //location now has proper y coordinate
                 foreach (GameObject formation in formationAreaArray){ //set proper coordinates
-                    formation.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
+                    formation.transform.position = new Vector3(Area.x, Area.y+0.5f, Area.z);
                 }
                 float circleRadius = amountOfTroops * 0.8f;
                 circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius);
                 rectAreaToSpawn.transform.localScale = new Vector3(offset, 0, offset);
-                triangleMesh.vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, amountOfTroops*0.7f, 0), new Vector3(-amountOfTroops * 0.7f, 0, 0) };
-
+                triangleMesh.vertices = new Vector3[] { new Vector3(10, 0, 0), new Vector3(10, amountOfTroops, 0), new Vector3(-amountOfTroops + 10, 0, 0) };
+                float xvalue = 0;
+                float yvalue = 0;
+                float zvalue = 0;
+                foreach (Vector3 vector in triangleMesh.vertices) { 
+                    xvalue += vector.x;
+                    yvalue += vector.y;
+                    zvalue += vector.z;
+                }
+                xvalue /= triangleMesh.vertices.Length;
+                yvalue /= triangleMesh.vertices.Length;
+                zvalue /= triangleMesh.vertices.Length;
+                Vector3 centerOfTri = new Vector3(xvalue, yvalue, zvalue);
             }   
         }
         //enable relevant indicator
