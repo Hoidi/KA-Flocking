@@ -112,19 +112,7 @@ public class EntitySpawning : MonoBehaviour
                 float circleRadius = amountOfTroops * 0.8f;
                 circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius);
                 rectAreaToSpawn.transform.localScale = new Vector3(offset, 0, offset);
-                triangleMesh.vertices = new Vector3[] { new Vector3(10, 0, 0), new Vector3(10, amountOfTroops, 0), new Vector3(-amountOfTroops + 10, 0, 0) };
-                float xvalue = 0;
-                float yvalue = 0;
-                float zvalue = 0;
-                foreach (Vector3 vector in triangleMesh.vertices) { 
-                    xvalue += vector.x;
-                    yvalue += vector.y;
-                    zvalue += vector.z;
-                }
-                xvalue /= triangleMesh.vertices.Length;
-                yvalue /= triangleMesh.vertices.Length;
-                zvalue /= triangleMesh.vertices.Length;
-                Vector3 centerOfTri = new Vector3(xvalue, yvalue, zvalue);
+                triangleMesh.vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, amountOfTroops, 0), new Vector3(-amountOfTroops, 0, 0) };
             }   
         }
         //enable relevant indicator
@@ -137,7 +125,6 @@ public class EntitySpawning : MonoBehaviour
         else if(formationType == 'a') {
             triAreaToSpawn.SetActive(true);
         }
-
     }
     IEnumerator SpawnWithDelay(){
         if (!inSpawningMethod){
