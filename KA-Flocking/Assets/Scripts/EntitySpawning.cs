@@ -41,7 +41,6 @@ public class EntitySpawning : MonoBehaviour
             triAreaToSpawn.transform.Rotate(90, -45, 0, 0);
             formationAreaArray[0] = circleAreaToSpawn;
             formationAreaArray[1] = rectAreaToSpawn;
-            rectAreaToSpawn.transform.localScale = new Vector3(5, 0, 5); //otherwise its invisible when amountToSpawn is 1
             formationAreaArray[2] = triAreaToSpawn;
             initTriangleIndicator();
             setIndicatorColors(formationAreaArray);
@@ -97,13 +96,13 @@ public class EntitySpawning : MonoBehaviour
         foreach (GameObject formation in formationAreaArray){ //disable indicators by default
             formation.SetActive(false);
         }
-        Mesh mesh = triAreaToSpawn.GetComponent<MeshFilter>().mesh;
         Vector3 Area = new Vector3(0, 0, 0);
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         //raycast to get the exact y coordinate
         if (Physics.Raycast(ray, out RaycastHit spawnIndicator, 10000f, planeLayer)){ //raytracing to acquire position for spawning indicator
             Area = spawnIndicator.point; //convert pixel coordinates to normal coordinates
             float offset = Area.x - (Area.x + 1.75f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))));
+            if (offset > -1) offset = -1; //required to show a small rectangle indicator for troops = 1
             if (Physics.Raycast(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, out RaycastHit getYPos, Mathf.Infinity, planeLayer)){
                 Area.y = getYPos.point.y; //location now has proper y coordinate
                 foreach (GameObject formation in formationAreaArray){ //set proper coordinates
@@ -112,7 +111,22 @@ public class EntitySpawning : MonoBehaviour
                 float circleRadius = amountOfTroops * 0.8f;
                 circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius);
                 rectAreaToSpawn.transform.localScale = new Vector3(offset, 0, offset);
-                triangleMesh.vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, amountOfTroops, 0), new Vector3(-amountOfTroops, 0, 0) };
+                float xoffset;
+                if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) xoffset = Area.x - (Area.x - amountOfTroops * -0.7f);
+                else xoffset = Area.x - (Area.x - amountOfTroops * 0.7f);
+                Vector3[] worldPosVertices = new Vector3[triangleMesh.vertices.Length];
+                Vector3[] verticesToCalc;
+                verticesToCalc = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, amountOfTroops, 0), new Vector3(-amountOfTroops, 0, 0) };
+                for (int i = 0; i < verticesToCalc.Length; i++){
+                    worldPosVertices[i] = transform.TransformPoint(verticesToCalc[i]);
+                    worldPosVertices[i] += new Vector3((Mathf.Sin((45 * Mathf.PI) / 180) * xoffset) / 2, 0, 0);
+                    Debug.Log("WORLD POS " + i + "= " + worldPosVertices[i]);
+                }
+                for (int j = 0; j < worldPosVertices.Length; j++){
+                    verticesToCalc[j] = transform.InverseTransformPoint(worldPosVertices[j]);
+                    Debug.Log("SCREEN POS " + j + "= " + verticesToCalc[j]);
+                }
+                triangleMesh.vertices = verticesToCalc;
             }   
         }
         //enable relevant indicator
