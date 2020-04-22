@@ -5,8 +5,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEditor;
 
-public class EntitySpawning : MonoBehaviour
-{
+public class EntitySpawning : MonoBehaviour{
 
     public Flock flock;
     public Camera cam;
@@ -30,6 +29,7 @@ public class EntitySpawning : MonoBehaviour
     GameObject[] formationAreaArray = new GameObject[3];
     public Material spawnAreaColor;
     private Mesh triangleMesh;
+    private float triangleXOffset;
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) { 
@@ -37,8 +37,7 @@ public class EntitySpawning : MonoBehaviour
             circleAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             rectAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Cube);
             triAreaToSpawn = new GameObject();
-            if(SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) triAreaToSpawn.transform.Rotate(0, 0, 180, 0); //rotate triangle properly depending on setup scene
-            triAreaToSpawn.transform.Rotate(90, -45, 0, 0);
+            if(SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) triAreaToSpawn.transform.Rotate(0, 0, 180, 0); //rotate triangle properly depending on setup scene
             formationAreaArray[0] = circleAreaToSpawn;
             formationAreaArray[1] = rectAreaToSpawn;
             formationAreaArray[2] = triAreaToSpawn;
@@ -77,7 +76,7 @@ public class EntitySpawning : MonoBehaviour
         triAreaToSpawn.AddComponent<MeshRenderer>();
         triangleMesh = triAreaToSpawn.GetComponent<MeshFilter>().mesh;
         triangleMesh.Clear();
-        triangleMesh.vertices = new Vector3[] { new Vector3(-2, 0, 2), new Vector3(-2, 0, -2), new Vector3(2, 0, -2) };
+        triangleMesh.vertices = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0) };
         triangleMesh.uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1) };
         triangleMesh.triangles = new int[] { 0, 1, 2 };
     }
@@ -97,55 +96,46 @@ public class EntitySpawning : MonoBehaviour
             formation.SetActive(false);
         }
         Vector3 Area = new Vector3(0, 0, 0);
+        Mesh mesh = triAreaToSpawn.GetComponent<MeshFilter>().mesh;
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         //raycast to get the exact y coordinate
         if (Physics.Raycast(ray, out RaycastHit spawnIndicator, 10000f, planeLayer)){ //raytracing to acquire position for spawning indicator
             Area = spawnIndicator.point; //convert pixel coordinates to normal coordinates
-            float offset = Area.x - (Area.x + 1.75f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))));
-            if (offset > -1) offset = -1; //required to show a small rectangle indicator for troops = 1
             if (Physics.Raycast(new Vector3(Area.x, 100, Area.z), Vector3.down * 100f, out RaycastHit getYPos, Mathf.Infinity, planeLayer)){
                 Area.y = getYPos.point.y; //location now has proper y coordinate
                 foreach (GameObject formation in formationAreaArray){ //set proper coordinates
                     formation.transform.position = new Vector3(Area.x, Area.y+0.5f, Area.z);
                 }
-                float circleRadius = amountOfTroops * 0.8f;
-                circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius);
-                rectAreaToSpawn.transform.localScale = new Vector3(offset, 0, offset);
-                float xoffset;
-                if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) xoffset = Area.x - (Area.x - amountOfTroops * -0.7f);
-                else xoffset = Area.x - (Area.x - amountOfTroops * 0.7f);
-                Vector3[] worldPosVertices = new Vector3[triangleMesh.vertices.Length];
-                Vector3[] verticesToCalc;
-                verticesToCalc = new Vector3[] { new Vector3(0, 0, 0), new Vector3(0, amountOfTroops, 0), new Vector3(-amountOfTroops, 0, 0) };
-                for (int i = 0; i < verticesToCalc.Length; i++){
-                    worldPosVertices[i] = transform.TransformPoint(verticesToCalc[i]);
-                    worldPosVertices[i] += new Vector3((Mathf.Sin((45 * Mathf.PI) / 180) * xoffset) / 2, 0, 0);
-                    Debug.Log("WORLD POS " + i + "= " + worldPosVertices[i]);
-                }
-                for (int j = 0; j < worldPosVertices.Length; j++){
-                    verticesToCalc[j] = transform.InverseTransformPoint(worldPosVertices[j]);
-                    Debug.Log("SCREEN POS " + j + "= " + verticesToCalc[j]);
-                }
-                triangleMesh.vertices = verticesToCalc;
-            }   
-        }
-        //enable relevant indicator
-        if (formationType == 'c'){
-            circleAreaToSpawn.SetActive(true);
-        }
-        else if (formationType == 'r') {
-            rectAreaToSpawn.SetActive(true);
-        }
-        else if(formationType == 'a') {
-            triAreaToSpawn.SetActive(true);
+            }
+            enableRelevantIndicator(Area, formationType); //enable and resize relevant indicator
         }
     }
+    private void enableRelevantIndicator(Vector3 Area, char formationType){
+        switch(formationType){ //enable and resize relevant indicator
+            case 'c':
+                float circleRadius = amountOfTroops * 0.8f;
+                circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius); 
+                circleAreaToSpawn.SetActive(true); 
+                break;
+            case 'r':
+                float offset = Area.x - (Area.x + 1.75f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))));
+                if (offset > -1) offset = -1; //required to show a small rectangle indicator for when amountOfTroops = 1
+                rectAreaToSpawn.transform.localScale = new Vector3(offset, 0, offset); 
+                rectAreaToSpawn.SetActive(true); 
+                break;
+            case 'a':
+                triangleMesh.vertices = new Vector3[] { new Vector3(-amountOfTroops * 0.65f / 2, 0, 0), new Vector3(amountOfTroops * 0.65f, 0, -amountOfTroops * 0.65f), 
+                new Vector3(amountOfTroops * 0.65f, 0, amountOfTroops * 0.65f) };
+                triAreaToSpawn.SetActive(true);
+                break;
+        }
+    }
+    
     IEnumerator SpawnWithDelay(){
         if (!inSpawningMethod){
             inSpawningMethod = true;
             // There should only be one
-            foreach (Toggle toggle in formationToggles.ActiveToggles())
-            {
+            foreach (Toggle toggle in formationToggles.ActiveToggles()){
                 // sends the first letter of the toggle to spawnTroop
                 spawnTroop(char.ToLower(toggle.ToString()[0]));
             }
@@ -156,15 +146,13 @@ public class EntitySpawning : MonoBehaviour
     private void setTroopAmount(){
         amountOfTroops = (int)troopSlider.value;
         troopText.text = amountOfTroops.ToString();
-
     }
     public void limitTroopAmount(Toggle toggle){
         troopSlider.maxValue = (toggle.isOn) ? 1 : 100;
     }
     private void spawnTroop(char formation){
         // There should only be one
-        foreach (Toggle toggle in troopToggles.ActiveToggles())
-        {
+        foreach (Toggle toggle in troopToggles.ActiveToggles()){
             TroopType troop = toggle.GetComponent<TroopType>();
             if (!spawnedFirstCastle && troop.unitType.name.StartsWith("Castle")) {
                 troopSpawning(troop.prefab, troop.unitType, 0, formation);
@@ -187,8 +175,7 @@ public class EntitySpawning : MonoBehaviour
     // Validates if there are any troop colliders within a small radius (dependent on if the unit is a Castle) of the position
     private bool validateColliders(Vector3 worldPos, Unit unitType) {
         Collider[] colliders = Physics.OverlapSphere(worldPos, 10, troopLayer);
-        foreach (Collider collider in colliders)
-        {
+        foreach (Collider collider in colliders){
             // If there is a troop collider within a range of 10(^2) (if collider is castle) or 1 meters, don't spawn
             if ((collider.ClosestPoint(worldPos)-worldPos).sqrMagnitude < (unitType.name.StartsWith("Castle") ? 100:0.5)) {
                 return false;
@@ -196,7 +183,6 @@ public class EntitySpawning : MonoBehaviour
         }
         return true;
     }
-
     private void troopSpawning(FlockAgent agentPrefab, Unit unitType, int cost, char formationType){
         Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
         Vector3 worldPos = new Vector3(0, 0, 0);
@@ -234,7 +220,7 @@ public class EntitySpawning : MonoBehaviour
                     worldPos.z + 1.5f * Mathf.CeilToInt(i / Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded))) + (worldPos.z - zoffset) / 2.4f);
             }
             else if(formationType == 'a') {
-                FinalWorldPos = new Vector3(worldPos.x - (i * arrowDirection*-1) * 0.7f, worldPos.y, worldPos.z + (i * switchSide) * 0.7f); //spawn location
+                FinalWorldPos = new Vector3(worldPos.x - (i * arrowDirection*-1), worldPos.y, worldPos.z + (i * switchSide) * 0.7f); //spawn location
             }
             // Only spawn if the location is on the correct piece of land
             if (FinalWorldPos.x * arrowDirection < 0) {
@@ -242,22 +228,24 @@ public class EntitySpawning : MonoBehaviour
                 continue;
             }
             //raycast to get the exact y coordinate
-            Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer);
-            if (!validateColliders(FinalWorldPos, unitType)) {
-                errorUnitOverlap = true;
-                continue;
+            if (Physics.Raycast(new Vector3(FinalWorldPos.x - (amountOfTroops * 0.65f / 2), 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)) { 
+                if (!validateColliders(FinalWorldPos, unitType)) {
+                    errorUnitOverlap = true;
+                    continue;
+                }
+                FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                FinalWorldPos.x -= amountOfTroops * 0.65f / 2;
+                flock.CreateUnit( //spawn troops in formation
+                    agentPrefab,
+                    FinalWorldPos,
+                    Quaternion.Euler(0, cam.transform.eulerAngles.y, 0),
+                    unitType
+                    );
+                switchSide *= -1;
+                flock.moneyAmount -= cost; //reduce money appropriately
+                money.text = "Money: " + flock.moneyAmount.ToString();
+                if (!spawnedFirstCastle && unitType.name.StartsWith("Castle")) spawnedFirstCastle = true;
             }
-            FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
-            flock.CreateUnit( //spawn troops in formation
-                agentPrefab,
-                FinalWorldPos,
-                Quaternion.Euler(0, cam.transform.eulerAngles.y, 0),
-                unitType
-                );
-            switchSide *= -1;
-            flock.moneyAmount -= cost; //reduce money appropriately
-            money.text = "Money: " + flock.moneyAmount.ToString();
-            if (!spawnedFirstCastle && unitType.name.StartsWith("Castle")) spawnedFirstCastle = true;
         }
         if (errorSpawnside) errorChat.ShowError("Invalid Spawnside");
         if (errorUnitOverlap) errorChat.ShowError("Overlap of unit(s)' position");
