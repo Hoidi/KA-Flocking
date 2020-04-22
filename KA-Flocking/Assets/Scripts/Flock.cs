@@ -92,6 +92,12 @@ public class Flock : MonoBehaviour
     // Threadsafe and is the only way that an agent should be removed
     public void RemoveUnit(FlockAgent agent)
     {
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
+        AudioSource audiouSource = agent.GetComponent<AudioSource>();
+        if (audioManager != null && audiouSource != null)
+        {
+            audioManager.PlayDeathSFX(audiouSource);
+        }
         deadUnits.Add(agent);
     }
 

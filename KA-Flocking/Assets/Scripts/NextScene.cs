@@ -16,6 +16,9 @@ public class NextScene : MonoBehaviour
             if (!validateTroopSetup(GameObject.Find("Team 2 Flock").GetComponent<Flock>())) return;
             Time.timeScale = 1.0f;
         }
+        if (SceneManager.GetActiveScene().name == "FlockScene"){
+            Time.timeScale = 0;
+        }
 
         if (SceneManager.GetActiveScene().name.Equals("Menu")) {
             settings = GameObject.Find("SettingsObject").GetComponent<Settings>();

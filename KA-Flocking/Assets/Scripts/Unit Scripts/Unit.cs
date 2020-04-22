@@ -60,6 +60,7 @@ public abstract class Unit : ScriptableObject
         if (amount < health)
         {
             health -= amount;
+            MakeSound(agent);
         }
         else
         {
@@ -68,6 +69,17 @@ public abstract class Unit : ScriptableObject
             agent.GetAgentFlock().RemoveUnit(agent);
         }
     }
+
+    internal void MakeSound(FlockAgent agent)
+    {
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
+        AudioSource audioSource = agent.GetComponent<AudioSource>();
+        if (audioSource != null)
+        {
+            audioManager.PlayRandomSFX(audioSource);
+        }
+    }
+
 
     public string GetAttackMode()
     {
