@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5132c2f07b97cd4baf89d7cc95e1b5b, type: 3}
   m_Name: Castle
   m_EditorClassIdentifier: 
-  behaviour: {fileID: 11400000, guid: c608a10b44ef2434f95e56fba3087e56, type: 2}
   attackFilter: {fileID: 11400000, guid: 9a40376dfafe67140821885f10618ed6, type: 2}
   health: 1000
   damage: 0
   attackReach: 0
+  behaviour: {fileID: 11400000, guid: c608a10b44ef2434f95e56fba3087e56, type: 2}
+  attackDirection: {x: 0, y: 0, z: 0}
+  spawnTime: 2
+  spawning: 0

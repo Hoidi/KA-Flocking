@@ -23,7 +23,10 @@ public class EntitySpawning : MonoBehaviour
     public Text money;
     public Text costOfSpawning;
     public ErrorChat errorChat;
+    [System.NonSerialized]
     public GameObject spawningWindow;
+    public Material previewMaterial;
+    private Material currentMaterial;
 
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
@@ -33,7 +36,9 @@ public class EntitySpawning : MonoBehaviour
             flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();	
         }
         money.text = "Money: " + flock.moneyAmount.ToString(); 
-        spawningWindow = GameObject.Find("SpawnScrollView");
+        // Find and disable the spawn queue
+        spawningWindow = GameObject.Find("CastleSelection");
+        spawningWindow.SetActive(false);
     }
 
     private void Update(){
@@ -90,12 +95,18 @@ public class EntitySpawning : MonoBehaviour
     private bool selectCastle() {
         FlockAgent flockAgent = collisionWithPlane.transform.gameObject.GetComponent<FlockAgent>();
         if (flockAgent.unit is Castle) { 
+            // Enable the spawning window and replace the queue
+            spawningWindow.SetActive(true);
             Castle spawnCastle = (Castle) flockAgent.unit;
-            SpawnQueue currentQueue = spawningWindow.GetComponent<SpawnQueue>();
+            SpawnQueue currentQueue = spawningWindow.GetComponentInChildren<SpawnQueue>();
             currentQueue.replaceQueue(spawnCastle);
+            MeshRenderer[] meshes = flockAgent.GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer mesh in meshes)
+            {
+                mesh.material = previewMaterial;
+            }
             // Start spawning routine if not active
             if (spawnCastle.spawning == false) flock.StartSpawning(spawnCastle, flockAgent, flock);
-            // if (spawnCastle.spawning == false) StartCoroutine(spawnCastle.SpawningRoutine(flockAgent, flock));
             return true;
         }
         return false;

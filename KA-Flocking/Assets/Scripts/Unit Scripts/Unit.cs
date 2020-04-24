@@ -48,25 +48,29 @@ public abstract class Unit : ScriptableObject
 
         if (closest != null)
         {
-            closest.unit.TakeDamage(damage, closest);
+            // if the unit dies, give your flock money
+             if (closest.unit.TakeDamage(damage, closest)) attacker.AgentFlock.moneyAmount += 50;
             return true;
         }
         else 
             return false;
     }
 
-    public void TakeDamage(float amount, FlockAgent agent)
+    // Return true if the agent dies
+    public bool TakeDamage(float amount, FlockAgent agent)
     {
         if (amount < health)
         {
             health -= amount;
             MakeSound(agent);
+            return false;
         }
         else
         {
             health = 0;
             agent.tag = "Dead";
             agent.AgentFlock.RemoveUnit(agent);
+            return true;
         }
     }
 

@@ -17,8 +17,8 @@ public class SpawnQueue : MonoBehaviour
     public ErrorChat errorChat;
     public Flock flock;
     public Text money;
-    // Timer is not applicable since we cannot see the queue when the game is running
-    // public Image timer;
+    [Range(0,1)]
+    public float queueCostPercent = 0.7f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,21 +33,7 @@ public class SpawnQueue : MonoBehaviour
         ToggleGroup troopToggles = GameObject.Find("TroopToggles").GetComponent<ToggleGroup>();
         Slider troopSlider = GameObject.Find("troopAmountSlider").GetComponent<Slider>();
         addButton.onClick.AddListener(delegate () {this.addButtonClicked(troopToggles, troopSlider);});
-        // timer = addButton.transform.GetChild(0).GetComponent<Image>();
     }
-
-    /*public void ResetTimer(float spawnTime, Castle castle) {
-        if (castle == this.castle) {
-            timer.fillAmount = 0;
-            StartCoroutine(UpdateTimer(spawnTime));
-        }
-    }
-    private IEnumerator UpdateTimer(float spawnTime) {
-        while (timer.fillAmount < 1) {
-            timer.fillAmount += Time.deltaTime/spawnTime;
-            yield return new WaitForEndOfFrame();
-        }
-    }*/
 
     public void replaceQueue(Castle newCastle) {
         if (castle == newCastle) return;
@@ -55,7 +41,6 @@ public class SpawnQueue : MonoBehaviour
         if (castle != null) ClearItems();
         castle = newCastle;
         UpdateUI();
-        // timer.fillAmount = 0;
     }
 
     void ClearItems() {
@@ -105,8 +90,8 @@ public class SpawnQueue : MonoBehaviour
             castle.items.RemoveAt(i+1);
             Destroy (currentSpawnedItems[i+1]);
         }
-        // Remove item
-        flock.moneyAmount += castle.items[i].Item1*castle.items[i].Item4;
+        // Refund and remove item
+        flock.moneyAmount += castle.items[i].Item1 * castle.items[i].Item4;
         money.text = "Money: " + flock.moneyAmount.ToString(); 
         castle.items.RemoveAt(i);
         Destroy (spawnedItem);
@@ -118,10 +103,15 @@ public class SpawnQueue : MonoBehaviour
         foreach (Toggle toggle in troopToggles.ActiveToggles())
         {
             TroopType troop = toggle.GetComponent<TroopType>();
+            // add the discount
+            int cost = (int) (troop.cost * queueCostPercent);
+
             if (troop.unitType is Castle) { errorChat.ShowError("Invalid unit type"); return;}
-            int maxTroopsAfforded = Mathf.Min((int) troopSlider.value, flock.moneyAmount/(troop.cost == 0 ? 1:troop.cost));
-            flock.moneyAmount -= maxTroopsAfforded*troop.cost;
+            // pay for units
+            int maxTroopsAfforded = Mathf.Min((int) troopSlider.value, flock.moneyAmount/(cost == 0 ? 1:cost));
+            flock.moneyAmount -= maxTroopsAfforded * cost;
             money.text = "Money: " + flock.moneyAmount.ToString();
+            // add units and update queue
             addToQueue(troop, maxTroopsAfforded, toggle.GetComponentInChildren<Image>().sprite);
             UpdateUI();
         }
