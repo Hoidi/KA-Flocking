@@ -221,6 +221,7 @@ public class EntitySpawning : MonoBehaviour{
             }
             else if(formationType == 'a') {
                 FinalWorldPos = new Vector3(worldPos.x - (i * arrowDirection*-1), worldPos.y, worldPos.z + (i * switchSide) * 0.7f); //spawn location
+                FinalWorldPos.x -= amountOfTroops * 0.65f / 2;
             }
             // Only spawn if the location is on the correct piece of land
             if (FinalWorldPos.x * arrowDirection < 0) {
@@ -234,7 +235,6 @@ public class EntitySpawning : MonoBehaviour{
                     continue;
                 }
                 FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
-                FinalWorldPos.x -= amountOfTroops * 0.65f / 2;
                 flock.CreateUnit( //spawn troops in formation
                     agentPrefab,
                     FinalWorldPos,
