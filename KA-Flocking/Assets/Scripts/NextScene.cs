@@ -40,7 +40,7 @@ public class NextScene : MonoBehaviour
             errorChat.ShowError("Atleast one castle is required");
             return false;
         } else if (castles == flock.agents.Count) {
-            errorChat.ShowError("Atleast one unit is required");
+            errorChat.ShowError("Atleast one spawned unit is required");
             return false;
         }
         return true;

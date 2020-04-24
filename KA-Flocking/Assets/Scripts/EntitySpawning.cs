@@ -90,8 +90,9 @@ public class EntitySpawning : MonoBehaviour
         troopText.text = amountOfTroops.ToString();
 
     }
+    // limits the troop amount slider if the castle toggle is active
     public void limitTroopAmount(Toggle toggle){
-        troopSlider.maxValue = (toggle.isOn) ? 1 : 100;
+        troopSlider.maxValue = (toggle.isOn) ? 1 : 30;
     }
     private void spawnTroop(char formation){
         // There should only be one
@@ -271,7 +272,6 @@ public class EntitySpawning : MonoBehaviour
                     worldPos.z + 1.5f * Mathf.CeilToInt(index / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount))) + (worldPos.z - zoffset) / 2.4f);
                 break;
             case 'a':
-            
                 //variable to make spawning on each "side" of the arrow shape possible..
                 int switchSide = (index % 2 == 1) ? 1 : (-1); 
 
