@@ -41,9 +41,11 @@ public class EntitySpawning : MonoBehaviour
             flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();	
         }
         money.text = "Money: " + flock.moneyAmount.ToString(); 
+
         // Find and disable the spawn queue
         spawningWindow = GameObject.Find("CastleSelection");
         spawningWindow.SetActive(false);
+
         // Check if this is the first turn
         isFirstTurn = !flock.spawnedFirstCastle;
     }
@@ -121,7 +123,7 @@ public class EntitySpawning : MonoBehaviour
             }
 
             // Replace the castle
-            currentQueue.replaceQueue(selectedCastle);
+            currentQueue.replaceCastle(selectedCastle);
             replaceMaterial(flockAgent, previewMaterial);
             previousCastle = flockAgent;
             
@@ -249,7 +251,7 @@ public class EntitySpawning : MonoBehaviour
         if (errorCastleRange) errorChat.ShowError("Units can only be spawned close to castles on consecutive turns");
     }
 
-    Vector3 troopSpawningFormation(int index, char formationType, Vector3 worldPos, int totalTroopAmount, int arrowDirection)
+    private Vector3 troopSpawningFormation(int index, char formationType, Vector3 worldPos, int totalTroopAmount, int arrowDirection)
     {
         Vector3 FinalWorldPos = new Vector3(0, 0, 0);
         Vector3 location;
