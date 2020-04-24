@@ -230,7 +230,7 @@ public class EntitySpawning : MonoBehaviour
                 continue;
             }
             //raycast to get the exact y coordinate
-            Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer);
+            if(Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){
             if (!validateColliders(FinalWorldPos, unitType)) {
                 errorUnitOverlap = true;
                 continue;
@@ -246,6 +246,7 @@ public class EntitySpawning : MonoBehaviour
             flock.moneyAmount -= cost; //reduce money appropriately
             money.text = "Money: " + flock.moneyAmount.ToString();
             if (!flock.spawnedFirstCastle && unitType is Castle) flock.spawnedFirstCastle = true;
+            }
         }
         if (errorSpawnside) errorChat.ShowError("Invalid Spawnside");
         if (errorUnitOverlap) errorChat.ShowError("Overlap of unit(s)' position");
