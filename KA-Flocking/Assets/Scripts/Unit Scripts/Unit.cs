@@ -37,7 +37,7 @@ public abstract class Unit : ScriptableObject
             Vector3 closestPoint = targets[i].GetComponent<Collider>().ClosestPoint(attacker.transform.position);
             Vector3 direction = closestPoint - attacker.transform.position;
             sqrDistance = Vector3.SqrMagnitude(direction);
-            if (sqrDistance < closestDistance && sqrDistance < attackReach)
+            if (sqrDistance < closestDistance && sqrDistance < attackReach * attackReach)
             {
                 closest = targets[i].GetComponentInParent<FlockAgent>();
                 closestDistance = sqrDistance;

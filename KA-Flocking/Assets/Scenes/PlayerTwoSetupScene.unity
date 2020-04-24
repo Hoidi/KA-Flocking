@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c12e7938c674cc4fbe310985fbf68cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 10000
+  cost: 3000
   prefab: {fileID: -6626364417587876630, guid: 209dcc713becaa74d87359e7155c0325, type: 3}
   unitType: {fileID: 11400000, guid: 29fb8a2819bd84340a071873f1450e5c, type: 2}
 --- !u!1 &185509300
@@ -3784,7 +3784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c12e7938c674cc4fbe310985fbf68cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 1000
+  cost: 300
   prefab: {fileID: 3355002661725430932, guid: 7afaaf20f3d337046a6379f8a2931a67, type: 3}
   unitType: {fileID: 11400000, guid: 63fa0fe3f2499664e85865ddb6371bf8, type: 2}
 --- !u!1 &1476293406
@@ -4485,7 +4485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c12e7938c674cc4fbe310985fbf68cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 200
+  cost: 150
   prefab: {fileID: 650865145934470292, guid: 7f904e221ce1aa04da561cfcd0ee0cbe, type: 3}
   unitType: {fileID: 11400000, guid: db19ab6627d24d79db9d4e19ce930f72, type: 2}
 --- !u!1 &1778432966
@@ -4837,8 +4837,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 931102854}
   m_Direction: 0
   m_MinValue: 1
-  m_MaxValue: 100
-  m_WholeNumbers: 0
+  m_MaxValue: 30
+  m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5109,6 +5109,7 @@ MonoBehaviour:
   money: {fileID: 742455934}
   costOfSpawning: {fileID: 1504969252}
   errorChat: {fileID: 1020843418}
+  requiredCastleRange: 15
   previewMaterial: {fileID: 2100000, guid: 9045494f93452344d811e0d183904816, type: 2}
 --- !u!4 &2012675549
 Transform:

@@ -1857,17 +1857,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d7019a07b6b9940afbe1f14a3d6499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingMoney: 50000
+  startingMoney: 10000
   mapX: 10
   mapZ: 10
   mountains: 6
   seed: 0
+  income: 2000
   inputStartingMoney: {fileID: 343787133}
   inputMapX: {fileID: 420920831}
   inputMapZ: {fileID: 1466208385}
   inputMountains: {fileID: 101267323}
   inputSeed: {fileID: 1554648429}
   prevSeed: {fileID: 142173739}
+  turnDuration: 60
 --- !u!4 &842602964
 Transform:
   m_ObjectHideFlags: 0
