@@ -255,28 +255,28 @@ public class EntitySpawning : MonoBehaviour
     {
         Vector3 FinalWorldPos = new Vector3(0, 0, 0);
         Vector3 location;
-        if(formationType == 'c')
-        {
-            location = Random.insideUnitSphere * totalTroopAmount * 0.4f;
-            FinalWorldPos = worldPos + location;
-        }
-        else if(formationType == 'r')
-        {
-            // x and z pos of last troop of largest square
-            float xoffset = worldPos.x + 1.5f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)));
-            float zoffset = worldPos.z + 1.5f * Mathf.CeilToInt((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)), 2) - 1) / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)));
+        switch (formationType) {
+            case 'c':
+                location = Random.insideUnitSphere * totalTroopAmount * 0.4f;
+                FinalWorldPos = worldPos + location;
+                break;
+            case 'r':
+                // x and z pos of last troop of largest square
+                float xoffset = worldPos.x + 1.5f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)));
+                float zoffset = worldPos.z + 1.5f * Mathf.CeilToInt((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)), 2) - 1) / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)));
 
-            FinalWorldPos = new Vector3(
-                worldPos.x + 1.5f * (index % Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount))) + (worldPos.x - xoffset) / 2, 
-                worldPos.y,
-                worldPos.z + 1.5f * Mathf.CeilToInt(index / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount))) + (worldPos.z - zoffset) / 2.4f);
-        }
-        else if(formationType == 'a')
-        {
-            //variable to make spawning on each "side" of the arrow shape possible..
-            int switchSide = (index % 2 == 1) ? 1 : (-1); 
+                FinalWorldPos = new Vector3(
+                    worldPos.x + 1.5f * (index % Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount))) + (worldPos.x - xoffset) / 2, 
+                    worldPos.y,
+                    worldPos.z + 1.5f * Mathf.CeilToInt(index / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount))) + (worldPos.z - zoffset) / 2.4f);
+                break;
+            case 'a':
+            
+                //variable to make spawning on each "side" of the arrow shape possible..
+                int switchSide = (index % 2 == 1) ? 1 : (-1); 
 
-            FinalWorldPos = new Vector3(worldPos.x + (index * switchSide), worldPos.y, worldPos.z - index * arrowDirection); //spawn location
+                FinalWorldPos = new Vector3(worldPos.x + (index * switchSide), worldPos.y, worldPos.z - index * arrowDirection); //spawn location
+                break;
         }
         return FinalWorldPos;
     }
