@@ -25,6 +25,9 @@ public class EntitySpawning : MonoBehaviour
     public ErrorChat errorChat;
     [System.NonSerialized]
     public GameObject spawningWindow;
+    private bool isFirstTurn;
+    [Range(0f,100f)]
+    public float requiredCastleRange = 15f;
     // 3 variables to help change the material when selecting a castle
     public Material previewMaterial;
     private Material previousMaterial;
@@ -41,6 +44,8 @@ public class EntitySpawning : MonoBehaviour
         // Find and disable the spawn queue
         spawningWindow = GameObject.Find("CastleSelection");
         spawningWindow.SetActive(false);
+        // Check if this is the first turn
+        isFirstTurn = !flock.spawnedFirstCastle;
     }
 
     void OnDestroy() {
@@ -171,18 +176,7 @@ public class EntitySpawning : MonoBehaviour
         return true;
     }
 
-    private void troopSpawning(FlockAgent agentPrefab, Unit unitType, int cost, char formationType){
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
-        Vector3 worldPos = new Vector3(0, 0, 0);
-        if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
-            worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
-        }
-        if (!validateLayers(ray) || (!validateColliders(worldPos, unitType))) return;
-        int switchSide = 1; //variable to make spawning on each "side" of the arrow shape possible..
-        int arrowDirection = -1; //arrow formation should be in opposite direction for the two players
-        if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") arrowDirection *= -1;
-        Vector3 FinalWorldPos = new Vector3(0, 0, 0);
-        Vector3 location;
+    private int validateAmount(int amountOfTroops, int cost) {
         // Bound the amountOfTroops to the amount that can be afforded
         int maxTroopsAfforded;
         if (cost == 0) {
@@ -191,24 +185,41 @@ public class EntitySpawning : MonoBehaviour
             maxTroopsAfforded = Mathf.Min(amountOfTroops, flock.moneyAmount/cost);
         }
         if (maxTroopsAfforded != amountOfTroops) errorChat.ShowError("All units could not be afforded");
-        // Two bools to keep track of if errors should be shown.
-        bool errorSpawnside = false;
-        bool errorUnitOverlap = false;
+        return maxTroopsAfforded;
+    }
+
+    private bool validateClosestCastle(Vector3 FinalWorldPos) {
+        foreach (FlockAgent agent in flock.agents)
+        {
+            if (agent.unit is Castle && (agent.transform.position - FinalWorldPos).sqrMagnitude < requiredCastleRange * requiredCastleRange) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void troopSpawning(FlockAgent agentPrefab, Unit unitType, int cost, char formationType){
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition); //ray from camera towards mouse cursor 
+        Vector3 worldPos = new Vector3(0, 0, 0);
+        if (Physics.Raycast(ray, out collisionWithPlane, 10000f, planeLayer)){ //raytracing to acquire spawn location
+            worldPos = collisionWithPlane.point; //convert pixel coordinates to normal coordinates
+        }
+        if (!validateLayers(ray) || (!validateColliders(worldPos, unitType))) return;
+        
+        // arrow formation should be in opposite direction for the two players
+        int arrowDirection = -1; 
+        if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") arrowDirection *= -1;
+
+        int maxTroopsAfforded = validateAmount(amountOfTroops, cost);
+        
+        // Three bools to keep track of if errors should be shown.
+        bool errorSpawnside, errorUnitOverlap, errorCastleRange;
+        errorSpawnside = errorUnitOverlap = errorCastleRange = false;
         for (int i = 0; i < maxTroopsAfforded; i++){
-            if(formationType == 'c') {
-                location = Random.insideUnitSphere * maxTroopsAfforded * 0.4f;
-                FinalWorldPos = worldPos + location;
-            }
-            else if(formationType == 'r') {
-                float xoffset = worldPos.x + 1.5f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded))); //x pos of last troop of largest square
-                float zoffset = worldPos.z + 1.5f * Mathf.CeilToInt((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded)), 2) - 1) / Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded)));//z pos of last troop of largest square
-                FinalWorldPos = new Vector3(
-                    worldPos.x + 1.5f * (i % Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded))) + (worldPos.x - xoffset) / 2, 
-                    worldPos.y,
-                    worldPos.z + 1.5f * Mathf.CeilToInt(i / Mathf.RoundToInt(Mathf.Sqrt(maxTroopsAfforded))) + (worldPos.z - zoffset) / 2.4f);
-            }
-            else if(formationType == 'a') {
-                FinalWorldPos = new Vector3(worldPos.x + (i * switchSide), worldPos.y, worldPos.z - i * arrowDirection); //spawn location
+            Vector3 FinalWorldPos = troopSpawningFormation(i, formationType, worldPos, maxTroopsAfforded, arrowDirection);
+            if (!isFirstTurn && !validateClosestCastle(FinalWorldPos)) {
+                errorCastleRange = true;
+                continue;
             }
             // Only spawn if the location is on the correct piece of land
             if (FinalWorldPos.x * arrowDirection < 0) {
@@ -229,12 +240,42 @@ public class EntitySpawning : MonoBehaviour
                 Quaternion.Euler(0, cam.transform.eulerAngles.y, 0),
                 unitType
                 );
-            switchSide *= -1;
             flock.moneyAmount -= cost; //reduce money appropriately
             money.text = "Money: " + flock.moneyAmount.ToString();
             if (!flock.spawnedFirstCastle && unitType is Castle) flock.spawnedFirstCastle = true;
         }
         if (errorSpawnside) errorChat.ShowError("Invalid Spawnside");
         if (errorUnitOverlap) errorChat.ShowError("Overlap of unit(s)' position");
+        if (errorCastleRange) errorChat.ShowError("Units can only be spawned close to castles on consecutive turns");
+    }
+
+    Vector3 troopSpawningFormation(int index, char formationType, Vector3 worldPos, int totalTroopAmount, int arrowDirection)
+    {
+        Vector3 FinalWorldPos = new Vector3(0, 0, 0);
+        Vector3 location;
+        if(formationType == 'c')
+        {
+            location = Random.insideUnitSphere * totalTroopAmount * 0.4f;
+            FinalWorldPos = worldPos + location;
+        }
+        else if(formationType == 'r')
+        {
+            // x and z pos of last troop of largest square
+            float xoffset = worldPos.x + 1.5f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)));
+            float zoffset = worldPos.z + 1.5f * Mathf.CeilToInt((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)), 2) - 1) / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)));
+
+            FinalWorldPos = new Vector3(
+                worldPos.x + 1.5f * (index % Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount))) + (worldPos.x - xoffset) / 2, 
+                worldPos.y,
+                worldPos.z + 1.5f * Mathf.CeilToInt(index / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount))) + (worldPos.z - zoffset) / 2.4f);
+        }
+        else if(formationType == 'a')
+        {
+            //variable to make spawning on each "side" of the arrow shape possible..
+            int switchSide = (index % 2 == 1) ? 1 : (-1); 
+
+            FinalWorldPos = new Vector3(worldPos.x + (index * switchSide), worldPos.y, worldPos.z - index * arrowDirection); //spawn location
+        }
+        return FinalWorldPos;
     }
 }
