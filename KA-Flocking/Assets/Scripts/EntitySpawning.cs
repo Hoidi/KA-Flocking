@@ -231,21 +231,21 @@ public class EntitySpawning : MonoBehaviour
             }
             //raycast to get the exact y coordinate
             if(Physics.Raycast(new Vector3(FinalWorldPos.x, 100, FinalWorldPos.z), Vector3.down * 100f, out RaycastHit hit, Mathf.Infinity, planeLayer)){
-            if (!validateColliders(FinalWorldPos, unitType)) {
-                errorUnitOverlap = true;
-                continue;
-            }
-            FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
-            if (!validateColliders(FinalWorldPos, unitType) || !validateHeight(FinalWorldPos)) continue;
-            flock.CreateUnit( //spawn troops in formation
-                agentPrefab,
-                FinalWorldPos,
-                Quaternion.Euler(0, cam.transform.eulerAngles.y, 0),
-                unitType
-                );
-            flock.moneyAmount -= cost; //reduce money appropriately
-            money.text = "Money: " + flock.moneyAmount.ToString();
-            if (!flock.spawnedFirstCastle && unitType is Castle) flock.spawnedFirstCastle = true;
+                if (!validateColliders(FinalWorldPos, unitType)) {
+                    errorUnitOverlap = true;
+                    continue;
+                }
+                FinalWorldPos.y = hit.point.y; //location now has proper y coordinate
+                if (!validateColliders(FinalWorldPos, unitType) || !validateHeight(FinalWorldPos)) continue;
+                flock.CreateUnit( //spawn troops in formation
+                    agentPrefab,
+                    FinalWorldPos,
+                    Quaternion.Euler(0, cam.transform.eulerAngles.y, 0),
+                    unitType
+                    );
+                flock.moneyAmount -= cost; //reduce money appropriately
+                money.text = "Money: " + flock.moneyAmount.ToString();
+                if (!flock.spawnedFirstCastle && unitType is Castle) flock.spawnedFirstCastle = true;
             }
         }
         if (errorSpawnside) errorChat.ShowError("Invalid Spawnside");
