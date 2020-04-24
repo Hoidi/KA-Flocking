@@ -15,6 +15,6 @@ MonoBehaviour:
   attackFilter: {fileID: 11400000, guid: 9a40376dfafe67140821885f10618ed6, type: 2}
   health: 100
   damage: 20
-  attackReach: 50
+  attackReach: 8
   behaviour: {fileID: 11400000, guid: 9233c2d20ecbd71f2800056d025ed7a0, type: 2}
   attackDirection: {x: 0, y: 0, z: 0}
