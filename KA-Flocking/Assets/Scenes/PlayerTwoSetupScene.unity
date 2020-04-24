@@ -3996,6 +3996,7 @@ MonoBehaviour:
   errorChat: {fileID: 1020843418}
   flock: {fileID: 621886118}
   money: {fileID: 742455934}
+  queueCostPercent: 0.7
 --- !u!114 &1603794950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5108,7 +5109,7 @@ MonoBehaviour:
   money: {fileID: 742455934}
   costOfSpawning: {fileID: 1504969252}
   errorChat: {fileID: 1020843418}
-  spawningWindow: {fileID: 1603794947}
+  previewMaterial: {fileID: 2100000, guid: 9045494f93452344d811e0d183904816, type: 2}
 --- !u!4 &2012675549
 Transform:
   m_ObjectHideFlags: 0

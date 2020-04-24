@@ -25,8 +25,10 @@ public class EntitySpawning : MonoBehaviour
     public ErrorChat errorChat;
     [System.NonSerialized]
     public GameObject spawningWindow;
+    // 3 variables to help change the material when selecting a castle
     public Material previewMaterial;
-    private Material currentMaterial;
+    private Material previousMaterial;
+    private FlockAgent previousCastle = null;
 
     void Start(){
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
@@ -39,6 +41,11 @@ public class EntitySpawning : MonoBehaviour
         // Find and disable the spawn queue
         spawningWindow = GameObject.Find("CastleSelection");
         spawningWindow.SetActive(false);
+    }
+
+    void OnDestroy() {
+        // Replace back the material of the last selected castle
+        if (previousCastle != null) replaceMaterial(previousCastle, previousMaterial);
     }
 
     private void Update(){
@@ -94,22 +101,40 @@ public class EntitySpawning : MonoBehaviour
 
     private bool selectCastle() {
         FlockAgent flockAgent = collisionWithPlane.transform.gameObject.GetComponent<FlockAgent>();
-        if (flockAgent.unit is Castle) { 
-            // Enable the spawning window and replace the queue
+        // If you already selected the castle, don't do anything
+        if (flockAgent == previousCastle) return true;
+        if (flockAgent.unit is Castle)
+        { 
+            // Enable the spawning window
             spawningWindow.SetActive(true);
-            Castle spawnCastle = (Castle) flockAgent.unit;
+            Castle selectedCastle = (Castle) flockAgent.unit;
             SpawnQueue currentQueue = spawningWindow.GetComponentInChildren<SpawnQueue>();
-            currentQueue.replaceQueue(spawnCastle);
-            MeshRenderer[] meshes = flockAgent.GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer mesh in meshes)
-            {
-                mesh.material = previewMaterial;
+            
+            // Change back the material of the previous castle
+            if (currentQueue.castle != null) {
+                replaceMaterial(previousCastle, previousMaterial);
             }
-            // Start spawning routine if not active
-            if (spawnCastle.spawning == false) flock.StartSpawning(spawnCastle, flockAgent, flock);
+
+            // Replace the castle
+            currentQueue.replaceQueue(selectedCastle);
+            replaceMaterial(flockAgent, previewMaterial);
+            previousCastle = flockAgent;
+            
+            // Start spawning routine if not active (if you don't select a castle you can't queue units, so there's no problem that it's not guaranteed to be called upon)
+            if (selectedCastle.spawning == false) flock.StartSpawning(selectedCastle, flockAgent, flock);
             return true;
         }
         return false;
+    }
+
+    // Replaces the material of all MeshRenderers in the agent's children
+    private void replaceMaterial(FlockAgent agent, Material material) {
+        MeshRenderer[] meshes = agent.GetComponentsInChildren<MeshRenderer>();
+        previousMaterial = meshes[0].material;
+        foreach (MeshRenderer mesh in meshes)
+        {
+            mesh.material = material;
+        }
     }
 
     private bool validateLayers(Ray ray) {

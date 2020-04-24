@@ -12,6 +12,7 @@ public class Castle : Infantry
     public float spawnTime = 10f;
     public bool spawning = false;
 
+    // Has to be started from a monobehaviour
     public IEnumerator SpawningRoutine(FlockAgent agent, Flock flock) {
         spawning = true;
         while (agent.isActiveAndEnabled) {

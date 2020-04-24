@@ -5515,7 +5515,7 @@ MonoBehaviour:
   money: {fileID: 64169626}
   costOfSpawning: {fileID: 51765211}
   errorChat: {fileID: 942441400}
-  previewMaterial: {fileID: 0}
+  previewMaterial: {fileID: 2100000, guid: 9045494f93452344d811e0d183904816, type: 2}
 --- !u!4 &2012675549
 Transform:
   m_ObjectHideFlags: 0
