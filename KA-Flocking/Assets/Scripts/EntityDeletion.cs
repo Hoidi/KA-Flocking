@@ -24,7 +24,7 @@ public class EntityDeletion : MonoBehaviour{
         areaToDelete.GetComponent<Renderer>().material = areaColor;
         areaToDelete.GetComponent<Collider>().enabled = false;
         Color color = areaToDelete.GetComponent<Renderer>().material.color;
-        color.a = 0.1f;
+        color.a = 0.3f;
         areaToDelete.GetComponent<Renderer>().material.color = color;
     }
 

@@ -87,7 +87,7 @@ public class EntitySpawning : MonoBehaviour{
             formation.GetComponent<Collider>().enabled = false;
             }
             Color color = formation.GetComponent<Renderer>().material.color;
-            color.a = 0.1f;
+            color.a = 0.3f;
             formation.GetComponent<Renderer>().material.color = color;
         }
     }
