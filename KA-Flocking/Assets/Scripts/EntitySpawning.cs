@@ -34,6 +34,9 @@ public class EntitySpawning : MonoBehaviour
     private FlockAgent previousCastle = null;
 
     void Start(){
+        // Turn of deletion in consecutive turns
+        if (!isFirstTurn) gameObject.GetComponentInChildren<EntityDeletion>().enabled = false;
+
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) { 
             flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
