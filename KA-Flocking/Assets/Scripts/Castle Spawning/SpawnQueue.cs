@@ -108,7 +108,8 @@ public class SpawnQueue : MonoBehaviour
             Destroy (currentSpawnedItems[i+1]);
         }
         // Refund and remove item
-        flock.moneyAmount += castle.items[i].Item1 * castle.items[i].Item4;
+        int cost = (int) (castle.items[i].Item1 * queueCostPercent);
+        flock.moneyAmount += cost * castle.items[i].Item4;
         money.text = "Money: " + flock.moneyAmount.ToString(); 
         castle.items.RemoveAt(i);
         Destroy (spawnedItem);
