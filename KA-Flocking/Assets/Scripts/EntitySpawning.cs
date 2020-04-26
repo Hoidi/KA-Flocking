@@ -220,7 +220,7 @@ public class EntitySpawning : MonoBehaviour{
         FlockAgent flockAgent = collisionWithPlane.transform.gameObject.GetComponent<FlockAgent>();
         // If you already selected the castle, don't do anything
         if (flockAgent == previousCastle) return true;
-        if (flockAgent.unit is Castle)
+        if (flockAgent.unit is Castle && flockAgent.AgentFlock == flock)
         { 
             // Enable the spawning window
             spawningWindow.SetActive(true);
