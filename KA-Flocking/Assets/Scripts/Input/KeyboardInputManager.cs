@@ -14,6 +14,7 @@ public class KeyboardInputManager : InputManager {
     public static event ZoomInputHandler OnZoomInput;
     public static event SpeedInputHandler OnSpeedInput;
 
+
     // Update is called once per frame
     void Update() {
         //movement
