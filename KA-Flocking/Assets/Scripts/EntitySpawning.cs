@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEditor;
 
@@ -32,10 +33,9 @@ public class EntitySpawning : MonoBehaviour
     public Material previewMaterial;
     private Material previousMaterial;
     private FlockAgent previousCastle = null;
+    public Material castleRangePreviewMaterial;
 
     void Start(){
-        // Turn of deletion in consecutive turns
-        if (!isFirstTurn) gameObject.GetComponentInChildren<EntityDeletion>().enabled = false;
 
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) { 
@@ -51,6 +51,30 @@ public class EntitySpawning : MonoBehaviour
 
         // Check if this is the first turn
         isFirstTurn = !flock.spawnedFirstCastle;
+
+        if (!isFirstTurn) {
+            // Turn of deletion in consecutive turns
+            gameObject.GetComponentInChildren<EntityDeletion>().enabled = false;
+            // Generate circles around castles for spawning indication
+            foreach (FlockAgent agent in flock.agents)
+            {
+                if (agent.unit is Castle) {
+                    generateCircle(agent.transform.position);
+                }
+            }   
+        }
+    }
+
+    private void generateCircle(Vector3 position) {
+        GameObject areaToDelete;
+        areaToDelete = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        areaToDelete.transform.position = position + Vector3.up;
+        areaToDelete.transform.localScale = new Vector3(requiredCastleRange * 2, 0, requiredCastleRange * 2);
+        areaToDelete.GetComponent<Renderer>().material = castleRangePreviewMaterial;
+        areaToDelete.GetComponent<Collider>().enabled = false;
+        Color color = areaToDelete.GetComponent<Renderer>().material.color;
+        color.a = 0.1f;
+        areaToDelete.GetComponent<Renderer>().material.color = color;
     }
 
     void OnDestroy() {
@@ -223,7 +247,7 @@ public class EntitySpawning : MonoBehaviour
         errorSpawnside = errorUnitOverlap = errorCastleRange = false;
         for (int i = 0; i < maxTroopsAfforded; i++){
             Vector3 FinalWorldPos = troopSpawningFormation(i, formationType, worldPos, maxTroopsAfforded, arrowDirection);
-            if (!isFirstTurn && !validateClosestCastle(FinalWorldPos)) {
+            if (!(unitType is Castle) && !isFirstTurn && !validateClosestCastle(FinalWorldPos)) {
                 errorCastleRange = true;
                 continue;
             }
@@ -249,6 +273,7 @@ public class EntitySpawning : MonoBehaviour
                 flock.moneyAmount -= cost; //reduce money appropriately
                 money.text = "Money: " + flock.moneyAmount.ToString();
                 if (!flock.spawnedFirstCastle && unitType is Castle) flock.spawnedFirstCastle = true;
+                if (!isFirstTurn && unitType is Castle) generateCircle(FinalWorldPos);
             }
         }
         if (errorSpawnside) errorChat.ShowError("Invalid Spawnside");

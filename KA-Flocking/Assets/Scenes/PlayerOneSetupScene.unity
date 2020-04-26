@@ -2575,7 +2575,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 7e-45, z: 5.9554e-41, w: 1.04e-43}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 8.3265794e-10}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -5611,6 +5611,8 @@ MonoBehaviour:
   errorChat: {fileID: 942441400}
   requiredCastleRange: 15
   previewMaterial: {fileID: 2100000, guid: 9045494f93452344d811e0d183904816, type: 2}
+  castleRangePreviewMaterial: {fileID: 2100000, guid: 83662faca4f236046bd4f1fbdfa41fc4,
+    type: 2}
 --- !u!4 &2012675549
 Transform:
   m_ObjectHideFlags: 0
