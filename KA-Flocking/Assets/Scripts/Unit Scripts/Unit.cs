@@ -37,7 +37,7 @@ public abstract class Unit : ScriptableObject
             Vector3 closestPoint = targets[i].GetComponent<Collider>().ClosestPoint(attacker.transform.position);
             Vector3 direction = closestPoint - attacker.transform.position;
             sqrDistance = Vector3.SqrMagnitude(direction);
-            if (sqrDistance < closestDistance && sqrDistance < attackReach)
+            if (sqrDistance < closestDistance && sqrDistance < attackReach * attackReach)
             {
                 closest = targets[i].GetComponentInParent<FlockAgent>();
                 closestDistance = sqrDistance;
@@ -48,26 +48,42 @@ public abstract class Unit : ScriptableObject
 
         if (closest != null)
         {
-            closest.GetUnit().TakeDamage(damage, closest);
+            // if the unit dies, give your flock money
+             if (closest.unit.TakeDamage(damage, closest)) attacker.AgentFlock.moneyAmount += 50;
             return true;
         }
         else 
             return false;
     }
 
-    public void TakeDamage(float amount, FlockAgent agent)
+    // Return true if the agent dies
+    public bool TakeDamage(float amount, FlockAgent agent)
     {
         if (amount < health)
         {
             health -= amount;
+            MakeSound(agent);
+            return false;
         }
         else
         {
             health = 0;
             agent.tag = "Dead";
-            agent.GetAgentFlock().RemoveUnit(agent);
+            agent.AgentFlock.RemoveUnit(agent);
+            return true;
         }
     }
+
+    internal void MakeSound(FlockAgent agent)
+    {
+        AudioManager audioManager = FindObjectOfType<AudioManager>();
+        AudioSource audioSource = agent.GetComponent<AudioSource>();
+        if (audioSource != null)
+        {
+            audioManager.PlayRandomSFX(audioSource);
+        }
+    }
+
 
     public string GetAttackMode()
     {

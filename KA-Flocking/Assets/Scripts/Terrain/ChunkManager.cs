@@ -30,6 +30,10 @@ public class ChunkManager : MonoBehaviour
     public GameObject chunkType;
     void Start()
     {
+        if (GameObject.FindObjectsOfType(this.GetType()).Length > 1) {
+            Destroy (this.gameObject);
+            return;
+        }
         // The starting positions for the walls, based on the chunksize and the amount of chunks in each direction
         int wallpositionX = chunkSize * chunksX / 2 + 1;
         float wallpositionZ = chunkSize * chunksZ / 2 + 0.8f;

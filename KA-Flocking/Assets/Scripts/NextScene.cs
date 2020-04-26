@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class NextScene : MonoBehaviour
 {
     private Settings settings;
+    private bool configuredSetupOne,configuredSetupTwo  = false;
     public void nextScene() {
         if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") {
             if (!validateTroopSetup(GameObject.Find("Team 1 Flock").GetComponent<Flock>())) return;
@@ -16,27 +17,30 @@ public class NextScene : MonoBehaviour
             if (!validateTroopSetup(GameObject.Find("Team 2 Flock").GetComponent<Flock>())) return;
             Time.timeScale = 1.0f;
         }
+        if (SceneManager.GetActiveScene().name == "FlockScene"){
+            Time.timeScale = 0;
+        }
 
         if (SceneManager.GetActiveScene().name.Equals("Menu")) {
             settings = GameObject.Find("SettingsObject").GetComponent<Settings>();
             settings.SaveValues();
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         SceneManager.sceneLoaded += ConfigureSettings;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private bool validateTroopSetup(Flock flock) {
         int castles = 0;
         foreach (FlockAgent agent in flock.agents)
         {
-            if (agent.GetUnit().name.StartsWith("Castle")) castles++;
+            if (agent.unit is Castle) castles++;
         }
         ErrorChat errorChat = GameObject.Find("ErrorBoard").GetComponent<ErrorChat>();
         if (castles == 0) {
             errorChat.ShowError("Atleast one castle is required");
             return false;
         } else if (castles == flock.agents.Count) {
-            errorChat.ShowError("Atleast one unit is required");
+            errorChat.ShowError("Atleast one spawned unit is required");
             return false;
         }
         return true;
@@ -54,6 +58,9 @@ public class NextScene : MonoBehaviour
     void ConfigureSettings(Scene scene, LoadSceneMode mode) {
         if (settings == null) return;
         if (scene.name.Equals("PlayerOneSetupScene")) {
+            if (configuredSetupOne == true) return;
+            configuredSetupOne = true;
+            
             ChunkManager chunkManager = GameObject.Find("VisualManager").GetComponent<ChunkManager>();
             chunkManager.pointyBreakOff = settings.inputMountains.value;
             chunkManager.chunksX = settings.mapX;
@@ -63,6 +70,9 @@ public class NextScene : MonoBehaviour
             Flock flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
             flock.moneyAmount = settings.startingMoney;
         } else if (scene.name.Equals("PlayerTwoSetupScene")) {
+            if (configuredSetupTwo == true) return;
+            configuredSetupTwo = true;
+
             Flock flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();
             flock.moneyAmount = settings.startingMoney;
         }

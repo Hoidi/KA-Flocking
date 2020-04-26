@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class Settings : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class Settings : MonoBehaviour
     [Range(10,2)]
     public int mountains = 6;
     public int seed;
+    public int income = 2000;
 
     public InputField inputStartingMoney;
     public InputField inputMapX;
@@ -21,7 +24,8 @@ public class Settings : MonoBehaviour
     public Slider inputMountains;
     public InputField inputSeed;
     public Text prevSeed;
-
+    public int turnDuration = 60;
+    private int nTurns = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,8 +51,37 @@ public class Settings : MonoBehaviour
         RandomizeSeed();
 
         Time.timeScale = 0.0f; // pauses the game so that the troops stand still
-
         DontDestroyOnLoad(this.gameObject);
+        StartCoroutine(TurnRoutine(turnDuration));
+    }
+
+    private IEnumerator TurnRoutine(int turnDuration) {
+        SceneManager.sceneLoaded += updateTurnText;
+
+        yield return new WaitForSeconds(turnDuration);
+        while (SceneManager.GetActiveScene().name == "FlockScene") {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+
+            nTurns++;
+            Time.timeScale = 0.0f;
+
+            Flock flock1 = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
+            flock1.moneyAmount += income;
+            Flock flock2 = GameObject.Find("Team 2 Flock").GetComponent<Flock>();
+            flock2.moneyAmount += income;
+            
+            yield return new WaitForSeconds(turnDuration);
+        }
+    }
+
+    private void updateTurnText(Scene scene, LoadSceneMode mode) {
+        if (scene.name.Equals("PlayerOneSetupScene")) {
+            Text turnText = GameObject.Find("TurnText").GetComponent<Text>();
+            turnText.text = "Turn number " + nTurns;
+            // Reset alpha and fade it out over 15 seconds
+            turnText.CrossFadeAlpha(1, 0.0f, true);
+            turnText.CrossFadeAlpha(0, 15.0f, true);
+        }
     }
 
     public void SaveValues() {

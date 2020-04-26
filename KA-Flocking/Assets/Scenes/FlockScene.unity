@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2951,6 +2951,119 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872295026}
   m_CullTransparentMesh: 0
+--- !u!1 &1886119241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1886119243}
+  - component: {fileID: 1886119242}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1886119242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886119241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4839221d6c846fc48a783d9c44b73120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxConcurrentSFX: 15
+  AdditionalAudioDelayInSeconds: 1
+  MaxAudioDistance: 50
+  AudioListenerObject: {fileID: 447764074}
+  sounds:
+  - name: 
+    clip: {fileID: 8300000, guid: 36052797ea57c024db4511be6302cbc2, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: c691a720a668bd8439357a41df980d38, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: 13289e28d9b7a8c4fb21e77dc1881d6d, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: 80ee2a4b315b69647bbd6f859f8edac2, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: a2dcc181c605e9e4189de14f9c039891, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: 513f65408514e20409020eb12f6854b9, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: df60cf4ae9211f84badec77d6cf547f6, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: 39b1e70cbf015f245b023ba46bd11772, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: 774dd6ce705a179429bcbbc03a9fc1aa, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: 760f2071c74ae1742934c21681c34f0f, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: 493924aac08f9484db05be1025003448, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: death
+    clip: {fileID: 8300000, guid: 732ff994529aab743ae610c479f62b79, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+  - name: 
+    clip: {fileID: 8300000, guid: c088728fdd2ab6148b49494af096f1be, type: 3}
+    volume: 0
+    pitch: 0
+    source: {fileID: 0}
+--- !u!4 &1886119243
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886119241}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1888500761
 GameObject:
   m_ObjectHideFlags: 0
