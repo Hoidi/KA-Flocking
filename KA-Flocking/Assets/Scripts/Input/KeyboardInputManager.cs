@@ -55,21 +55,23 @@ public class KeyboardInputManager : InputManager {
             OnSpeedInput?.Invoke(0.8f);
         }
 
-        //simulation speed
-        if (Input.GetKey(KeyCode.Alpha1)) {
-            Time.timeScale = 1.0f;
-        }
-        if (Input.GetKey(KeyCode.Alpha2)) {
-            Time.timeScale = 2.0f;
-        }
-        if (Input.GetKey(KeyCode.Alpha3)) {
-            Time.timeScale = 3.0f;
-        }
-        if (Input.GetKey(KeyCode.Alpha4)) {
-            Time.timeScale = 4.0f;
-        }
-        if (Input.GetKey(KeyCode.Alpha5)) {
-            Time.timeScale = 5.0f;
+        if (SceneManager.GetSceneByName("FlockScene").isLoaded) { //change timescale, but only if in simulation scene
+            //simulation speed
+            if (Input.GetKey(KeyCode.Alpha1)) {
+                Time.timeScale = 1.0f;
+            }
+            if (Input.GetKey(KeyCode.Alpha2)) {
+                Time.timeScale = 2.0f;
+            }
+            if (Input.GetKey(KeyCode.Alpha3)) {
+                Time.timeScale = 3.0f;
+            }
+            if (Input.GetKey(KeyCode.Alpha4)) {
+                Time.timeScale = 4.0f;
+            }
+            if (Input.GetKey(KeyCode.Alpha5)) {
+                Time.timeScale = 5.0f;
+            }
         }
         // Can only pause in FlockScene since the game will already be frozen
         if (Input.GetKey(KeyCode.Alpha0)) {
