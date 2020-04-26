@@ -29,7 +29,6 @@ public class EntitySpawning : MonoBehaviour{
     GameObject[] formationAreaArray = new GameObject[3];
     public Material spawnAreaColor;
     private Mesh triangleMesh;
-    private float triangleXOffset;
     [System.NonSerialized]
     public GameObject spawningWindow;
     private bool isFirstTurn;
