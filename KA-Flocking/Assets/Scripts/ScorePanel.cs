@@ -56,7 +56,7 @@ public class ScorePanel : MonoBehaviour
         {
             for (int i = 0; i < troopTypes.Length; i++)
             {
-                if (agent.GetUnit().name == troopTypes[i]+"(Clone)") {
+                if (agent.unit.name == troopTypes[i]+"(Clone)") {
                     troopAlive[i] += 1;
                     break;
                 }
@@ -77,7 +77,7 @@ public class ScorePanel : MonoBehaviour
         {
             for (int i = 0; i < troopTypes.Length; i++)
             {
-                if (agent.GetUnit().name == troopTypes[i]+"(Clone)") {
+                if (agent.unit.name == troopTypes[i]+"(Clone)") {
                     troopDead[i]++;
                     break;
                 }

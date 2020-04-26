@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be15c3b0079c7b7c6afe31228968f02d, type: 3}
   m_Name: Pikeman
   m_EditorClassIdentifier: 
-  behaviour: {fileID: 11400000, guid: 9233c2d20ecbd71f2800056d025ed7a0, type: 2}
   attackFilter: {fileID: 11400000, guid: 9a40376dfafe67140821885f10618ed6, type: 2}
-  health: 200
+  health: 250
   damage: 30
-  attackReach: 3
+  attackReach: 2.5
+  behaviour: {fileID: 11400000, guid: 9233c2d20ecbd71f2800056d025ed7a0, type: 2}
+  attackDirection: {x: 0, y: 0, z: 0}

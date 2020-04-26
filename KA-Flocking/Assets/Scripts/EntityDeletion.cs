@@ -19,6 +19,11 @@ public class EntityDeletion : MonoBehaviour{
 
     // Start is called before the first frame update
     private void Start(){
+        if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) { 
+            flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
+        } else if (SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) {
+            flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();	
+        }
         areaToDelete = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         areaToDelete.transform.localScale = new Vector3(radius, 0, radius);
         areaToDelete.GetComponent<Renderer>().material = areaColor;

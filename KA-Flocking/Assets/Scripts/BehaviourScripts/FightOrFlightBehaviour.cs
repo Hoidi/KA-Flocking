@@ -18,7 +18,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
     {
         // If the unit is a scout then look at a larger range
-        if (agent.GetUnit().GetType().ToString().Equals("Scout")) {
+        if (agent.unit.GetType().ToString().Equals("Scout")) {
             Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, scoutNeighbourRadius, troopLayer);
             foreach (Collider c in contextColliders)
             {
@@ -61,7 +61,7 @@ public class FightOrFlightBehaviour : FlockBehaviour
                 Vector3 unitVector = item.position - agent.transform.position;
                 distance = Vector3.Magnitude(unitVector);
                 float unitStrength = 1f / distance;
-                if (itemAgent.GetAgentFlock() == flock)
+                if (itemAgent.AgentFlock == flock)
                 {
                     friendsStrength += unitStrength;
                     friendsDirection += unitVector.normalized * unitStrength;

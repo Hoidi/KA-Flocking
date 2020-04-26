@@ -5,15 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class FlockAgent : MonoBehaviour
 {
-    private Flock AgentFlock;
+    public Flock AgentFlock {get; private set;}
     public float stability = 0.3f;
     public float stabilisationSpeed = 2.0f; // The speed at which the rotation of the agents stabilises
     private readonly float acceleration = 35;
     private readonly float maxAcceleration = 25;
-    private Unit unit;
-    Collider agentCollider;
+    public Unit unit { get; private set; }
+    public Collider agentCollider {get; private set; }
     private Rigidbody rb;
-    public Collider AgentCollider { get { return agentCollider; } }
     private Animator animator;
     bool attacking = false;
     float attackCountDown = 0f;
@@ -199,14 +198,5 @@ public class FlockAgent : MonoBehaviour
                 }
             }
         }
-    }
-    public Unit GetUnit()
-    {
-        return unit;
-    }
-
-    public Flock GetAgentFlock()
-    {
-        return AgentFlock;
     }
 }
