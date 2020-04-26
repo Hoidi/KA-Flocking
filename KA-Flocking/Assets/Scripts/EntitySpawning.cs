@@ -45,15 +45,20 @@ public class EntitySpawning : MonoBehaviour{
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) {
             money.text = "Money: " + flock.moneyAmount.ToString();
+
             circleAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             rectAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Cube);
             triAreaToSpawn = new GameObject();
+
             if (SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) triAreaToSpawn.transform.Rotate(0, 0, 180, 0); //rotate triangle properly depending on setup scene
+
             formationAreaArray[0] = circleAreaToSpawn;
             formationAreaArray[1] = rectAreaToSpawn;
             formationAreaArray[2] = triAreaToSpawn;
+
             initTriangleIndicator();
             setIndicatorColors(formationAreaArray);
+
             if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) {
                 flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
             } else if (SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) {
@@ -124,6 +129,7 @@ public class EntitySpawning : MonoBehaviour{
             }
         }
     }
+
     private void initTriangleIndicator(){
         triAreaToSpawn.AddComponent<MeshFilter>();
         triAreaToSpawn.AddComponent<MeshRenderer>();
@@ -133,6 +139,7 @@ public class EntitySpawning : MonoBehaviour{
         triangleMesh.uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1) };
         triangleMesh.triangles = new int[] { 0, 1, 2 };
     }
+
     private void setIndicatorColors(GameObject [] formationAreaArray) {
         foreach (GameObject formation in formationAreaArray) {
             formation.GetComponent<Renderer>().material = spawnAreaColor;
@@ -144,6 +151,7 @@ public class EntitySpawning : MonoBehaviour{
             formation.GetComponent<Renderer>().material.color = color;
         }
     }
+
     private void spawnIndicator(char formationType) {
         foreach (GameObject formation in formationAreaArray){ //disable indicators by default
             formation.SetActive(false);
@@ -163,6 +171,7 @@ public class EntitySpawning : MonoBehaviour{
             enableRelevantIndicator(Area, formationType); //enable and resize relevant indicator
         }
     }
+
     private void enableRelevantIndicator(Vector3 Area, char formationType){
         switch(formationType){ //enable and resize relevant indicator
             case 'c':
@@ -196,14 +205,17 @@ public class EntitySpawning : MonoBehaviour{
             inSpawningMethod = false;
         }
     }
+
     private void setTroopAmount(){
         amountOfTroops = (int)troopSlider.value;
         troopText.text = amountOfTroops.ToString();
     }
+
     // limits the troop amount slider if the castle toggle is active
     public void limitTroopAmount(Toggle toggle){
         troopSlider.maxValue = (toggle.isOn) ? 1 : 30;
     }
+
     private void spawnTroop(char formation){
         // There should only be one
         foreach (Toggle toggle in troopToggles.ActiveToggles()){
@@ -267,6 +279,7 @@ public class EntitySpawning : MonoBehaviour{
         }
         return false;
     }
+
     // Validates if there are any troop colliders within a small radius (dependent on if the unit is a Castle) of the position
     private bool validateColliders(Vector3 worldPos, Unit unitType) {
         Collider[] colliders = Physics.OverlapSphere(worldPos, 10, troopLayer);
