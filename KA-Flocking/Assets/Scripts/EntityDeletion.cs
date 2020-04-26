@@ -29,7 +29,7 @@ public class EntityDeletion : MonoBehaviour{
         areaToDelete.GetComponent<Renderer>().material = areaColor;
         areaToDelete.GetComponent<Collider>().enabled = false;
         Color color = areaToDelete.GetComponent<Renderer>().material.color;
-        color.a = 0.1f;
+        color.a = 0.3f;
         areaToDelete.GetComponent<Renderer>().material.color = color;
     }
 
@@ -65,7 +65,8 @@ public class EntityDeletion : MonoBehaviour{
                             areaToDelete.transform.position = new Vector3(Area.x, Area.y + 1, Area.z);
                         }
                     }
-                    if (hits.Length > 0){
+                    if (hits == null) return;
+                    else if (hits.Length > 0){
                         troopArray = new GameObject[hits.Length];
                         for (int i = 0; i < hits.Length; i++){ //get colliders of all troops
                             troopArray[i] = hits[i].collider.gameObject;

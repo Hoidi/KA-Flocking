@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3365,8 +3365,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 397706972}
   m_HandleRect: {fileID: 397706971}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5554,7 +5554,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!114 &1959859363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5609,6 +5609,7 @@ MonoBehaviour:
   money: {fileID: 64169626}
   costOfSpawning: {fileID: 51765211}
   errorChat: {fileID: 942441400}
+  spawnAreaColor: {fileID: 2100000, guid: 9a61ce5341f2e5c4182640f4da39a871, type: 2}
   requiredCastleRange: 15
   previewMaterial: {fileID: 2100000, guid: 9045494f93452344d811e0d183904816, type: 2}
   castleRangePreviewMaterial: {fileID: 2100000, guid: 83662faca4f236046bd4f1fbdfa41fc4,
@@ -5777,4 +5778,4 @@ MonoBehaviour:
   - {fileID: 1959859363}
   cam: {fileID: 447764074}
   money: {fileID: 64169626}
-  areaColor: {fileID: 2100000, guid: 29af47a217a7fd548acd664a4ad4c334, type: 2}
+  areaColor: {fileID: 2100000, guid: ffdeb0c88d69da042a82579488a50337, type: 2}
