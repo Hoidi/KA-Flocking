@@ -44,11 +44,10 @@ public class EntitySpawning : MonoBehaviour{
     void Start() {
         //if-statement is to get around a null pointer exception in flockscene (since the amount of money each player has isnt relevant the flocking scene)
         if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded || SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) {
-            money.text = "Money: " + flock.moneyAmount.ToString();
 
             circleAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             rectAreaToSpawn = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            triAreaToSpawn = new GameObject();
+            triAreaToSpawn = new GameObject(); //no primitive type for triangular spawning..
 
             if (SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) triAreaToSpawn.transform.Rotate(0, 0, 180, 0); //rotate triangle properly depending on setup scene
 
@@ -56,15 +55,15 @@ public class EntitySpawning : MonoBehaviour{
             formationAreaArray[1] = rectAreaToSpawn;
             formationAreaArray[2] = triAreaToSpawn;
 
-            initTriangleIndicator();
-            setIndicatorColors(formationAreaArray);
+            initTriangleIndicator(); //create the formation for triangular spawning
+            setIndicatorColors(formationAreaArray); //set the color for the indicators
 
             if (SceneManager.GetSceneByName("PlayerOneSetupScene").isLoaded) {
                 flock = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
             } else if (SceneManager.GetSceneByName("PlayerTwoSetupScene").isLoaded) {
                 flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();
             }
-            money.text = "Money: " + flock.moneyAmount.ToString();
+            money.text = "Money: " + flock.moneyAmount.ToString(); //display money correctly
 
             // Find and disable the spawn queue
             spawningWindow = GameObject.Find("CastleSelection");
@@ -73,8 +72,7 @@ public class EntitySpawning : MonoBehaviour{
             // Check if this is the first turn
             isFirstTurn = !flock.spawnedFirstCastle;
 
-            if (!isFirstTurn) {
-                // Turn of deletion in consecutive turns
+            if (!isFirstTurn) { // Turn of deletion in consecutive turns
                 gameObject.GetComponentInChildren<EntityDeletion>().enabled = false;
                 // Generate circles around castles for spawning indication
                 foreach (FlockAgent agent in flock.agents)
@@ -87,7 +85,7 @@ public class EntitySpawning : MonoBehaviour{
         } 
     }
 
-    private void generateCircle(Vector3 position) {
+    private void generateCircle(Vector3 position) { // create area to indicate the spawning proximity around a castle
         GameObject areaToDelete;
         areaToDelete = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         areaToDelete.transform.position = position + Vector3.up;
@@ -130,7 +128,7 @@ public class EntitySpawning : MonoBehaviour{
         }
     }
 
-    private void initTriangleIndicator(){
+    private void initTriangleIndicator(){ //initiates the indicator used for the triangular spawning formation
         triAreaToSpawn.AddComponent<MeshFilter>();
         triAreaToSpawn.AddComponent<MeshRenderer>();
         triangleMesh = triAreaToSpawn.GetComponent<MeshFilter>().mesh;
@@ -140,7 +138,7 @@ public class EntitySpawning : MonoBehaviour{
         triangleMesh.triangles = new int[] { 0, 1, 2 };
     }
 
-    private void setIndicatorColors(GameObject [] formationAreaArray) {
+    private void setIndicatorColors(GameObject [] formationAreaArray) { //sets the color and transparency value for all the spawning indicators
         foreach (GameObject formation in formationAreaArray) {
             formation.GetComponent<Renderer>().material = spawnAreaColor;
             if(formation.GetComponent<Collider>() != null) { // triangle doesnt have collider so this is needed
@@ -172,23 +170,23 @@ public class EntitySpawning : MonoBehaviour{
         }
     }
 
-    private void enableRelevantIndicator(Vector3 Area, char formationType){
-        switch(formationType){ //enable and resize relevant indicator
+    private void enableRelevantIndicator(Vector3 Area, char formationType){ //enable and resize relevant indicator
+        switch(formationType){ 
             case 'c':
                 float circleRadius = amountOfTroops * 0.8f;
                 circleAreaToSpawn.transform.localScale = new Vector3(circleRadius, 0, circleRadius); 
-                circleAreaToSpawn.SetActive(true); 
+                circleAreaToSpawn.SetActive(true); //activate the relevant indicator
                 break;
             case 'r':
                 float offset = Area.x - (Area.x + 1.75f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(amountOfTroops))));
                 if (offset > -1) offset = -1; //required to show a small rectangle indicator for when amountOfTroops = 1
                 rectAreaToSpawn.transform.localScale = new Vector3(offset, 0, offset); 
-                rectAreaToSpawn.SetActive(true); 
+                rectAreaToSpawn.SetActive(true); //activate the relevant indicator
                 break;
             case 'a':
                 triangleMesh.vertices = new Vector3[] { new Vector3(-amountOfTroops * 0.65f / 2, 0, 0), new Vector3(amountOfTroops * 0.65f, 0, -amountOfTroops * 0.65f), 
                 new Vector3(amountOfTroops * 0.65f, 0, amountOfTroops * 0.65f) };
-                triAreaToSpawn.SetActive(true);
+                triAreaToSpawn.SetActive(true); //activate the relevant indicator
                 break;
         }
     }
@@ -206,7 +204,7 @@ public class EntitySpawning : MonoBehaviour{
         }
     }
 
-    private void setTroopAmount(){
+    private void setTroopAmount(){ //sets the amount of troops, taken from the slider in the UI
         amountOfTroops = (int)troopSlider.value;
         troopText.text = amountOfTroops.ToString();
     }
@@ -220,7 +218,7 @@ public class EntitySpawning : MonoBehaviour{
         // There should only be one
         foreach (Toggle toggle in troopToggles.ActiveToggles()){
             TroopType troop = toggle.GetComponent<TroopType>();
-            if (!flock.spawnedFirstCastle && troop.unitType is Castle) {
+            if (!flock.spawnedFirstCastle && troop.unitType is Castle) { //if a player is spawning his/her first castle, the cost should be 0
                 troopSpawning(troop.prefab, troop.unitType, 0, formation);
             } else {
                 troopSpawning(troop.prefab, troop.unitType, troop.cost, formation);
@@ -232,7 +230,7 @@ public class EntitySpawning : MonoBehaviour{
         FlockAgent flockAgent = collisionWithPlane.transform.gameObject.GetComponent<FlockAgent>();
         // If you already selected the castle, don't do anything
         if (flockAgent == previousCastle) return true;
-        if (flockAgent.unit is Castle && flockAgent.AgentFlock == flock)
+        if (flockAgent.unit is Castle && flockAgent.AgentFlock == flock) //player selected an allied castle
         { 
             // Enable the spawning window
             spawningWindow.SetActive(true);
@@ -256,8 +254,7 @@ public class EntitySpawning : MonoBehaviour{
         return false;
     }
 
-    // Replaces the material of all MeshRenderers in the agent's children
-    private void replaceMaterial(FlockAgent agent, Material material) {
+    private void replaceMaterial(FlockAgent agent, Material material) { // Replaces the material of all MeshRenderers in the agent's children
         MeshRenderer[] meshes = agent.GetComponentsInChildren<MeshRenderer>();
         previousMaterial = meshes[0].material;
         foreach (MeshRenderer mesh in meshes)
@@ -280,11 +277,9 @@ public class EntitySpawning : MonoBehaviour{
         return false;
     }
 
-    // Validates if there are any troop colliders within a small radius (dependent on if the unit is a Castle) of the position
-    private bool validateColliders(Vector3 worldPos, Unit unitType) {
+    private bool validateColliders(Vector3 worldPos, Unit unitType) { // Validates if there are any troop colliders within a small radius (dependent on if the unit is a Castle) of the position
         Collider[] colliders = Physics.OverlapSphere(worldPos, 10, troopLayer);
-        foreach (Collider collider in colliders){
-            // If there is a troop collider within a range of 10(^2) (if collider is castle) or 1 meters, don't spawn
+        foreach (Collider collider in colliders){ // If there is a troop collider within a range of 10(^2) (if collider is castle) or 1 meters, don't spawn
             if ((collider.ClosestPoint(worldPos)-worldPos).sqrMagnitude < (unitType.name.StartsWith("Castle") ? 100:0.5)) {
                 return false;
             }
@@ -292,7 +287,7 @@ public class EntitySpawning : MonoBehaviour{
         return true;
     }
 
-    private bool validateHeight(Vector3 worldPos) {
+    private bool validateHeight(Vector3 worldPos) { //prevents a player from spawning troops on mountains
         if (worldPos.y > 10) {
             errorChat.ShowError("Cannot spawn on mountains");
             return false;
@@ -300,8 +295,7 @@ public class EntitySpawning : MonoBehaviour{
         return true;
     }
 
-    private int validateAmount(int amountOfTroops, int cost) {
-        // Bound the amountOfTroops to the amount that can be afforded
+    private int validateAmount(int amountOfTroops, int cost) { // Bound the amountOfTroops to the amount that can be afforded
         int maxTroopsAfforded;
         if (cost == 0) {
             maxTroopsAfforded = amountOfTroops;
@@ -371,9 +365,9 @@ public class EntitySpawning : MonoBehaviour{
                 if (!isFirstTurn && unitType is Castle) generateCircle(FinalWorldPos);
             }
         }
-        if (errorSpawnside) errorChat.ShowError("Invalid Spawnside");
-        if (errorUnitOverlap) errorChat.ShowError("Overlap of unit(s)' position");
-        if (errorCastleRange) errorChat.ShowError("Units can only be spawned close to castles on consecutive turns");
+        if (errorSpawnside) errorChat.ShowError("Invalid Spawnside"); //error message if player tries to spawn on the wrong side of the map
+        if (errorUnitOverlap) errorChat.ShowError("Overlap of unit(s)' position"); //error message if player tries to spawn where a unit is already present
+        if (errorCastleRange) errorChat.ShowError("Units can only be spawned close to castles on consecutive turns"); // error message if player tries to spawn too far from a castle on a turn
     }
 
     private Vector3 troopSpawningFormation(int index, char formationType, Vector3 worldPos, int totalTroopAmount, int arrowDirection)
@@ -381,11 +375,11 @@ public class EntitySpawning : MonoBehaviour{
         Vector3 FinalWorldPos = new Vector3(0, 0, 0);
         Vector3 location;
         switch (formationType) {
-            case 'c':
+            case 'c': //circular formation
                 location = Random.insideUnitSphere * totalTroopAmount * 0.4f;
                 FinalWorldPos = worldPos + location;
                 break;
-            case 'r':
+            case 'r': //rectangular formation
                 // x and z pos of last troop of largest square
                 float xoffset = worldPos.x + 1.5f * ((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)), 2) - 1) % Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)));
                 float zoffset = worldPos.z + 1.5f * Mathf.CeilToInt((Mathf.Pow(Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)), 2) - 1) / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount)));
@@ -395,9 +389,8 @@ public class EntitySpawning : MonoBehaviour{
                     worldPos.y,
                     worldPos.z + 1.5f * Mathf.CeilToInt(index / Mathf.RoundToInt(Mathf.Sqrt(totalTroopAmount))) + (worldPos.z - zoffset) / 2.4f);
                 break;
-            case 'a':
-                //variable to make spawning on each "side" of the arrow shape possible..
-                int switchSide = (index % 2 == 1) ? 1 : (-1);
+            case 'a': // "arrow"/triangular formation
+                int switchSide = (index % 2 == 1) ? 1 : (-1); //variable to make spawning on each "side" of the arrow shape possible..
                 FinalWorldPos = new Vector3(worldPos.x - (index * arrowDirection * -1), worldPos.y, worldPos.z + (index * switchSide) * 0.7f); //spawn location
                 if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") FinalWorldPos.x -= (amountOfTroops * 0.65f / 2); //align spawnlocation to triangle outline
                 else FinalWorldPos.x += (amountOfTroops * 0.65f / 2);
