@@ -131,6 +131,8 @@ public class SpawnQueue : MonoBehaviour
 
             // pay for units
             int maxTroopsAfforded = Mathf.Min((int) troopSlider.value, flock.moneyAmount/(cost == 0 ? 1:cost));
+            if (maxTroopsAfforded == 0) { errorChat.ShowError("Cannot afford any more units"); return; }
+
             flock.moneyAmount -= maxTroopsAfforded * cost;
             money.text = "Money: " + flock.moneyAmount.ToString();
 

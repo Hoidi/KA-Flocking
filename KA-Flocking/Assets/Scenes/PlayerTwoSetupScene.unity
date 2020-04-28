@@ -4837,7 +4837,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 931102854}
   m_Direction: 0
   m_MinValue: 1
-  m_MaxValue: 30
+  m_MaxValue: 1
   m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
@@ -5105,6 +5105,7 @@ MonoBehaviour:
   troopToggles: {fileID: 332669092}
   formationToggles: {fileID: 947750399}
   troopSlider: {fileID: 1928300759}
+  castleToggle: {fileID: 174066200}
   troopText: {fileID: 348286369}
   money: {fileID: 742455934}
   costOfSpawning: {fileID: 1504969252}
