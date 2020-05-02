@@ -23,7 +23,7 @@ public class Flock : MonoBehaviour
     public bool spawnedFirstCastle = false;
 
     [System.NonSerialized]
-    public int moneyAmount = 50000;
+    public int moneyAmount = 10000;
 
     float squareMaxSpeed, squareNeighbourRadius, squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }

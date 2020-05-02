@@ -2013,7 +2013,7 @@ MonoBehaviour:
   mapZ: 10
   mountains: 6
   seed: 0
-  income: 2000
+  income: 1500
   hideEnemyFlock: 1
   inputStartingMoney: {fileID: 343787133}
   inputMapX: {fileID: 420920831}

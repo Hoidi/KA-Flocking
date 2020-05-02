@@ -16,7 +16,7 @@ public class Settings : MonoBehaviour
     [Range(10,2)]
     public int mountains = 6;
     public int seed;
-    public int income = 2000;
+    public int income = 1500;
     public bool hideEnemyFlock = true;
 
     public InputField inputStartingMoney;
