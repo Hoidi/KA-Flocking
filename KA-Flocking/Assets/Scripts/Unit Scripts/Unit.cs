@@ -7,7 +7,7 @@ public abstract class Unit : ScriptableObject
     public abstract void Initialize();
 
     public ContextFilter attackFilter;
-    [Range(1f, 1000f)]
+    [Range(1f, 10000f)]
     public float health = 100f;
     // The amount of damage this unit deals in one Time unit
     [Range(0f, 1000f)]
