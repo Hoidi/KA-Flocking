@@ -66,13 +66,20 @@ public class NextScene : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    private void setActiveFlockAgents(Flock flock, bool activity) {
+        foreach (FlockAgent agent in flock.agents)
+        {
+            agent.gameObject.SetActive(activity);
+        }
+    }
+
     // Configures settings depending on the scenes
     void ConfigureSettings(Scene scene, LoadSceneMode mode) {
         if (settings == null) return;
         if (scene.name.Equals("PlayerOneSetupScene")) {
             if (configuredSetupOne == true) return;
             configuredSetupOne = true;
-            
+
             ChunkManager chunkManager = GameObject.Find("VisualManager").GetComponent<ChunkManager>();
             chunkManager.pointyBreakOff = settings.inputMountains.value;
             chunkManager.chunksX = settings.mapX;
@@ -85,8 +92,16 @@ public class NextScene : MonoBehaviour
             if (configuredSetupTwo == true) return;
             configuredSetupTwo = true;
 
+            if (settings.hideEnemyFlock) {
+                setActiveFlockAgents(GameObject.Find("Team 1 Flock").GetComponent<Flock>(), false);
+            }
+
             Flock flock = GameObject.Find("Team 2 Flock").GetComponent<Flock>();
             flock.moneyAmount = settings.startingMoney;
+        } else if (scene.name.Equals("FlockScene")) {
+            if (settings.nTurns == 1 && settings.hideEnemyFlock) {
+                setActiveFlockAgents(GameObject.Find("Team 1 Flock").GetComponent<Flock>(), true);
+            }
         }
     }
 }

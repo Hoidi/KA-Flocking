@@ -17,6 +17,7 @@ public class Settings : MonoBehaviour
     public int mountains = 6;
     public int seed;
     public int income = 2000;
+    public bool hideEnemyFlock = true;
 
     public InputField inputStartingMoney;
     public InputField inputMapX;
@@ -24,6 +25,7 @@ public class Settings : MonoBehaviour
     public Slider inputMountains;
     public InputField inputSeed;
     public Text prevSeed;
+    public Toggle inputHideEnemyFlock;
     public int turnDuration = 60;
     public int nTurns = 1;
     // Start is called before the first frame update
@@ -40,6 +42,7 @@ public class Settings : MonoBehaviour
             seed = previousSettings.seed;
             prevSeed.gameObject.SetActive(true);
             GameObject.Find("PrevSeedNo").GetComponent<Text>().text= seed.ToString();
+            hideEnemyFlock = previousSettings.hideEnemyFlock;
             // Remove previous settings after copying
             Destroy(previousObject);
         }
@@ -49,6 +52,7 @@ public class Settings : MonoBehaviour
         inputMapZ.text = mapZ.ToString();
         inputMountains.value = mountains;
         RandomizeSeed();
+        inputHideEnemyFlock.isOn = inputHideEnemyFlock;
 
         Time.timeScale = 0.0f; // pauses the game so that the troops stand still
         DontDestroyOnLoad(this.gameObject);
@@ -98,6 +102,7 @@ public class Settings : MonoBehaviour
         mapZ += mapZ % 2;
         mountains = (int) inputMountains.value;
         seed = int.Parse(inputSeed.text);
+        hideEnemyFlock = inputHideEnemyFlock.isOn;
     }
 
     // Used to randomize the seed
