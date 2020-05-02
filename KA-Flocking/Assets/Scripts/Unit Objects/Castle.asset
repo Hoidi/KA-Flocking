@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Castle
   m_EditorClassIdentifier: 
   attackFilter: {fileID: 11400000, guid: 9a40376dfafe67140821885f10618ed6, type: 2}
-  health: 1000
+  health: 10000
   damage: 0
   attackReach: 0
   behaviour: {fileID: 11400000, guid: c608a10b44ef2434f95e56fba3087e56, type: 2}

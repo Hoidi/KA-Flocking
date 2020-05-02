@@ -25,7 +25,7 @@ public class Settings : MonoBehaviour
     public InputField inputSeed;
     public Text prevSeed;
     public int turnDuration = 60;
-    private int nTurns = 1;
+    public int nTurns = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,9 +60,14 @@ public class Settings : MonoBehaviour
 
         yield return new WaitForSeconds(turnDuration);
         while (SceneManager.GetActiveScene().name == "FlockScene") {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
-
             nTurns++;
+
+            if (nTurns % 2 == 0) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            } else {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+            }
+
             Time.timeScale = 0.0f;
 
             Flock flock1 = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
@@ -75,7 +80,7 @@ public class Settings : MonoBehaviour
     }
 
     private void updateTurnText(Scene scene, LoadSceneMode mode) {
-        if (scene.name.Equals("PlayerOneSetupScene")) {
+        if (scene.name.Equals("PlayerOneSetupScene") || scene.name.Equals("PlayerTwoSetupScene")) {
             Text turnText = GameObject.Find("TurnText").GetComponent<Text>();
             turnText.text = "Turn number " + nTurns;
             // Reset alpha and fade it out over 15 seconds

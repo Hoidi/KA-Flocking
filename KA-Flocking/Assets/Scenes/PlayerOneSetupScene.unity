@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3365,8 +3365,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 397706972}
   m_HandleRect: {fileID: 397706971}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3836,7 +3836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.77254903, g: 0.7176471, b: 0.4509804, a: 1}
+  m_Color: {r: 0.4509804, g: 0.6267406, b: 0.77254903, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5605,7 +5605,6 @@ MonoBehaviour:
   troopToggles: {fileID: 838942802}
   formationToggles: {fileID: 1073566557}
   troopSlider: {fileID: 1928300759}
-  castleToggle: {fileID: 1959859362}
   troopText: {fileID: 348286369}
   money: {fileID: 64169626}
   costOfSpawning: {fileID: 51765211}

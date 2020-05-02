@@ -7,26 +7,38 @@ using UnityEngine.UI;
 public class NextScene : MonoBehaviour
 {
     private Settings settings;
-    private bool configuredSetupOne,configuredSetupTwo  = false;
+    private static bool configuredSetupOne,configuredSetupTwo  = false;
     public void nextScene() {
+        int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
+        settings = GameObject.Find("SettingsObject").GetComponent<Settings>();
+
         if (SceneManager.GetActiveScene().name == "PlayerOneSetupScene") {
             if (!validateTroopSetup(GameObject.Find("Team 1 Flock").GetComponent<Flock>())) return;
+            // If the turn started with player 2 (modulo 2 == 0) skip directly to flock scene after PlayerOneSetupScene
+            if (settings.nTurns % 2 == 0 && settings.nTurns > 1) {
+                Time.timeScale = 1.0f;
+                nextScene++;
+            }
         }
         if (SceneManager.GetActiveScene().name == "PlayerTwoSetupScene")
         {
             if (!validateTroopSetup(GameObject.Find("Team 2 Flock").GetComponent<Flock>())) return;
-            Time.timeScale = 1.0f;
+            // If the turn started with player 2 (modulo 2 == 0) go back to PlayerOneSetupScene instead of going to flockscene
+            if (settings.nTurns % 2 == 0 && settings.nTurns > 1) {
+                nextScene -= 2;
+            } else {
+                Time.timeScale = 1.0f;
+            }
         }
         if (SceneManager.GetActiveScene().name == "FlockScene"){
             Time.timeScale = 0;
         }
 
         if (SceneManager.GetActiveScene().name.Equals("Menu")) {
-            settings = GameObject.Find("SettingsObject").GetComponent<Settings>();
             settings.SaveValues();
         }
         SceneManager.sceneLoaded += ConfigureSettings;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(nextScene);
     }
 
     private bool validateTroopSetup(Flock flock) {
