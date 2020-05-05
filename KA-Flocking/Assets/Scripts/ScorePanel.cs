@@ -42,8 +42,8 @@ public class ScorePanel : MonoBehaviour
     }
 
     private void Lose() {
-        if (flock.name == "Team 1 Flock") winningText = "Team 2 won!";
-        else winningText = "Team 1 won!";
+        if (flock.name == "Team 1 Flock") winningText = "Red team won!";
+        else winningText = "Blue team won!";
         next.nextScene(); //go to end screen if all soldiers in one of the teams are dead
     }
 

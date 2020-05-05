@@ -331,7 +331,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Team 1 kills: '
+  m_Text: 'Blue team kills: '
 --- !u!222 &243041245
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1378,7 +1378,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Team 2 kills: '
+  m_Text: 'Red team kills: '
 --- !u!222 &1459642630
 CanvasRenderer:
   m_ObjectHideFlags: 0
