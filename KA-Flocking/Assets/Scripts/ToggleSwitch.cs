@@ -64,4 +64,5 @@ public class ToggleSwitch : MonoBehaviour
     //Spear: https://thenounproject.com/search/?q=spear&i=819835, Hamish 
     //Bow: https://thenounproject.com/search/?q=bow&i=2851797 NicklasR, AT
     //Flag: https://thenounproject.com/search/?q=flag&i=714884 Maxim Kulikov
+    //Castle: https://thenounproject.com/search/?q=castle&i=28149 Joel McKinney
 }
