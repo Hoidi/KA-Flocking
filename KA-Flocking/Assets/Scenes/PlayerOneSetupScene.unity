@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1823,7 +1823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 300
   prefab: {fileID: 6785972329752564812, guid: 2486cfa5343d67ecc85a1700463a0207, type: 3}
-  unitType: {fileID: 11400000, guid: fddc702707569da4ebf2d8b346b8db12, type: 2}
+  unitType: {fileID: 11400000, guid: 4a177295c08f84347b60e88eb6f6cca0, type: 2}
 --- !u!1 &498275121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2038,7 +2038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 300
   prefab: {fileID: 830114343603659779, guid: 5c71d256263b09d448f9d67c3ce0017e, type: 3}
-  unitType: {fileID: 11400000, guid: 63fa0fe3f2499664e85865ddb6371bf8, type: 2}
+  unitType: {fileID: 11400000, guid: 835e1c98309148b408e47abd79ddcb2e, type: 2}
 --- !u!1 &609963870
 GameObject:
   m_ObjectHideFlags: 0
@@ -5605,7 +5605,6 @@ MonoBehaviour:
   troopToggles: {fileID: 838942802}
   formationToggles: {fileID: 1073566557}
   troopSlider: {fileID: 1928300759}
-  castleToggle: {fileID: 1959859362}
   troopText: {fileID: 348286369}
   money: {fileID: 64169626}
   costOfSpawning: {fileID: 51765211}
