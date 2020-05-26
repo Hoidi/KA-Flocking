@@ -64,6 +64,8 @@ public class NextScene : MonoBehaviour
         Destroy(GameObject.Find("VisualManager")); //remove gameobjects from finished game
         GameObject.Find("SettingsObject").name = "PreviousSettings"; //renames the previous settingsObject
         SceneManager.LoadScene(0);
+        configuredSetupOne = false;
+        configuredSetupTwo = false;
     }
 
     private void setActiveFlockAgents(Flock flock, bool activity) {
