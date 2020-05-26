@@ -16,7 +16,8 @@ public class Settings : MonoBehaviour
     [Range(10,2)]
     public int mountains = 6;
     public int seed;
-    public int income = 2000;
+    public int income = 1500;
+    public bool hideEnemyFlock = true;
 
     public InputField inputStartingMoney;
     public InputField inputMapX;
@@ -24,8 +25,9 @@ public class Settings : MonoBehaviour
     public Slider inputMountains;
     public InputField inputSeed;
     public Text prevSeed;
+    public Toggle inputHideEnemyFlock;
     public int turnDuration = 60;
-    private int nTurns = 1;
+    public int nTurns = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +42,7 @@ public class Settings : MonoBehaviour
             seed = previousSettings.seed;
             prevSeed.gameObject.SetActive(true);
             GameObject.Find("PrevSeedNo").GetComponent<Text>().text= seed.ToString();
+            hideEnemyFlock = previousSettings.hideEnemyFlock;
             // Remove previous settings after copying
             Destroy(previousObject);
         }
@@ -49,6 +52,7 @@ public class Settings : MonoBehaviour
         inputMapZ.text = mapZ.ToString();
         inputMountains.value = mountains;
         RandomizeSeed();
+        inputHideEnemyFlock.isOn = inputHideEnemyFlock;
 
         Time.timeScale = 0.0f; // pauses the game so that the troops stand still
         DontDestroyOnLoad(this.gameObject);
@@ -60,9 +64,14 @@ public class Settings : MonoBehaviour
 
         yield return new WaitForSeconds(turnDuration);
         while (SceneManager.GetActiveScene().name == "FlockScene") {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
-
             nTurns++;
+
+            if (nTurns % 2 == 0) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            } else {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+            }
+
             Time.timeScale = 0.0f;
 
             Flock flock1 = GameObject.Find("Team 1 Flock").GetComponent<Flock>();
@@ -75,7 +84,7 @@ public class Settings : MonoBehaviour
     }
 
     private void updateTurnText(Scene scene, LoadSceneMode mode) {
-        if (scene.name.Equals("PlayerOneSetupScene")) {
+        if (scene.name.Equals("PlayerOneSetupScene") || scene.name.Equals("PlayerTwoSetupScene")) {
             Text turnText = GameObject.Find("TurnText").GetComponent<Text>();
             turnText.text = "Turn number " + nTurns;
             // Reset alpha and fade it out over 15 seconds
@@ -93,6 +102,7 @@ public class Settings : MonoBehaviour
         mapZ += mapZ % 2;
         mountains = (int) inputMountains.value;
         seed = int.Parse(inputSeed.text);
+        hideEnemyFlock = inputHideEnemyFlock.isOn;
     }
 
     // Used to randomize the seed

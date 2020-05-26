@@ -75,11 +75,11 @@ public class MouseInputManager : InputManager
     {
         if (!Input.GetMouseButton(1) && Input.mouseScrollDelta.y > 0)
         {
-            OnZoomInput?.Invoke(-5f);
+            OnZoomInput?.Invoke(-10f);
         }
         else if (!Input.GetMouseButton(1) && Input.mouseScrollDelta.y < 0)
         {
-            OnZoomInput?.Invoke(5f);
+            OnZoomInput?.Invoke(10f);
         }
     }
 }

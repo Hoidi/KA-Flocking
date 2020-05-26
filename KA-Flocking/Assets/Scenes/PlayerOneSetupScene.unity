@@ -1821,7 +1821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c12e7938c674cc4fbe310985fbf68cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 300
+  cost: 200
   prefab: {fileID: 6785972329752564812, guid: 2486cfa5343d67ecc85a1700463a0207, type: 3}
   unitType: {fileID: 11400000, guid: 4a177295c08f84347b60e88eb6f6cca0, type: 2}
 --- !u!1 &498275121
@@ -3365,8 +3365,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 397706972}
   m_HandleRect: {fileID: 397706971}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3836,7 +3836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.77254903, g: 0.7176471, b: 0.4509804, a: 1}
+  m_Color: {r: 0.4509804, g: 0.6267406, b: 0.77254903, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

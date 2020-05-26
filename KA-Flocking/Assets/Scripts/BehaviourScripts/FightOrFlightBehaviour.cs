@@ -69,6 +69,8 @@ public class FightOrFlightBehaviour : FlockBehaviour
                 else
                 {
                     enemiesStrength += unitStrength;
+                    // Increase the direction weight for castles
+                    if (itemAgent.unit is Castle) unitStrength *= 30;
                     enemiesDirection += unitVector.normalized * unitStrength;
                 }
             }
