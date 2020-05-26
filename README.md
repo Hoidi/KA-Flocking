@@ -19,6 +19,7 @@ z: Zoom in
 x: Zoom out
 
 shift: speeds up the camera movementspeed
+ctrl: slows down the camera movementspeed
 
 left-click: spawn (hold to continually spawn)
 right-click: refund units (scroll while holding to change area of deletion)
